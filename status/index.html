@@ -471,6 +471,81 @@ summary{
   function readStatDataObject(){
     var p = safeGetParent();
 
+    // ① 参考卡同款核心读取方式：
+    // 从“当前消息”的变量对象里读取 stat_data。
+    try {
+      if (
+        typeof getVariables === "function" &&
+        typeof getCurrentMessageId === "function" &&
+        typeof _ !== "undefined" &&
+        _.get
+      ) {
+        var vars = getVariables({
+          type: "message",
+          message_id: getCurrentMessageId()
+        });
+        var stat = _.get(vars, "stat_data", {});
+        if (stat && typeof stat === "object" && Object.keys(stat).length > 0) {
+          return stat.stat_data || stat;
+        }
+      }
+    } catch(e) {}
+
+    // ② 如果 API 挂在父窗口，则从父窗口读取。
+    try {
+      if (
+        p &&
+        typeof p.getVariables === "function" &&
+        typeof p.getCurrentMessageId === "function" &&
+        typeof p._ !== "undefined" &&
+        p._.get
+      ) {
+        var vars2 = p.getVariables({
+          type: "message",
+          message_id: p.getCurrentMessageId()
+        });
+        var stat2 = p._.get(vars2, "stat_data", {});
+        if (stat2 && typeof stat2 === "object" && Object.keys(stat2).length > 0) {
+          return stat2.stat_data || stat2;
+        }
+      }
+    } catch(e) {}
+
+    // ③ 兼容没有 lodash 的情况：直接从 getVariables 返回对象里取 stat_data。
+    try {
+      if (
+        typeof getVariables === "function" &&
+        typeof getCurrentMessageId === "function"
+      ) {
+        var vars3 = getVariables({
+          type: "message",
+          message_id: getCurrentMessageId()
+        });
+        var stat3 = vars3 && vars3.stat_data;
+        if (stat3 && typeof stat3 === "object" && Object.keys(stat3).length > 0) {
+          return stat3.stat_data || stat3;
+        }
+      }
+    } catch(e) {}
+
+    try {
+      if (
+        p &&
+        typeof p.getVariables === "function" &&
+        typeof p.getCurrentMessageId === "function"
+      ) {
+        var vars4 = p.getVariables({
+          type: "message",
+          message_id: p.getCurrentMessageId()
+        });
+        var stat4 = vars4 && vars4.stat_data;
+        if (stat4 && typeof stat4 === "object" && Object.keys(stat4).length > 0) {
+          return stat4.stat_data || stat4;
+        }
+      }
+    } catch(e) {}
+
+    // ④ 兼容 window 变量。
     var candidates = [
       window.mushokuStatusData,
       window.stat_data,
@@ -487,6 +562,7 @@ summary{
       if (obj) return obj.stat_data || obj;
     }
 
+    // ⑤ 兼容 getvar("stat_data")。
     try {
       if (typeof getvar === "function") {
         var whole = parseMaybeJson(getvar("stat_data"));
@@ -672,3 +748,4 @@ summary{
 
 </body>
 </html>
+
