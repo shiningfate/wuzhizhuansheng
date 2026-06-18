@@ -144,12 +144,6 @@ summary{
   color:#7a6858;
   opacity:.85;
 }
-@media(max-width:520px){
-  .grid{grid-template-columns:1fr}
-  .wide{grid-column:auto}
-  .mushoku-status-card{padding:12px;border-radius:18px 8px}
-  .rel-head{flex-direction:column;align-items:flex-start}
-}
 .npc-card,
 .npc-thought-card {
   margin-top:10px;
@@ -159,7 +153,6 @@ summary{
   background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,250,236,.18)),rgba(255,244,216,.46);
   box-shadow:inset 0 0 14px rgba(91,50,19,.09),0 2px 7px rgba(56,29,10,.08);
 }
-
 .npc-name {
   font-size:1.45em;
   text-align:center;
@@ -167,7 +160,6 @@ summary{
   color:#3d2516;
   letter-spacing:1px;
 }
-
 .npc-pill-row {
   display:flex;
   flex-wrap:wrap;
@@ -175,7 +167,6 @@ summary{
   gap:8px;
   margin:10px 0;
 }
-
 .npc-pill {
   display:inline-block;
   min-width:80px;
@@ -187,32 +178,27 @@ summary{
   font-weight:bold;
   color:#4c314c;
 }
-
 .npc-info-grid {
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:10px;
   margin-top:10px;
 }
-
 .npc-info-grid > div {
   padding:9px 10px;
   border-radius:10px;
   background:rgba(255,250,242,.5);
   border:1px solid rgba(126,90,56,.16);
 }
-
 .npc-info-wide {
   grid-column:1/-1;
 }
-
 .npc-box-title,
 .npc-thought-title {
   font-weight:bold;
   color:#4a3120;
   margin:12px 0 7px;
 }
-
 .npc-appearance-box,
 .npc-thought-box {
   padding:12px 14px;
@@ -222,20 +208,17 @@ summary{
   color:#4e3b2f;
   text-align:justify;
 }
-
 .npc-feature-table {
   display:flex;
   flex-direction:column;
   gap:8px;
 }
-
 .npc-feature-row {
   display:grid;
   grid-template-columns:88px 1fr;
   gap:8px;
   align-items:center;
 }
-
 .npc-feature-label {
   display:flex;
   align-items:center;
@@ -246,7 +229,6 @@ summary{
   color:#3b2138;
   font-weight:bold;
 }
-
 .npc-feature-value {
   min-height:34px;
   padding:6px 10px;
@@ -255,13 +237,15 @@ summary{
   border:1px solid rgba(132,95,58,.16);
   color:#5d4534;
 }
-
 .npc-thought-box {
   line-height:1.9;
   color:#5a493b;
 }
-
 @media(max-width:520px){
+  .grid{grid-template-columns:1fr}
+  .wide{grid-column:auto}
+  .mushoku-status-card{padding:12px;border-radius:18px 8px}
+  .rel-head{flex-direction:column;align-items:flex-start}
   .npc-info-grid,
   .npc-feature-row {
     grid-template-columns:1fr;
@@ -341,19 +325,19 @@ summary{
     <div class="section">
       <div class="rel-card roxy">
         <div class="rel-head"><b id="roxyName">洛琪希·米格路迪亚</b><span class="pill">Lv.<span id="roxyLv">0</span>/10</span></div>
-        <div class="row"><b>关系：</b><span id="roxyRelationship">尚未相遇 / 未建立羁绊</span></div>
+        <div class="row"><b>关系：</b><span id="roxyRelationship">命运固定；尚未相遇 / 未建立羁绊</span></div>
         <div class="row"><b>状态：</b><span id="roxyState">暂无动向</span></div>
       </div>
 
       <div class="rel-card sylphy">
         <div class="rel-head"><b id="sylphyName">希露菲叶特</b><span class="pill">Lv.<span id="sylphyLv">0</span>/10</span></div>
-        <div class="row"><b>关系：</b><span id="sylphyRelationship">尚未相遇 / 未建立羁绊</span></div>
+        <div class="row"><b>关系：</b><span id="sylphyRelationship">命运固定；尚未相遇 / 未建立羁绊</span></div>
         <div class="row"><b>状态：</b><span id="sylphyState">暂无动向</span></div>
       </div>
 
       <div class="rel-card eris">
         <div class="rel-head"><b id="erisName">艾莉丝·伯雷亚斯·格雷拉特</b><span class="pill">Lv.<span id="erisLv">0</span>/10</span></div>
-        <div class="row"><b>关系：</b><span id="erisRelationship">尚未相遇 / 未建立羁绊</span></div>
+        <div class="row"><b>关系：</b><span id="erisRelationship">命运固定；尚未相遇 / 未建立羁绊</span></div>
         <div class="row"><b>状态：</b><span id="erisState">暂无动向</span></div>
       </div>
 
@@ -375,80 +359,192 @@ summary{
   </details>
 
   <details>
-  <summary>目标 NPC</summary>
+    <summary>目标 NPC</summary>
 
-  <div class="npc-card">
-    <div class="npc-name" id="targetName">未知</div>
+    <div class="npc-card">
+      <div class="npc-name" id="targetName">未知</div>
 
-    <div class="npc-pill-row">
-      <span class="npc-pill">种族：<span id="targetRace">未知</span></span>
-      <span class="npc-pill">性别：<span id="targetGender">未知</span></span>
-      <span class="npc-pill">年龄：<span id="targetAge">未知</span></span>
+      <div class="npc-pill-row">
+        <span class="npc-pill">种族：<span id="targetRace">未知</span></span>
+        <span class="npc-pill">性别：<span id="targetGender">未知</span></span>
+        <span class="npc-pill">年龄：<span id="targetAge">未知</span></span>
+      </div>
+
+      <div class="npc-info-grid">
+        <div><b>鉴定：</b><span id="targetIdentifyStatus">未鉴定</span></div>
+        <div><b>称号：</b><span id="targetTitle">未知</span></div>
+        <div class="npc-info-wide"><b>身份标签：</b><span id="targetIdentityTags">暂无</span></div>
+        <div class="npc-info-wide"><b>当前状态：</b><span id="targetBodyStatus">未知</span></div>
+        <div class="npc-info-wide"><b>当前动作：</b><span id="targetCurrentAction">未知</span></div>
+      </div>
+
+      <div class="npc-box-title">外貌 / 衣着 / 气质</div>
+      <div class="npc-appearance-box" id="targetAppearance">暂无明确外貌描写。</div>
+
+      <div class="npc-box-title">身体细节</div>
+      <div class="npc-feature-table">
+        <div class="npc-feature-row">
+          <div class="npc-feature-label">身材</div>
+          <div class="npc-feature-value" id="targetFigureState">未知</div>
+        </div>
+        <div class="npc-feature-row">
+          <div class="npc-feature-label">胸部</div>
+          <div class="npc-feature-value" id="targetBreastsStatus">未知</div>
+        </div>
+        <div class="npc-feature-row">
+          <div class="npc-feature-label">阴部</div>
+          <div class="npc-feature-value" id="targetVaginaStatus">未知</div>
+        </div>
+        <div class="npc-feature-row">
+          <div class="npc-feature-label">屁穴</div>
+          <div class="npc-feature-value" id="targetAnusAction">未知</div>
+        </div>
+        <div class="npc-feature-row">
+          <div class="npc-feature-label">足部</div>
+          <div class="npc-feature-value" id="targetFeetsAction">未知</div>
+        </div>
+        <div class="npc-feature-row">
+          <div class="npc-feature-label">性幻想</div>
+          <div class="npc-feature-value" id="targetSexualFantasy">未知</div>
+        </div>
+      </div>
+
+      <div class="npc-box-title">立场 / 风险</div>
+      <div class="npc-info-grid">
+        <div><b>立场：</b><span id="targetStance">未知</span></div>
+        <div><b>危险：</b><span id="targetDanger">未知</span></div>
+        <div><b>对用户态度：</b><span id="targetAttitude">未知</span></div>
+        <div><b>战力概评：</b><span id="targetPowerBrief">未评估</span></div>
+        <div class="npc-info-wide"><b>风险说明：</b><span id="targetRiskNote">暂无。</span></div>
+      </div>
+
+      <div class="npc-box-title">天赋 / 技能 / 特殊能力</div>
+      <div class="npc-appearance-box" id="targetTalentsSkills">暂无已知天赋或技能。</div>
     </div>
 
-    <div class="npc-info-grid">
-      <div><b>鉴定：</b><span id="targetIdentifyStatus">未鉴定</span></div>
-      <div><b>称号：</b><span id="targetTitle">未知</span></div>
-      <div class="npc-info-wide"><b>身份标签：</b><span id="targetIdentityTags">暂无</span></div>
-      <div class="npc-info-wide"><b>当前状态：</b><span id="targetBodyStatus">未知</span></div>
-      <div class="npc-info-wide"><b>当前动作：</b><span id="targetCurrentAction">未知</span></div>
+    <div class="npc-thought-card">
+      <div class="npc-thought-title">目标内心</div>
+      <div class="npc-thought-box" id="targetInnerThought">无法得知。</div>
     </div>
+  </details>
 
-    <div class="npc-box-title">外貌 / 衣着 / 气质</div>
-    <div class="npc-appearance-box" id="targetAppearance">暂无明确外貌描写。</div>
-
-    <div class="npc-box-title">身体细节</div>
-    <div class="npc-feature-table">
-      <div class="npc-feature-row">
-        <div class="npc-feature-label">身材</div>
-        <div class="npc-feature-value" id="targetFigureState">未知</div>
-      </div>
-      <div class="npc-feature-row">
-        <div class="npc-feature-label">胸部</div>
-        <div class="npc-feature-value" id="targetBreastsStatus">未知</div>
-      </div>
-      <div class="npc-feature-row">
-        <div class="npc-feature-label">阴部</div>
-        <div class="npc-feature-value" id="targetVaginaStatus">未知</div>
-      </div>
-      <div class="npc-feature-row">
-        <div class="npc-feature-label">屁穴</div>
-        <div class="npc-feature-value" id="targetAnusAction">未知</div>
-      </div>
-      <div class="npc-feature-row">
-        <div class="npc-feature-label">足部</div>
-        <div class="npc-feature-value" id="targetFeetsAction">未知</div>
-      </div>
+  <details>
+    <summary>原著剧情偏移度</summary>
+    <div class="section">
+      <div class="row"><b>偏移等级：</b><span id="canonDeviationLevel">低</span></div>
+      <div class="box-title">偏移说明</div>
+      <div class="text-box" id="canonDeviationNote">暂无明显偏移。</div>
     </div>
-
-    <div class="npc-box-title">立场 / 风险</div>
-    <div class="npc-info-grid">
-      <div><b>立场：</b><span id="targetStance">未知</span></div>
-      <div><b>危险：</b><span id="targetDanger">未知</span></div>
-      <div><b>对用户态度：</b><span id="targetAttitude">未知</span></div>
-      <div><b>战力概评：</b><span id="targetPowerBrief">未评估</span></div>
-      <div class="npc-info-wide"><b>风险说明：</b><span id="targetRiskNote">暂无。</span></div>
-    </div>
-
-    <div class="npc-box-title">天赋 / 技能 / 特殊能力</div>
-    <div class="npc-appearance-box" id="targetTalentsSkills">暂无已知天赋或技能。</div>
-  </div>
-
-  <div class="npc-thought-card">
-    <div class="npc-thought-title">目标内心</div>
-    <div class="npc-thought-box" id="targetInnerThought">无法得知。</div>
-  </div>
-</details>
+  </details>
 
 </div>
 
 <script>
 (function(){
-  var data = window.mushokuStatusData || {};
+  function safeGetParent(){
+    try {
+      if (window.parent && window.parent !== window) return window.parent;
+    } catch(e){}
+    return null;
+  }
+
+  function parseMaybeJson(v){
+    if (v === undefined || v === null || v === "") return null;
+    if (typeof v === "object") return v;
+    if (typeof v === "string") {
+      try { return JSON.parse(v); } catch(e) {}
+    }
+    return null;
+  }
+
+  function readFromObjectPath(obj, path){
+    if (!obj || !path) return undefined;
+    var parts = path.split(".");
+    var cur = obj;
+    for (var i = 0; i < parts.length; i++) {
+      if (cur === undefined || cur === null) return undefined;
+      cur = cur[parts[i]];
+    }
+    return cur;
+  }
+
+  function readStatDataObject(){
+    var p = safeGetParent();
+
+    var candidates = [
+      window.mushokuStatusData,
+      window.stat_data,
+      window.statData,
+      window.chat_metadata && window.chat_metadata.variables && window.chat_metadata.variables.stat_data,
+      p && p.mushokuStatusData,
+      p && p.stat_data,
+      p && p.statData,
+      p && p.chat_metadata && p.chat_metadata.variables && p.chat_metadata.variables.stat_data
+    ];
+
+    for (var i = 0; i < candidates.length; i++) {
+      var obj = parseMaybeJson(candidates[i]);
+      if (obj) return obj.stat_data || obj;
+    }
+
+    try {
+      if (typeof getvar === "function") {
+        var whole = parseMaybeJson(getvar("stat_data"));
+        if (whole) return whole.stat_data || whole;
+      }
+    } catch(e){}
+
+    try {
+      if (p && typeof p.getvar === "function") {
+        var whole2 = parseMaybeJson(p.getvar("stat_data"));
+        if (whole2) return whole2.stat_data || whole2;
+      }
+    } catch(e){}
+
+    return {};
+  }
+
+  var data = readStatDataObject();
+
+  function readByGetvar(key){
+    var p = safeGetParent();
+    var paths = [
+      "stat_data." + key,
+      "/stat_data/" + key,
+      "stat_data/" + key
+    ];
+
+    for (var i = 0; i < paths.length; i++) {
+      try {
+        if (typeof getvar === "function") {
+          var v = getvar(paths[i]);
+          if (v !== undefined && v !== null && String(v).trim() !== "") return v;
+        }
+      } catch(e){}
+
+      try {
+        if (p && typeof p.getvar === "function") {
+          var pv = p.getvar(paths[i]);
+          if (pv !== undefined && pv !== null && String(pv).trim() !== "") return pv;
+        }
+      } catch(e){}
+    }
+
+    return undefined;
+  }
 
   function get(key, fallback){
     var v = data[key];
-    if(v === undefined || v === null) return fallback;
+
+    if (v === undefined || v === null || String(v).trim() === "") {
+      v = readFromObjectPath(data, key);
+    }
+
+    if (v === undefined || v === null || String(v).trim() === "") {
+      v = readByGetvar(key);
+    }
+
+    if (v === undefined || v === null) return fallback;
     v = String(v).trim();
     return v || fallback;
   }
@@ -464,98 +560,113 @@ summary{
   }
 
   function pct(current, max){
-    current = parseFloat(String(current || '').replace(/[^\d.]/g,''));
-    max = parseFloat(String(max || '').replace(/[^\d.]/g,''));
+    current = parseFloat(String(current || "").replace(/[^\d.]/g,""));
+    max = parseFloat(String(max || "").replace(/[^\d.]/g,""));
     if(!max || isNaN(current)) return 0;
     return Math.max(0, Math.min(100, current / max * 100));
   }
 
-  text('chapter','chapter','未知');
-  text('time','time','未知');
-  text('weather','weather','未知');
-  text('temperature','temperature','');
-  text('location','location','未知');
-  text('environment','environment','未知');
-  text('people','people','未知');
+  text("chapter","chapter","未知");
+  text("time","time","未知");
+  text("weather","weather","未知");
+  text("temperature","temperature","");
+  text("location","location","未知");
+  text("environment","environment","未知");
+  text("people","people","未知");
 
-  text('mapName','mapName','六面世界地图');
-  text('mapNote','mapNote','当前路线与当地情报记录。');
-  html('routeNote','routeNote','暂无明确路线。');
-  html('localNews','localNews','暂无新的当地传闻。');
+  text("mapName","mapName","六面世界地图");
+  text("mapNote","mapNote","当前路线与当地情报记录。");
+  html("routeNote","routeNote","暂无明确路线。");
+  html("localNews","localNews","暂无新的当地传闻。");
 
-  var mapUrl = get('mapImageUrl','');
-  var mapFrame = document.getElementById('mapFrame');
+  var defaultMapUrl = "https://raw.githubusercontent.com/shiningfate/wzzsjpg/main/dc94a7ca6ec9d90d26e9f09d86ee7d5c97196803_raw.jpg";
+  var mapUrl = get("mapImageUrl", defaultMapUrl);
+  var mapFrame = document.getElementById("mapFrame");
   if(mapFrame && mapUrl){
     mapFrame.innerHTML = '<img src="' + mapUrl + '" alt="世界地图">';
   }
 
-  text('pcName','pcName','未知');
-  text('pcRace','pcRace','未知种族');
-  text('pcGender','pcGender','未知性别');
-  text('pcAge','pcAge','未知年龄');
-  text('pcBodyStatus','pcBodyStatus','正常');
-  text('pcTitle','pcTitle','暂无称号');
-  text('pcIdentityTags','pcIdentityTags','暂无身份标签');
+  text("pcName","pcName","未知");
+  text("pcRace","pcRace","未知种族");
+  text("pcGender","pcGender","未知性别");
+  text("pcAge","pcAge","未知年龄");
+  text("pcBodyStatus","pcBodyStatus","正常");
+  text("pcTitle","pcTitle","暂无称号");
+  text("pcIdentityTags","pcIdentityTags","暂无身份标签");
 
-  var hpCurrent = get('hpCurrent','？');
-  var hpMax = get('hpMax','？');
-  var mpCurrent = get('mpCurrent','？');
-  var mpMax = get('mpMax','？');
+  var hpCurrent = get("hpCurrent","？");
+  var hpMax = get("hpMax","？");
+  var mpCurrent = get("mpCurrent","？");
+  var mpMax = get("mpMax","？");
 
-  document.getElementById('hpCurrent').textContent = hpCurrent;
-  document.getElementById('hpMax').textContent = hpMax;
-  document.getElementById('mpCurrent').textContent = mpCurrent;
-  document.getElementById('mpMax').textContent = mpMax;
-  document.getElementById('hpBar').style.width = pct(hpCurrent,hpMax) + '%';
-  document.getElementById('mpBar').style.width = pct(mpCurrent,mpMax) + '%';
+  var hpCurrentEl = document.getElementById("hpCurrent");
+  var hpMaxEl = document.getElementById("hpMax");
+  var mpCurrentEl = document.getElementById("mpCurrent");
+  var mpMaxEl = document.getElementById("mpMax");
+  var hpBar = document.getElementById("hpBar");
+  var mpBar = document.getElementById("mpBar");
 
-  text('pcPowerBrief','pcPowerBrief','未评估');
-  text('pcMentalStatus','pcMentalStatus','平稳');
-  text('pcCurrentGoal','pcCurrentGoal','暂无明确目标');
-  html('pcAppearance','pcAppearance','暂无明确外貌描写。');
+  if(hpCurrentEl) hpCurrentEl.textContent = hpCurrent;
+  if(hpMaxEl) hpMaxEl.textContent = hpMax;
+  if(mpCurrentEl) mpCurrentEl.textContent = mpCurrent;
+  if(mpMaxEl) mpMaxEl.textContent = mpMax;
+  if(hpBar) hpBar.style.width = pct(hpCurrent,hpMax) + "%";
+  if(mpBar) mpBar.style.width = pct(mpCurrent,mpMax) + "%";
 
-  text('roxyName','roxyName','洛琪希·米格路迪亚');
-  text('roxyLv','roxyLv','0');
-  html('roxyRelationship','roxyRelationship','尚未相遇 / 未建立羁绊');
-  html('roxyState','roxyState','暂无动向');
+  text("pcPowerBrief","pcPowerBrief","未评估");
+  text("pcMentalStatus","pcMentalStatus","平稳");
+  text("pcCurrentGoal","pcCurrentGoal","暂无明确目标");
+  html("pcAppearance","pcAppearance","暂无明确外貌描写。");
 
-  text('sylphyName','sylphyName','希露菲叶特');
-  text('sylphyLv','sylphyLv','0');
-  html('sylphyRelationship','sylphyRelationship','尚未相遇 / 未建立羁绊');
-  html('sylphyState','sylphyState','暂无动向');
+  text("roxyName","roxyName","洛琪希·米格路迪亚");
+  text("roxyLv","roxyLv","0");
+  html("roxyRelationship","roxyRelationship","命运固定；尚未相遇 / 未建立羁绊");
+  html("roxyState","roxyState","暂无动向");
 
-  text('erisName','erisName','艾莉丝·伯雷亚斯·格雷拉特');
-  text('erisLv','erisLv','0');
-  html('erisRelationship','erisRelationship','尚未相遇 / 未建立羁绊');
-  html('erisState','erisState','暂无动向');
+  text("sylphyName","sylphyName","希露菲叶特");
+  text("sylphyLv","sylphyLv","0");
+  html("sylphyRelationship","sylphyRelationship","命运固定；尚未相遇 / 未建立羁绊");
+  html("sylphyState","sylphyState","暂无动向");
 
-  html('relationSummary','relationSummary','暂无其他重要关系。');
+  text("erisName","erisName","艾莉丝·伯雷亚斯·格雷拉特");
+  text("erisLv","erisLv","0");
+  html("erisRelationship","erisRelationship","命运固定；尚未相遇 / 未建立羁绊");
+  html("erisState","erisState","暂无动向");
 
-  html('talentsDetail','talentsDetail','暂无天赋与加护。');
-  html('skillsDetail','skillsDetail','暂无习得技能。');
-  html('equipmentDetail','equipmentDetail','暂无装备与物品。');
+  html("relationSummary","relationSummary","暂无其他重要关系。");
 
-  text('targetName','targetName','未知');
-  text('targetRace','targetRace','未知');
-  text('targetGender','targetGender','未知');
-  text('targetAge','targetAge','未知');
-  text('targetIdentifyStatus','targetIdentifyStatus','未鉴定');
-  text('targetTitle','targetTitle','未知');
-  text('targetIdentityTags','targetIdentityTags','暂无');
-  html('targetAppearance','targetAppearance','暂无明确外貌描写。');
+  html("talentsDetail","talentsDetail","暂无天赋与加护。");
+  html("skillsDetail","skillsDetail","暂无习得技能。");
+  html("equipmentDetail","equipmentDetail","暂无装备与物品。");
 
-  html('targetFigureState','targetFigureState','未知');
-  html('targetBreastsStatus','targetBreastsStatus','未知');
-  html('targetVaginaStatus','targetVaginaStatus','未知');
-  html('targetAnusAction','targetAnusAction','未知');
-  html('targetFeetsAction','targetFeetsAction','未知');
+  text("targetName","targetName","未知");
+  text("targetRace","targetRace","未知");
+  text("targetGender","targetGender","未知");
+  text("targetAge","targetAge","未知");
+  text("targetIdentifyStatus","targetIdentifyStatus","未鉴定");
+  text("targetTitle","targetTitle","未知");
+  text("targetIdentityTags","targetIdentityTags","暂无");
+  html("targetBodyStatus","targetBodyStatus","未知");
+  html("targetCurrentAction","targetCurrentAction","未知");
+  html("targetAppearance","targetAppearance","暂无明确外貌描写。");
 
-  text('targetStance','targetStance','未知');
-  text('targetDanger','targetDanger','未知');
-  text('targetAttitude','targetAttitude','未知');
-  text('targetPowerBrief','targetPowerBrief','未评估');
-  html('targetTalentsSkills','targetTalentsSkills','暂无已知天赋或技能。');
-  html('targetInnerThought','targetInnerThought','无法得知。');
+  html("targetFigureState","targetFigureState","未知");
+  html("targetBreastsStatus","targetBreastsStatus","未知");
+  html("targetVaginaStatus","targetVaginaStatus","未知");
+  html("targetAnusAction","targetAnusAction","未知");
+  html("targetFeetsAction","targetFeetsAction","未知");
+  html("targetSexualFantasy","targetSexualFantasy","未知");
+
+  text("targetStance","targetStance","未知");
+  text("targetDanger","targetDanger","未知");
+  text("targetAttitude","targetAttitude","未知");
+  text("targetPowerBrief","targetPowerBrief","未评估");
+  html("targetRiskNote","targetRiskNote","暂无。");
+  html("targetTalentsSkills","targetTalentsSkills","暂无已知天赋或技能。");
+  html("targetInnerThought","targetInnerThought","无法得知。");
+
+  text("canonDeviationLevel","canonDeviationLevel","低");
+  html("canonDeviationNote","canonDeviationNote","暂无明显偏移。");
 })();
 </script>
 
