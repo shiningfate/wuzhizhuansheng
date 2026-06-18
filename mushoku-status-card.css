@@ -1,0 +1,57 @@
+.mushoku-status-card {
+  font-family: "STKaiti", "KaiTi", "Noto Serif SC", serif;
+  max-width: 740px;
+  margin: 12px auto;
+  padding: 16px;
+  color: #3b2417;
+  background: linear-gradient(135deg, #fbf2dd, #f8edd5 52%, #e6c891);
+  border: 2px double rgba(82,45,20,.8);
+  border-radius: 24px 10px;
+  box-shadow: 0 14px 34px rgba(30,15,6,.34);
+  line-height: 1.72;
+}
+
+.mushoku-status-card details {
+  margin: 10px 0;
+}
+
+.mushoku-status-card summary {
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #dfb676, #b97c3e);
+  font-weight: bold;
+}
+
+.mushoku-status-section {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border: 1px solid rgba(99,58,29,.35);
+  border-radius: 12px;
+  background: rgba(255,244,216,.5);
+}
+
+.mushoku-row {
+  margin: 5px 0;
+}
+
+.mushoku-bar-shell {
+  height: 13px;
+  border-radius: 999px;
+  background: rgba(80,45,18,.18);
+  overflow: hidden;
+  border: 1px solid rgba(70,38,18,.22);
+}
+
+.mushoku-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.mushoku-hp {
+  background: linear-gradient(90deg, #98312a, #d45a43);
+}
+
+.mushoku-mp {
+  background: linear-gradient(90deg, #1b6f9b, #42a8cf);
+}
