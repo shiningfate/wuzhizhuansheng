@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>无职状态栏</title>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 10px;
+  background: transparent;
+  color: #3b2417;
+  font-family: "STKaiti", "KaiTi", "FangSong", "Noto Serif SC", serif;
+}
+
+.mushoku-status-card {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 16px;
+  border: 2px double rgba(82,45,20,.8);
+  border-radius: 24px 10px;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(102,80,140,.14), transparent 20%),
+    radial-gradient(circle at 90% 12%, rgba(47,97,126,.12), transparent 22%),
+    linear-gradient(135deg, #fbf2dd, #f8edd5 52%, #e6c891);
+  box-shadow:
+    0 14px 34px rgba(30,15,6,.34),
+    inset 0 0 28px rgba(96,53,24,.18);
+  line-height: 1.72;
+}
+
+details {
+  margin: 10px 0;
+}
+
+summary {
+  cursor: pointer;
+  user-select: none;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(116,69,22,.58);
+  background: linear-gradient(180deg, #dfb676, #b97c3e);
+  color: #442716;
+  font-weight: bold;
+}
+
+.section {
+  margin-top: 8px;
+  padding: 11px 13px;
+  border: 1px solid rgba(99,58,29,.35);
+  border-radius: 13px;
+  background: rgba(255,244,216,.5);
+}
+
+.row {
+  margin: 6px 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.bar-title {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.bar-shell {
+  height: 13px;
+  border-radius: 999px;
+  background: rgba(80,45,18,.18);
+  overflow: hidden;
+  border: 1px solid rgba(70,38,18,.22);
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.hp-fill {
+  background: linear-gradient(90deg, #98312a, #d45a43);
+}
+
+.mp-fill {
+  background: linear-gradient(90deg, #1b6f9b, #42a8cf);
+}
+
+.name {
+  text-align: center;
+  font-size: 1.35em;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+
+.pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(185,142,86,.22);
+  border: 1px solid rgba(130,91,52,.18);
+  font-weight: bold;
+}
+
+@media (max-width: 520px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mushoku-status-card {
+    padding: 12px;
+    border-radius: 18px 8px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="mushoku-status-card">
+  <details open>
+    <summary>主角状态</summary>
+    <div class="section">
+      <div class="name" id="pcName">未知</div>
+
+      <div class="bar-title">
+        <span>HP</span>
+        <span><span id="hpCurrent">？</span> / <span id="hpMax">？</span></span>
+      </div>
+      <div class="bar-shell">
+        <div class="bar-fill hp-fill" id="hpBar" style="width:0%"></div>
+      </div>
+
+      <div class="bar-title">
+        <span>MP</span>
+        <span><span id="mpCurrent">？</span> / <span id="mpMax">？</span></span>
+      </div>
+      <div class="bar-shell">
+        <div class="bar-fill mp-fill" id="mpBar" style="width:0%"></div>
+      </div>
+
+      <div class="row"><b>战力概评：</b><span id="pcPowerBrief">未评估</span></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>目标 NPC</summary>
+    <div class="section grid">
+      <div><b>姓名：</b><span id="targetName">未知</span></div>
+      <div><b>立场：</b><span id="targetStance">未知</span></div>
+      <div><b>危险：</b><span id="targetDanger">未知</span></div>
+      <div><b>战力概评：</b><span id="targetPowerBrief">未评估</span></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>三女主羁绊</summary>
+    <div class="section">
+      <div class="row"><b>洛琪希：</b><span class="pill">Lv.<span id="roxyLv">0</span></span> <span id="roxyState">暂无动向</span></div>
+      <div class="row"><b>希露菲：</b><span class="pill">Lv.<span id="sylphyLv">0</span></span> <span id="sylphyState">暂无动向</span></div>
+      <div class="row"><b>艾莉丝：</b><span class="pill">Lv.<span id="erisLv">0</span></span> <span id="erisState">暂无动向</span></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>当地传闻 / 新闻</summary>
+    <div class="section" id="localNews">暂无新的当地传闻。</div>
+  </details>
+</div>
+
+<script>
+(function () {
+  const params = new URLSearchParams(location.search);
+
+  function get(key, fallback) {
+    const v = params.get(key);
+    return v && String(v).trim() ? String(v).trim() : fallback;
+  }
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function pct(current, max) {
+    current = parseFloat(String(current || '').replace(/[^\d.]/g, ''));
+    max = parseFloat(String(max || '').replace(/[^\d.]/g, ''));
+    if (!max || isNaN(current)) return 0;
+    return Math.max(0, Math.min(100, current / max * 100));
+  }
+
+  const hpCurrent = get('hpCurrent', '？');
+  const hpMax = get('hpMax', '？');
+  const mpCurrent = get('mpCurrent', '？');
+  const mpMax = get('mpMax', '？');
+
+  setText('pcName', get('pcName', '未知'));
+  setText('hpCurrent', hpCurrent);
+  setText('hpMax', hpMax);
+  setText('mpCurrent', mpCurrent);
+  setText('mpMax', mpMax);
+  setText('pcPowerBrief', get('pcPowerBrief', '未评估'));
+
+  setText('targetName', get('targetName', '未知'));
+  setText('targetStance', get('targetStance', '未知'));
+  setText('targetDanger', get('targetDanger', '未知'));
+  setText('targetPowerBrief', get('targetPowerBrief', '未评估'));
+
+  setText('roxyLv', get('roxyLv', '0'));
+  setText('roxyState', get('roxyState', '暂无动向'));
+  setText('sylphyLv', get('sylphyLv', '0'));
+  setText('sylphyState', get('sylphyState', '暂无动向'));
+  setText('erisLv', get('erisLv', '0'));
+  setText('erisState', get('erisState', '暂无动向'));
+
+  setText('localNews', get('localNews', '暂无新的当地传闻。'));
+
+  const hpBar = document.getElementById('hpBar');
+  const mpBar = document.getElementById('mpBar');
+
+  if (hpBar) hpBar.style.width = pct(hpCurrent, hpMax) + '%';
+  if (mpBar) mpBar.style.width = pct(mpCurrent, mpMax) + '%';
+})();
+</script>
+
+</body>
+</html>
