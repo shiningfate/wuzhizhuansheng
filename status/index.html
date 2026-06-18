@@ -125,6 +125,15 @@ summary{
 .roxy{border-left:4px solid rgba(63,102,142,.78)}
 .sylphy{border-left:4px solid rgba(76,127,91,.78)}
 .eris{border-left:4px solid rgba(155,74,53,.80)}
+.other-rel{border-left:4px solid rgba(126,90,56,.65)}
+.other-rel-empty{
+  padding:9px 10px;
+  margin:8px 0;
+  border-radius:12px;
+  border:1px solid rgba(126,90,56,.18);
+  background:rgba(255,250,242,.45);
+  color:#7a6858;
+}
 .map-frame{
   border:1px solid rgba(98,60,34,.34);
   border-radius:12px;
@@ -321,7 +330,7 @@ summary{
   </details>
 
   <details>
-    <summary>三女主羁绊</summary>
+    <summary>羁绊</summary>
     <div class="section">
       <div class="rel-card roxy">
         <div class="rel-head"><b id="roxyName">洛琪希·米格路迪亚</b><span class="pill">Lv.<span id="roxyLv">0</span>/10</span></div>
@@ -342,7 +351,9 @@ summary{
       </div>
 
       <div class="box-title">其他重要关系</div>
-      <div class="text-box" id="relationSummary">暂无其他重要关系。</div>
+      <div id="otherRelationsList">
+        <div class="other-rel-empty" id="relationSummary">暂无其他重要关系。</div>
+      </div>
     </div>
   </details>
 
@@ -709,7 +720,129 @@ summary{
   html("erisRelationship","erisRelationship","命运固定；尚未相遇 / 未建立羁绊");
   html("erisState","erisState","暂无动向");
 
-  html("relationSummary","relationSummary","暂无其他重要关系。");
+  function escapeHtml(str){
+    return String(str === undefined || str === null ? "" : str)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#39;");
+  }
+
+  function readRaw(key){
+    var v = data[key];
+
+    if (v === undefined || v === null || String(v).trim() === "") {
+      v = readFromObjectPath(data, key);
+    }
+
+    if (v === undefined || v === null || String(v).trim() === "") {
+      v = readByGetvar(key);
+    }
+
+    return v;
+  }
+
+  function parseMaybeArray(v){
+    if (Array.isArray(v)) return v;
+    if (v === undefined || v === null || v === "") return [];
+    if (typeof v === "string") {
+      try {
+        var parsed = JSON.parse(v);
+        if (Array.isArray(parsed)) return parsed;
+      } catch(e) {}
+    }
+    return [];
+  }
+
+  function normalizeRelation(item){
+    if (!item || typeof item !== "object") return null;
+
+    var name = item.name || item.Name || item.姓名 || item.otherRelationName || item.relationName || "";
+    var lv = item.lv || item.Lv || item.level || item.bondLv || item.羁绊等级 || item.等级 || "0";
+    var relationship = item.relationship || item.relation || item.关系 || item.desc || item.description || "暂无重要关系";
+    var state = item.state || item.status || item.状态 || "暂无";
+
+    name = String(name || "").trim();
+    lv = String(lv || "0").trim();
+    relationship = String(relationship || "暂无重要关系").trim();
+    state = String(state || "暂无").trim();
+
+    if (!name || name === "暂无" || name === "无" || name === "未知") return null;
+
+    return {
+      name: name,
+      lv: lv,
+      relationship: relationship || "暂无重要关系",
+      state: state || "暂无"
+    };
+  }
+
+  function buildOtherRelations(){
+    var list = [];
+
+    // 推荐格式：otherRelations 是数组，可随剧情增加/减少，不限制数量。
+    // 示例：
+    // otherRelations: [
+    //   {"name":"保罗","lv":"6","relationship":"父亲；关系紧张但仍有关心","state":"同住中"},
+    //   {"name":"塞妮丝","lv":"6","relationship":"母亲；亲情稳定","state":"同住中"}
+    // ]
+    var arr = parseMaybeArray(readRaw("otherRelations"));
+    for (var i = 0; i < arr.length; i++) {
+      var rel = normalizeRelation(arr[i]);
+      if (rel) list.push(rel);
+    }
+
+    // 兼容格式：otherRelation1Name / otherRelation1Lv / otherRelation1Relationship / otherRelation1State。
+    // 最多扫描20个编号字段；推荐使用 otherRelations 数组来动态扩展。
+    if (list.length === 0) {
+      for (var n = 1; n <= 20; n++) {
+        var name = get("otherRelation" + n + "Name", "");
+        var lv = get("otherRelation" + n + "Lv", "0");
+        var relationship = get("otherRelation" + n + "Relationship", "暂无重要关系");
+        var state = get("otherRelation" + n + "State", "暂无");
+
+        var rel2 = normalizeRelation({
+          name: name,
+          lv: lv,
+          relationship: relationship,
+          state: state
+        });
+
+        if (rel2) list.push(rel2);
+      }
+    }
+
+    return list;
+  }
+
+  function renderOtherRelations(){
+    var box = document.getElementById("otherRelationsList");
+    if (!box) return;
+
+    var list = buildOtherRelations();
+
+    if (!list.length) {
+      var summary = get("relationSummary", "暂无其他重要关系。");
+      box.innerHTML = '<div class="other-rel-empty" id="relationSummary">' + escapeHtml(summary) + '</div>';
+      return;
+    }
+
+    var out = "";
+    for (var i = 0; i < list.length; i++) {
+      var r = list[i];
+      out += ''
+        + '<div class="rel-card other-rel">'
+        +   '<div class="rel-head"><b>' + escapeHtml(r.name) + '</b><span class="pill">羁绊等级：' + escapeHtml(r.lv) + '</span></div>'
+        +   '<div class="row"><b>关系：</b><span>' + escapeHtml(r.relationship) + '</span></div>'
+        +   '<div class="row"><b>状态：</b><span>' + escapeHtml(r.state) + '</span></div>'
+        + '</div>';
+    }
+
+    box.innerHTML = out;
+  }
+
+  renderOtherRelations();
 
   html("talentsDetail","talentsDetail","暂无天赋与加护。");
   html("skillsDetail","skillsDetail","暂无习得技能。");
@@ -748,4 +881,3 @@ summary{
 
 </body>
 </html>
-
