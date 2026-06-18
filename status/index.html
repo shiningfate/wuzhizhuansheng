@@ -5,228 +5,416 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>无职状态栏</title>
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  padding:10px;
+  background:transparent;
+  color:#3b2417;
+  font-family:"STKaiti","KaiTi","FangSong","Noto Serif SC",serif;
 }
-
-body {
-  margin: 0;
-  padding: 10px;
-  background: transparent;
-  color: #3b2417;
-  font-family: "STKaiti", "KaiTi", "FangSong", "Noto Serif SC", serif;
-}
-
-.mushoku-status-card {
-  max-width: 740px;
-  margin: 0 auto;
-  padding: 16px;
-  border: 2px double rgba(82,45,20,.8);
-  border-radius: 24px 10px;
+.mushoku-status-card{
+  max-width:760px;
+  margin:0 auto;
+  padding:16px;
+  border:2px double rgba(82,45,20,.8);
+  border-radius:24px 10px;
   background:
-    radial-gradient(circle at 12% 8%, rgba(102,80,140,.14), transparent 20%),
-    radial-gradient(circle at 90% 12%, rgba(47,97,126,.12), transparent 22%),
-    linear-gradient(135deg, #fbf2dd, #f8edd5 52%, #e6c891);
-  box-shadow:
-    0 14px 34px rgba(30,15,6,.34),
-    inset 0 0 28px rgba(96,53,24,.18);
-  line-height: 1.72;
+    radial-gradient(circle at 12% 8%,rgba(102,80,140,.14),transparent 20%),
+    radial-gradient(circle at 90% 12%,rgba(47,97,126,.12),transparent 22%),
+    linear-gradient(135deg,#fbf2dd,#f8edd5 52%,#e6c891);
+  box-shadow:0 14px 34px rgba(30,15,6,.34),inset 0 0 28px rgba(96,53,24,.18);
+  line-height:1.72;
+  overflow:hidden;
 }
-
-details {
-  margin: 10px 0;
+details{margin:10px 0}
+summary{
+  cursor:pointer;
+  user-select:none;
+  padding:8px 12px;
+  border-radius:12px;
+  border:1px solid rgba(116,69,22,.58);
+  background:linear-gradient(180deg,#dfb676,#b97c3e);
+  color:#442716;
+  font-weight:bold;
 }
-
-summary {
-  cursor: pointer;
-  user-select: none;
-  padding: 8px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(116,69,22,.58);
-  background: linear-gradient(180deg, #dfb676, #b97c3e);
-  color: #442716;
-  font-weight: bold;
+.section{
+  margin-top:8px;
+  padding:11px 13px;
+  border:1px solid rgba(99,58,29,.35);
+  border-radius:13px;
+  background:rgba(255,244,216,.5);
 }
-
-.section {
-  margin-top: 8px;
-  padding: 11px 13px;
-  border: 1px solid rgba(99,58,29,.35);
-  border-radius: 13px;
-  background: rgba(255,244,216,.5);
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
 }
-
-.row {
-  margin: 6px 0;
+.wide{grid-column:1/-1}
+.row{margin:6px 0}
+.name{
+  text-align:center;
+  font-size:1.35em;
+  font-weight:900;
+  margin-bottom:6px;
 }
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
+.meta{
+  text-align:center;
+  color:#6f5947;
+  margin-bottom:8px;
 }
-
-.bar-title {
-  display: flex;
-  justify-content: space-between;
-  font-weight: bold;
-  margin-top: 8px;
+.pill{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  background:rgba(185,142,86,.22);
+  border:1px solid rgba(130,91,52,.18);
+  font-weight:bold;
 }
-
-.bar-shell {
-  height: 13px;
-  border-radius: 999px;
-  background: rgba(80,45,18,.18);
-  overflow: hidden;
-  border: 1px solid rgba(70,38,18,.22);
+.tag-row{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:6px;
+  margin:8px 0;
 }
-
-.bar-fill {
-  height: 100%;
-  border-radius: 999px;
+.box-title{
+  font-weight:bold;
+  margin:8px 0 4px;
+  color:#4a3120;
 }
-
-.hp-fill {
-  background: linear-gradient(90deg, #98312a, #d45a43);
+.text-box{
+  padding:9px 10px;
+  border-radius:10px;
+  background:rgba(255,251,243,.62);
+  border:1px solid rgba(130,95,58,.16);
+  text-align:justify;
 }
-
-.mp-fill {
-  background: linear-gradient(90deg, #1b6f9b, #42a8cf);
+.bar-title{
+  display:flex;
+  justify-content:space-between;
+  font-weight:bold;
+  margin-top:8px;
 }
-
-.name {
-  text-align: center;
-  font-size: 1.35em;
-  font-weight: 900;
-  margin-bottom: 6px;
+.bar-shell{
+  height:13px;
+  border-radius:999px;
+  background:rgba(80,45,18,.18);
+  overflow:hidden;
+  border:1px solid rgba(70,38,18,.22);
 }
-
-.pill {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: rgba(185,142,86,.22);
-  border: 1px solid rgba(130,91,52,.18);
-  font-weight: bold;
+.bar-fill{
+  height:100%;
+  border-radius:999px;
 }
-
-@media (max-width: 520px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .mushoku-status-card {
-    padding: 12px;
-    border-radius: 18px 8px;
-  }
+.hp-fill{background:linear-gradient(90deg,#98312a,#d45a43)}
+.mp-fill{background:linear-gradient(90deg,#1b6f9b,#42a8cf)}
+.rel-card{
+  padding:9px 10px;
+  margin:8px 0;
+  border-radius:12px;
+  border:1px solid rgba(126,90,56,.22);
+  background:rgba(255,250,242,.52);
+}
+.rel-head{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  align-items:center;
+}
+.roxy{border-left:4px solid rgba(63,102,142,.78)}
+.sylphy{border-left:4px solid rgba(76,127,91,.78)}
+.eris{border-left:4px solid rgba(155,74,53,.80)}
+.map-frame{
+  border:1px solid rgba(98,60,34,.34);
+  border-radius:12px;
+  overflow:hidden;
+  background:rgba(255,250,240,.5);
+  min-height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.map-frame img{
+  display:block;
+  max-width:100%;
+  height:auto;
+}
+.empty{
+  color:#7a6858;
+  opacity:.85;
+}
+@media(max-width:520px){
+  .grid{grid-template-columns:1fr}
+  .wide{grid-column:auto}
+  .mushoku-status-card{padding:12px;border-radius:18px 8px}
+  .rel-head{flex-direction:column;align-items:flex-start}
 }
 </style>
 </head>
 <body>
 
 <div class="mushoku-status-card">
+
   <details open>
-    <summary>主角状态</summary>
+    <summary>总览</summary>
+    <div class="section grid">
+      <div><b>章节：</b><span id="chapter">未知</span></div>
+      <div><b>时间：</b><span id="time">未知</span></div>
+      <div><b>天气：</b><span id="weather">未知</span> <span id="temperature"></span></div>
+      <div><b>地点：</b><span id="location">未知</span></div>
+      <div class="wide"><b>环境：</b><span id="environment">未知</span></div>
+      <div class="wide"><b>在场人物：</b><span id="people">未知</span></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>世界地图 / 当地情报</summary>
+    <div class="section">
+      <div class="name" id="mapName">六面世界地图</div>
+      <div class="meta" id="mapNote">当前路线与当地情报记录。</div>
+      <div class="map-frame" id="mapFrame">
+        <span class="empty">暂无地图图片。</span>
+      </div>
+      <div class="box-title">旅行路线</div>
+      <div class="text-box" id="routeNote">暂无明确路线。</div>
+      <div class="box-title">当地传闻 / 新闻</div>
+      <div class="text-box" id="localNews">暂无新的当地传闻。</div>
+    </div>
+  </details>
+
+  <details open>
+    <summary>主角档案</summary>
     <div class="section">
       <div class="name" id="pcName">未知</div>
+      <div class="meta">
+        <span id="pcRace">未知种族</span>｜
+        <span id="pcGender">未知性别</span>｜
+        <span id="pcAge">未知年龄</span>
+      </div>
+      <div class="tag-row">
+        <span class="pill" id="pcBodyStatus">正常</span>
+        <span class="pill" id="pcTitle">暂无称号</span>
+        <span class="pill" id="pcIdentityTags">暂无身份标签</span>
+      </div>
 
       <div class="bar-title">
         <span>HP</span>
         <span><span id="hpCurrent">？</span> / <span id="hpMax">？</span></span>
       </div>
-      <div class="bar-shell">
-        <div class="bar-fill hp-fill" id="hpBar" style="width:0%"></div>
-      </div>
+      <div class="bar-shell"><div class="bar-fill hp-fill" id="hpBar" style="width:0%"></div></div>
 
       <div class="bar-title">
         <span>MP</span>
         <span><span id="mpCurrent">？</span> / <span id="mpMax">？</span></span>
       </div>
-      <div class="bar-shell">
-        <div class="bar-fill mp-fill" id="mpBar" style="width:0%"></div>
-      </div>
+      <div class="bar-shell"><div class="bar-fill mp-fill" id="mpBar" style="width:0%"></div></div>
 
       <div class="row"><b>战力概评：</b><span id="pcPowerBrief">未评估</span></div>
-    </div>
-  </details>
+      <div class="row"><b>精神：</b><span id="pcMentalStatus">平稳</span></div>
+      <div class="row"><b>目标：</b><span id="pcCurrentGoal">暂无明确目标</span></div>
 
-  <details>
-    <summary>目标 NPC</summary>
-    <div class="section grid">
-      <div><b>姓名：</b><span id="targetName">未知</span></div>
-      <div><b>立场：</b><span id="targetStance">未知</span></div>
-      <div><b>危险：</b><span id="targetDanger">未知</span></div>
-      <div><b>战力概评：</b><span id="targetPowerBrief">未评估</span></div>
+      <div class="box-title">外貌</div>
+      <div class="text-box" id="pcAppearance">暂无明确外貌描写。</div>
     </div>
   </details>
 
   <details>
     <summary>三女主羁绊</summary>
     <div class="section">
-      <div class="row"><b>洛琪希：</b><span class="pill">Lv.<span id="roxyLv">0</span></span> <span id="roxyState">暂无动向</span></div>
-      <div class="row"><b>希露菲：</b><span class="pill">Lv.<span id="sylphyLv">0</span></span> <span id="sylphyState">暂无动向</span></div>
-      <div class="row"><b>艾莉丝：</b><span class="pill">Lv.<span id="erisLv">0</span></span> <span id="erisState">暂无动向</span></div>
+      <div class="rel-card roxy">
+        <div class="rel-head"><b id="roxyName">洛琪希·米格路迪亚</b><span class="pill">Lv.<span id="roxyLv">0</span>/10</span></div>
+        <div class="row"><b>关系：</b><span id="roxyRelationship">尚未相遇 / 未建立羁绊</span></div>
+        <div class="row"><b>状态：</b><span id="roxyState">暂无动向</span></div>
+      </div>
+
+      <div class="rel-card sylphy">
+        <div class="rel-head"><b id="sylphyName">希露菲叶特</b><span class="pill">Lv.<span id="sylphyLv">0</span>/10</span></div>
+        <div class="row"><b>关系：</b><span id="sylphyRelationship">尚未相遇 / 未建立羁绊</span></div>
+        <div class="row"><b>状态：</b><span id="sylphyState">暂无动向</span></div>
+      </div>
+
+      <div class="rel-card eris">
+        <div class="rel-head"><b id="erisName">艾莉丝·伯雷亚斯·格雷拉特</b><span class="pill">Lv.<span id="erisLv">0</span>/10</span></div>
+        <div class="row"><b>关系：</b><span id="erisRelationship">尚未相遇 / 未建立羁绊</span></div>
+        <div class="row"><b>状态：</b><span id="erisState">暂无动向</span></div>
+      </div>
+
+      <div class="box-title">其他重要关系</div>
+      <div class="text-box" id="relationSummary">暂无其他重要关系。</div>
     </div>
   </details>
 
   <details>
-    <summary>当地传闻 / 新闻</summary>
-    <div class="section" id="localNews">暂无新的当地传闻。</div>
+    <summary>能力与装备</summary>
+    <div class="section">
+      <div class="box-title">天赋 / 加护</div>
+      <div class="text-box" id="talentsDetail">暂无天赋与加护。</div>
+      <div class="box-title">技能 / 魔术</div>
+      <div class="text-box" id="skillsDetail">暂无习得技能。</div>
+      <div class="box-title">装备 / 物品</div>
+      <div class="text-box" id="equipmentDetail">暂无装备与物品。</div>
+    </div>
   </details>
+
+  <details>
+    <summary>目标 NPC</summary>
+    <div class="section">
+      <div class="name" id="targetName">未知</div>
+      <div class="tag-row">
+        <span class="pill">种族：<span id="targetRace">未知</span></span>
+        <span class="pill">性别：<span id="targetGender">未知</span></span>
+        <span class="pill">年龄：<span id="targetAge">未知</span></span>
+      </div>
+
+      <div class="grid">
+        <div><b>鉴定：</b><span id="targetIdentifyStatus">未鉴定</span></div>
+        <div><b>称号：</b><span id="targetTitle">未知</span></div>
+        <div class="wide"><b>身份标签：</b><span id="targetIdentityTags">暂无</span></div>
+      </div>
+
+      <div class="box-title">外貌</div>
+      <div class="text-box" id="targetAppearance">暂无明确外貌描写。</div>
+
+      <div class="box-title">身体状态</div>
+      <div class="grid">
+        <div><b>身材：</b><span id="targetFigureState">未知</span></div>
+        <div><b>胸部：</b><span id="targetBreastsStatus">未知</span></div>
+        <div><b>阴部：</b><span id="targetVaginaStatus">未知</span></div>
+        <div><b>屁穴：</b><span id="targetAnusAction">未知</span></div>
+        <div class="wide"><b>足部：</b><span id="targetFeetsAction">未知</span></div>
+      </div>
+
+      <div class="box-title">立场 / 风险</div>
+      <div class="grid">
+        <div><b>立场：</b><span id="targetStance">未知</span></div>
+        <div><b>危险：</b><span id="targetDanger">未知</span></div>
+        <div><b>对用户：</b><span id="targetAttitude">未知</span></div>
+        <div><b>战力概评：</b><span id="targetPowerBrief">未评估</span></div>
+        <div class="wide"><b>天赋 / 技能：</b><span id="targetTalentsSkills">暂无已知天赋或技能。</span></div>
+      </div>
+
+      <div class="box-title">目标内心</div>
+      <div class="text-box" id="targetInnerThought">无法得知。</div>
+    </div>
+  </details>
+
 </div>
 
 <script>
-(function () {
-  const params = new URLSearchParams(location.search);
+(function(){
+  var data = window.mushokuStatusData || {};
 
-  function get(key, fallback) {
-    const v = params.get(key);
-    return v && String(v).trim() ? String(v).trim() : fallback;
+  function get(key, fallback){
+    var v = data[key];
+    if(v === undefined || v === null) return fallback;
+    v = String(v).trim();
+    return v || fallback;
   }
 
-  function setText(id, value) {
-    const el = document.getElementById(id);
-    if (el) el.textContent = value;
+  function text(id, key, fallback){
+    var el = document.getElementById(id);
+    if(el) el.textContent = get(key, fallback);
   }
 
-  function pct(current, max) {
-    current = parseFloat(String(current || '').replace(/[^\d.]/g, ''));
-    max = parseFloat(String(max || '').replace(/[^\d.]/g, ''));
-    if (!max || isNaN(current)) return 0;
+  function html(id, key, fallback){
+    var el = document.getElementById(id);
+    if(el) el.innerHTML = get(key, fallback);
+  }
+
+  function pct(current, max){
+    current = parseFloat(String(current || '').replace(/[^\d.]/g,''));
+    max = parseFloat(String(max || '').replace(/[^\d.]/g,''));
+    if(!max || isNaN(current)) return 0;
     return Math.max(0, Math.min(100, current / max * 100));
   }
 
-  const hpCurrent = get('hpCurrent', '？');
-  const hpMax = get('hpMax', '？');
-  const mpCurrent = get('mpCurrent', '？');
-  const mpMax = get('mpMax', '？');
+  text('chapter','chapter','未知');
+  text('time','time','未知');
+  text('weather','weather','未知');
+  text('temperature','temperature','');
+  text('location','location','未知');
+  text('environment','environment','未知');
+  text('people','people','未知');
 
-  setText('pcName', get('pcName', '未知'));
-  setText('hpCurrent', hpCurrent);
-  setText('hpMax', hpMax);
-  setText('mpCurrent', mpCurrent);
-  setText('mpMax', mpMax);
-  setText('pcPowerBrief', get('pcPowerBrief', '未评估'));
+  text('mapName','mapName','六面世界地图');
+  text('mapNote','mapNote','当前路线与当地情报记录。');
+  html('routeNote','routeNote','暂无明确路线。');
+  html('localNews','localNews','暂无新的当地传闻。');
 
-  setText('targetName', get('targetName', '未知'));
-  setText('targetStance', get('targetStance', '未知'));
-  setText('targetDanger', get('targetDanger', '未知'));
-  setText('targetPowerBrief', get('targetPowerBrief', '未评估'));
+  var mapUrl = get('mapImageUrl','');
+  var mapFrame = document.getElementById('mapFrame');
+  if(mapFrame && mapUrl){
+    mapFrame.innerHTML = '<img src="' + mapUrl + '" alt="世界地图">';
+  }
 
-  setText('roxyLv', get('roxyLv', '0'));
-  setText('roxyState', get('roxyState', '暂无动向'));
-  setText('sylphyLv', get('sylphyLv', '0'));
-  setText('sylphyState', get('sylphyState', '暂无动向'));
-  setText('erisLv', get('erisLv', '0'));
-  setText('erisState', get('erisState', '暂无动向'));
+  text('pcName','pcName','未知');
+  text('pcRace','pcRace','未知种族');
+  text('pcGender','pcGender','未知性别');
+  text('pcAge','pcAge','未知年龄');
+  text('pcBodyStatus','pcBodyStatus','正常');
+  text('pcTitle','pcTitle','暂无称号');
+  text('pcIdentityTags','pcIdentityTags','暂无身份标签');
 
-  setText('localNews', get('localNews', '暂无新的当地传闻。'));
+  var hpCurrent = get('hpCurrent','？');
+  var hpMax = get('hpMax','？');
+  var mpCurrent = get('mpCurrent','？');
+  var mpMax = get('mpMax','？');
 
-  const hpBar = document.getElementById('hpBar');
-  const mpBar = document.getElementById('mpBar');
+  document.getElementById('hpCurrent').textContent = hpCurrent;
+  document.getElementById('hpMax').textContent = hpMax;
+  document.getElementById('mpCurrent').textContent = mpCurrent;
+  document.getElementById('mpMax').textContent = mpMax;
+  document.getElementById('hpBar').style.width = pct(hpCurrent,hpMax) + '%';
+  document.getElementById('mpBar').style.width = pct(mpCurrent,mpMax) + '%';
 
-  if (hpBar) hpBar.style.width = pct(hpCurrent, hpMax) + '%';
-  if (mpBar) mpBar.style.width = pct(mpCurrent, mpMax) + '%';
+  text('pcPowerBrief','pcPowerBrief','未评估');
+  text('pcMentalStatus','pcMentalStatus','平稳');
+  text('pcCurrentGoal','pcCurrentGoal','暂无明确目标');
+  html('pcAppearance','pcAppearance','暂无明确外貌描写。');
+
+  text('roxyName','roxyName','洛琪希·米格路迪亚');
+  text('roxyLv','roxyLv','0');
+  html('roxyRelationship','roxyRelationship','尚未相遇 / 未建立羁绊');
+  html('roxyState','roxyState','暂无动向');
+
+  text('sylphyName','sylphyName','希露菲叶特');
+  text('sylphyLv','sylphyLv','0');
+  html('sylphyRelationship','sylphyRelationship','尚未相遇 / 未建立羁绊');
+  html('sylphyState','sylphyState','暂无动向');
+
+  text('erisName','erisName','艾莉丝·伯雷亚斯·格雷拉特');
+  text('erisLv','erisLv','0');
+  html('erisRelationship','erisRelationship','尚未相遇 / 未建立羁绊');
+  html('erisState','erisState','暂无动向');
+
+  html('relationSummary','relationSummary','暂无其他重要关系。');
+
+  html('talentsDetail','talentsDetail','暂无天赋与加护。');
+  html('skillsDetail','skillsDetail','暂无习得技能。');
+  html('equipmentDetail','equipmentDetail','暂无装备与物品。');
+
+  text('targetName','targetName','未知');
+  text('targetRace','targetRace','未知');
+  text('targetGender','targetGender','未知');
+  text('targetAge','targetAge','未知');
+  text('targetIdentifyStatus','targetIdentifyStatus','未鉴定');
+  text('targetTitle','targetTitle','未知');
+  text('targetIdentityTags','targetIdentityTags','暂无');
+  html('targetAppearance','targetAppearance','暂无明确外貌描写。');
+
+  html('targetFigureState','targetFigureState','未知');
+  html('targetBreastsStatus','targetBreastsStatus','未知');
+  html('targetVaginaStatus','targetVaginaStatus','未知');
+  html('targetAnusAction','targetAnusAction','未知');
+  html('targetFeetsAction','targetFeetsAction','未知');
+
+  text('targetStance','targetStance','未知');
+  text('targetDanger','targetDanger','未知');
+  text('targetAttitude','targetAttitude','未知');
+  text('targetPowerBrief','targetPowerBrief','未评估');
+  html('targetTalentsSkills','targetTalentsSkills','暂无已知天赋或技能。');
+  html('targetInnerThought','targetInnerThought','无法得知。');
 })();
 </script>
 
