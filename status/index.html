@@ -1309,10 +1309,10 @@ summary{
   </details>
 
     <details>
-    <summary>原著剧情偏移</summary>
+    <summary>异世之蝶</summary>
     <div class="section causal-card">
       <div class="causal-head">
-        <span class="causal-title">因果值 · 双轨制</span>
+        <span class="causal-title">路线</span>
         <span class="causal-level-badge" id="canonDeviationLevel">低</span>
       </div>
 
@@ -1364,10 +1364,6 @@ summary{
         <div class="causal-box causal-wide">
           <div class="causal-box-title">振翅之涟漪</div>
           <div id="canonRipples">暂无已确认涟漪事件。</div>
-        </div>
-        <div class="causal-box causal-wide">
-          <div class="causal-box-title">后续风险</div>
-          <div class="causal-text" id="canonFutureRisk">暂无明显后续风险。</div>
         </div>
       </div>
     </div>
@@ -1586,8 +1582,8 @@ summary{
     var hEl = document.getElementById("hitogamiAttention");
     var dEl = document.getElementById("dragonGodCausality");
     var track = document.getElementById("causalTrack");
-    if(hEl) hEl.textContent = String(Math.round(h));
-    if(dEl) dEl.textContent = String(Math.round(d));
+    if(hEl) hEl.textContent = String(Math.round(h)) + "/100";
+    if(dEl) dEl.textContent = String(Math.round(d)) + "/100";
 
     // 50 为中线；人神高则滑块左移，龙神高则右移。
     var pos = 50 + (d - h) * 0.45;
@@ -1600,7 +1596,7 @@ summary{
     if(!el) return;
     var level = get("canonDeviationLevel","低");
     var slug = canonDeviationSlug(level);
-    el.textContent = level;
+    el.textContent = "偏移度：" + level;
     el.className = "causal-level-badge causal-dev-" + slug;
   }
 
@@ -2115,7 +2111,6 @@ function heroineRelationText(key, fallback){
   html("dragonCausalityNote","dragonCausalityNote","暂无明显脱离。");
   html("causalBalanceNote","causalBalanceNote","当前因果天平接近稳定，原著路线仍可作为主要参考。");
   renderRippleList("canonRipples","canonRipples","暂无已确认涟漪事件。");
-  html("canonFutureRisk","canonFutureRisk","暂无明显后续风险。");
 })();
 </script>
 
