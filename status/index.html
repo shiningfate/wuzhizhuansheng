@@ -110,11 +110,22 @@ summary{
 .hp-fill{background:linear-gradient(90deg,#98312a,#d45a43)}
 .mp-fill{background:linear-gradient(90deg,#1b6f9b,#42a8cf)}
 .rel-card{
-  padding:9px 10px;
+  position:relative;
+  overflow:hidden;
+  padding:11px 12px 14px;
   margin:8px 0;
   border-radius:12px;
   border:1px solid rgba(126,90,56,.22);
   background:rgba(255,250,242,.52);
+}
+.rel-card:after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:4px;
+  opacity:.95;
 }
 .rel-head{
   display:flex;
@@ -122,10 +133,72 @@ summary{
   gap:8px;
   align-items:center;
 }
-.roxy{border-left:4px solid rgba(63,102,142,.78)}
-.sylphy{border-left:4px solid rgba(76,127,91,.78)}
-.eris{border-left:4px solid rgba(155,74,53,.80)}
+.rel-name{
+  font-weight:900;
+  letter-spacing:.5px;
+}
+.rel-badges{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  align-items:center;
+  gap:6px;
+}
+.fate-badge{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  color:#fffaf3;
+  font-weight:900;
+  font-size:.92em;
+  border:1px solid rgba(255,255,255,.48);
+  background:linear-gradient(120deg,#8c5ad9,#47a4dc,#50b878,#e2ae4a,#d65d79,#8c5ad9);
+  background-size:260% 260%;
+  box-shadow:0 1px 5px rgba(80,45,18,.18),inset 0 0 8px rgba(255,255,255,.22);
+  text-shadow:0 1px 2px rgba(70,35,20,.36);
+}
+.rel-lv{
+  font-weight:900;
+}
+
+.roxy{
+  border-left:4px solid rgba(63,102,142,.78);
+  background:linear-gradient(180deg,rgba(236,248,255,.72),rgba(255,250,242,.54));
+}
+.roxy:after{background:linear-gradient(90deg,rgba(142,206,238,.25),rgba(70,151,205,.9),rgba(202,234,250,.45))}
+.roxy .rel-name{color:#1f5f91}
+.roxy .rel-lv{
+  color:#194f78;
+  background:rgba(154,211,240,.28);
+  border-color:rgba(63,102,142,.28);
+}
+
+.sylphy{
+  border-left:4px solid rgba(76,127,91,.78);
+  background:linear-gradient(180deg,rgba(239,255,242,.72),rgba(255,250,242,.54));
+}
+.sylphy:after{background:linear-gradient(90deg,rgba(169,232,184,.25),rgba(72,161,96,.9),rgba(213,248,220,.45))}
+.sylphy .rel-name{color:#276d3a}
+.sylphy .rel-lv{
+  color:#245f35;
+  background:rgba(164,224,177,.28);
+  border-color:rgba(76,127,91,.28);
+}
+
+.eris{
+  border-left:4px solid rgba(155,74,53,.80);
+  background:linear-gradient(180deg,rgba(255,239,236,.72),rgba(255,250,242,.54));
+}
+.eris:after{background:linear-gradient(90deg,rgba(244,169,154,.25),rgba(196,82,62,.92),rgba(255,215,207,.45))}
+.eris .rel-name{color:#8e2f24}
+.eris .rel-lv{
+  color:#7d2c22;
+  background:rgba(236,163,147,.28);
+  border-color:rgba(155,74,53,.28);
+}
+
 .other-rel{border-left:4px solid rgba(126,90,56,.65)}
+.other-rel:after{background:linear-gradient(90deg,rgba(126,90,56,.18),rgba(126,90,56,.55),rgba(126,90,56,.18))}
 .other-rel-empty{
   padding:9px 10px;
   margin:8px 0;
@@ -331,22 +404,39 @@ summary{
 
   <details>
     <summary>羁绊</summary>
-    <div class="section">
-      <div class="rel-card roxy">
-        <div class="rel-head"><b id="roxyName">洛琪希·米格路迪亚</b><span class="pill">Lv.<span id="roxyLv">0</span>/10</span></div>
-        <div class="row"><b>关系：</b><span id="roxyRelationship">命运固定；尚未相遇 / 未建立羁绊</span></div>
+<div class="rel-card roxy">
+        <div class="rel-head">
+          <b class="rel-name" id="roxyName">洛琪希·米格路迪亚</b>
+          <span class="rel-badges">
+            <span class="fate-badge">命运固定</span>
+            <span class="pill rel-lv">Lv.<span id="roxyLv">0</span>/10</span>
+          </span>
+        </div>
+        <div class="row"><b>关系：</b><span id="roxyRelationship">尚未相遇 / 未建立羁绊</span></div>
         <div class="row"><b>状态：</b><span id="roxyState">暂无动向</span></div>
       </div>
 
       <div class="rel-card sylphy">
-        <div class="rel-head"><b id="sylphyName">希露菲叶特</b><span class="pill">Lv.<span id="sylphyLv">0</span>/10</span></div>
-        <div class="row"><b>关系：</b><span id="sylphyRelationship">命运固定；尚未相遇 / 未建立羁绊</span></div>
+        <div class="rel-head">
+          <b class="rel-name" id="sylphyName">希露菲叶特</b>
+          <span class="rel-badges">
+            <span class="fate-badge">命运固定</span>
+            <span class="pill rel-lv">Lv.<span id="sylphyLv">0</span>/10</span>
+          </span>
+        </div>
+        <div class="row"><b>关系：</b><span id="sylphyRelationship">尚未相遇 / 未建立羁绊</span></div>
         <div class="row"><b>状态：</b><span id="sylphyState">暂无动向</span></div>
       </div>
 
       <div class="rel-card eris">
-        <div class="rel-head"><b id="erisName">艾莉丝·伯雷亚斯·格雷拉特</b><span class="pill">Lv.<span id="erisLv">0</span>/10</span></div>
-        <div class="row"><b>关系：</b><span id="erisRelationship">命运固定；尚未相遇 / 未建立羁绊</span></div>
+        <div class="rel-head">
+          <b class="rel-name" id="erisName">艾莉丝·伯雷亚斯·格雷拉特</b>
+          <span class="rel-badges">
+            <span class="fate-badge">命运固定</span>
+            <span class="pill rel-lv">Lv.<span id="erisLv">0</span>/10</span>
+          </span>
+        </div>
+        <div class="row"><b>关系：</b><span id="erisRelationship">尚未相遇 / 未建立羁绊</span></div>
         <div class="row"><b>状态：</b><span id="erisState">暂无动向</span></div>
       </div>
 
@@ -705,19 +795,32 @@ summary{
   text("pcCurrentGoal","pcCurrentGoal","暂无明确目标");
   html("pcAppearance","pcAppearance","暂无明确外貌描写。");
 
+function heroineRelationText(key, fallback){
+    var v = get(key, fallback);
+    v = String(v || "")
+      .replace(/^\s*命运固定\s*[；;：:、，,]?\s*/, "")
+      .trim();
+    return v || fallback;
+  }
+
+  function heroineHtml(id, key, fallback){
+    var el = document.getElementById(id);
+    if(el) el.innerHTML = heroineRelationText(key, fallback);
+  }
+
   text("roxyName","roxyName","洛琪希·米格路迪亚");
   text("roxyLv","roxyLv","0");
-  html("roxyRelationship","roxyRelationship","命运固定；尚未相遇 / 未建立羁绊");
+  heroineHtml("roxyRelationship","roxyRelationship","尚未相遇 / 未建立羁绊");
   html("roxyState","roxyState","暂无动向");
 
   text("sylphyName","sylphyName","希露菲叶特");
   text("sylphyLv","sylphyLv","0");
-  html("sylphyRelationship","sylphyRelationship","命运固定；尚未相遇 / 未建立羁绊");
+  heroineHtml("sylphyRelationship","sylphyRelationship","尚未相遇 / 未建立羁绊");
   html("sylphyState","sylphyState","暂无动向");
 
   text("erisName","erisName","艾莉丝·伯雷亚斯·格雷拉特");
   text("erisLv","erisLv","0");
-  html("erisRelationship","erisRelationship","命运固定；尚未相遇 / 未建立羁绊");
+  heroineHtml("erisRelationship","erisRelationship","尚未相遇 / 未建立羁绊");
   html("erisState","erisState","暂无动向");
 
   function escapeHtml(str){
