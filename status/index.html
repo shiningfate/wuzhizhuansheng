@@ -325,51 +325,55 @@ summary{
 }
 
 /* ===== 能力与装备：卡片化 ===== */
+.ability-section{
+  position:relative;
+}
 .ability-group{
-  margin:10px 0 16px;
+  margin:10px 0 14px;
 }
 .ability-card-grid{
   display:flex;
   flex-wrap:wrap;
-  gap:10px;
+  gap:8px;
   margin-top:8px;
 }
 .ability-chip{
   position:relative;
-  min-width:120px;
-  max-width:100%;
-  padding:10px 14px;
-  border-radius:10px;
+  flex:0 0 auto;
+  min-width:72px;
+  max-width:140px;
+  padding:7px 10px;
+  border-radius:8px;
   border:1px solid rgba(110,80,55,.18);
-  background:linear-gradient(180deg,rgba(255,255,255,.88),rgba(247,240,230,.82));
+  background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(247,240,230,.88));
   color:#4a3120;
-  box-shadow:0 2px 8px rgba(70,40,20,.10);
+  box-shadow:0 1px 4px rgba(70,40,20,.08);
   cursor:pointer;
   user-select:none;
-  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
   text-align:center;
-  font-weight:700;
-  letter-spacing:.4px;
+  font-weight:800;
+  letter-spacing:.2px;
   font-family:inherit;
 }
 .ability-chip:hover{
-  transform:translateY(-2px);
-  box-shadow:0 6px 14px rgba(70,40,20,.16);
+  transform:translateY(-1px);
+  box-shadow:0 4px 10px rgba(70,40,20,.12);
+  border-color:rgba(110,80,55,.26);
 }
 .ability-chip:active{
   transform:translateY(0);
 }
 .ability-chip-name{
   display:block;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.35;
+  font-size:.93em;
 }
 .ability-chip-rank{
-  display:block;
-  margin-top:4px;
-  font-size:.83em;
-  opacity:.92;
+  display:none;
 }
 .ability-empty{
   width:100%;
@@ -384,128 +388,135 @@ summary{
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
+@keyframes textSheen{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
 
-/* 技能 / 魔法 / 装备等级色 */
-.rank-chuji{
-  color:#f2eee8;
-  background:linear-gradient(120deg,#23201d,#4a4540,#817970,#2f2a26);
-  background-size:240% 240%;
-  border-color:rgba(70,65,60,.35);
+/* 卡片本体维持浅色，颜色只作用于文字 */
+.rank-chuji .ability-chip-name,
+.rarity-putong .ability-chip-name{
+  color:#2e2a28;
+  text-shadow:0 1px 0 rgba(255,255,255,.46);
 }
-.rank-zhongji{
-  color:#fff2df;
-  background:linear-gradient(120deg,#6c3f1d,#b77735,#d59a52,#70431f);
-  background-size:240% 240%;
-  border-color:rgba(126,80,30,.35);
+.rank-zhongji .ability-chip-name{
+  color:#9a5d1f;
+  text-shadow:0 1px 0 rgba(255,250,240,.55);
 }
-.rank-shangji{
-  color:#28313b;
-  background:linear-gradient(120deg,#98a4b2,#eef4fb,#b7c2cf,#84919f);
-  background-size:240% 240%;
-  border-color:rgba(120,130,145,.35);
+.rank-shangji .ability-chip-name{
+  color:#8e98a6;
+  text-shadow:0 1px 0 rgba(255,255,255,.70);
 }
-.rank-shengji{
-  color:#4a5a68;
-  background:linear-gradient(120deg,#e8f1fa,#ffffff,#cfddea,#f7fbff);
-  background-size:240% 240%;
-  border-color:rgba(180,195,210,.35);
+.rank-shengji .ability-chip-name{
+  color:#a8b9cc;
+  text-shadow:0 1px 0 rgba(255,255,255,.82);
 }
-.rank-wangji{
-  color:#fff5d0;
-  background:linear-gradient(120deg,#5c3a96,#9b72d6,#d7b852,#7043ad,#f0d36d);
+.rank-wangji .ability-chip-name{
+  background:linear-gradient(120deg,#7f56cc,#d7b44e,#9a6be8,#f0d784,#7f56cc);
+  background-size:240% 240%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  animation:textSheen 5s linear infinite;
+}
+.rank-diji .ability-chip-name{
+  background:linear-gradient(120deg,#11141b,#866f2c,#d7be71,#232833,#11141b);
   background-size:260% 260%;
-  border-color:rgba(138,101,191,.38);
-  animation:chipFlow 5s linear infinite;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  animation:textSheen 5.5s linear infinite;
 }
-.rank-diji{
-  color:#f3d989;
-  background:linear-gradient(120deg,#080b10,#252b36,#6f5f2d,#151922,#d0b35e,#0b0e14);
-  background-size:280% 280%;
-  border-color:rgba(94,82,40,.45);
-  animation:chipFlow 5.5s linear infinite;
+.rank-shenji .ability-chip-name{
+  background:linear-gradient(120deg,#7e0e0e,#e02a2a,#ff6860,#980f0f,#7e0e0e);
+  background-size:260% 260%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  animation:textSheen 4.6s linear infinite;
 }
-.rank-shenji{
-  color:#fff0ed;
-  background:linear-gradient(120deg,#4f0707,#9c1010,#e02a2a,#ff5a4d,#7a0b0b,#d32222);
-  background-size:280% 280%;
-  border-color:rgba(165,28,28,.45);
-  animation:chipFlow 4.6s linear infinite;
-}
-.rank-guigewai{
-  color:#fffdf7;
+.rank-guigewai .ability-chip-name{
   background:linear-gradient(120deg,#ff4fd8,#5ec8ff,#7dff88,#ffe36c,#c987ff,#ff6e6e,#ff4fd8);
-  background-size:340% 340%;
-  border-color:rgba(180,120,220,.42);
-  animation:chipFlow 4s linear infinite;
+  background-size:320% 320%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  animation:textSheen 4s linear infinite;
 }
 
-/* 天赋稀有度色 */
-.rarity-putong{
-  color:#f2eeee;
-  background:linear-gradient(120deg,#1d1b1b,#3d3939,#756f6f,#282525);
+.rarity-xiyou .ability-chip-name{
+  background:linear-gradient(120deg,#6d43bd,#c097ff,#7f56db,#6d43bd);
+  background-size:220% 220%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  animation:textSheen 5s linear infinite;
+}
+.rarity-shishi .ability-chip-name{
+  background:linear-gradient(120deg,#b7840f,#ffe08a,#d39f18,#b7840f);
+  background-size:220% 220%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  animation:textSheen 5s linear infinite;
+}
+.rarity-chuanshuo .ability-chip-name{
+  background:linear-gradient(120deg,#8b1313,#f04d4d,#ff8a8a,#8b1313);
   background-size:240% 240%;
-  border-color:rgba(60,55,55,.35);
-}
-.rarity-xiyou{
-  color:#fbf4ff;
-  background:linear-gradient(120deg,#4c2c8f,#7d45d6,#b178ff,#6635b0);
-  background-size:260% 260%;
-  border-color:rgba(98,63,170,.40);
-  animation:chipFlow 5s linear infinite;
-}
-.rarity-shishi{
-  color:#4e3500;
-  background:linear-gradient(120deg,#b98508,#e7b92f,#fff0a5,#d5a21f,#f5d05e);
-  background-size:260% 260%;
-  border-color:rgba(176,131,18,.42);
-  animation:chipFlow 5s linear infinite;
-}
-.rarity-chuanshuo{
-  color:#fff1f1;
-  background:linear-gradient(120deg,#7a0f0f,#b91d1d,#ef4848,#ff7d7d,#8e1111);
-  background-size:260% 260%;
-  border-color:rgba(150,28,28,.45);
-  animation:chipFlow 4.6s linear infinite;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  animation:textSheen 4.8s linear infinite;
 }
 
 .ability-modal-mask{
-  position:fixed;
+  position:absolute;
   inset:0;
   display:none;
   align-items:center;
   justify-content:center;
-  padding:18px;
-  background:rgba(33,20,12,.42);
-  z-index:9999;
+  padding:14px;
+  background:rgba(33,20,12,.30);
+  backdrop-filter:blur(1px);
+  z-index:30;
+  border-radius:18px;
 }
 .ability-modal-mask.show{
   display:flex;
 }
 .ability-modal{
   position:relative;
-  width:min(92vw,560px);
-  padding:22px 20px 18px;
-  border-radius:18px;
-  border:2px solid rgba(133,91,56,.34);
+  width:min(90%,420px);
+  padding:18px 18px 15px;
+  border-radius:16px;
+  border:2px solid rgba(133,91,56,.30);
   background:linear-gradient(180deg,#fffdf9,#f9f1e4);
-  box-shadow:0 16px 38px rgba(40,22,8,.30);
+  box-shadow:0 10px 28px rgba(40,22,8,.22);
 }
 .ability-modal-close{
   position:absolute;
-  right:12px;
-  top:10px;
-  width:32px;
-  height:32px;
+  right:10px;
+  top:8px;
+  width:28px;
+  height:28px;
   border:none;
   border-radius:50%;
   cursor:pointer;
-  font-size:18px;
+  font-size:16px;
   background:rgba(122,84,55,.12);
   color:#5c3b29;
 }
 .ability-modal-title{
   text-align:center;
-  font-size:1.65em;
+  font-size:1.35em;
   font-weight:900;
   color:#3e2618;
   margin-bottom:8px;
@@ -513,34 +524,40 @@ summary{
 .ability-modal-rank{
   display:flex;
   justify-content:center;
-  margin-bottom:14px;
+  margin-bottom:12px;
 }
 .ability-modal-rank .ability-chip{
   cursor:default;
   min-width:unset;
-  transform:none;
+  max-width:none;
+  padding:5px 10px;
 }
 .ability-modal-rank .ability-chip:hover{
   transform:none;
 }
 .ability-modal-desc{
-  padding:14px 16px;
+  padding:12px 14px;
   border-radius:12px;
   border:1px solid rgba(130,95,58,.16);
   background:rgba(255,251,243,.70);
   color:#4f3a2b;
-  line-height:1.9;
+  line-height:1.85;
   text-align:justify;
 }
 
+
 @media(max-width:520px){
-  .ability-card-grid{gap:8px}
+  .ability-card-grid{gap:6px}
   .ability-chip{
-    min-width:calc(50% - 4px);
-    font-size:.95em;
-    padding:9px 10px;
+    min-width:64px;
+    max-width:120px;
+    font-size:.88em;
+    padding:6px 8px;
   }
-  .ability-modal{padding:18px 14px 14px}
+  .ability-modal{
+    width:min(94%,360px);
+    padding:16px 12px 12px;
+  }
   .grid{grid-template-columns:1fr}
   .wide{grid-column:auto}
   .mushoku-status-card{padding:12px;border-radius:18px 8px}
@@ -667,7 +684,7 @@ summary{
 
   <details>
     <summary>能力与装备</summary>
-    <div class="section">
+    <div class="section ability-section" id="abilitySection">
       <div class="ability-group">
         <div class="box-title">天赋 / 加护</div>
         <div class="ability-card-grid" id="talentsDetail"></div>
@@ -682,17 +699,16 @@ summary{
         <div class="box-title">装备 / 物品</div>
         <div class="ability-card-grid" id="equipmentDetail"></div>
       </div>
+      <div class="ability-modal-mask" id="abilityModalMask">
+        <div class="ability-modal">
+          <button class="ability-modal-close" id="abilityModalClose" type="button">×</button>
+          <div class="ability-modal-title" id="abilityModalTitle">未选择项目</div>
+          <div class="ability-modal-rank" id="abilityModalRank"></div>
+          <div class="ability-modal-desc" id="abilityModalDesc">暂无说明。</div>
+        </div>
+      </div>
     </div>
   </details>
-
-  <div class="ability-modal-mask" id="abilityModalMask">
-    <div class="ability-modal">
-      <button class="ability-modal-close" id="abilityModalClose" type="button">×</button>
-      <div class="ability-modal-title" id="abilityModalTitle">未选择项目</div>
-      <div class="ability-modal-rank" id="abilityModalRank"></div>
-      <div class="ability-modal-desc" id="abilityModalDesc">暂无说明。</div>
-    </div>
-  </div>
 
   <details>
     <summary>目标 NPC</summary>
@@ -1296,7 +1312,6 @@ function heroineRelationText(key, fallback){
       + ' data-desc="' + escapeHtml(item.desc) + '"'
       + ' data-kind="' + escapeHtml(item.kind) + '">'
       +   '<span class="ability-chip-name">' + escapeHtml(item.name) + '</span>'
-      +   '<span class="ability-chip-rank">' + escapeHtml(item.rank) + '</span>'
       + '</button>';
   }
 
