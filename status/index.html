@@ -323,7 +323,224 @@ summary{
   line-height:1.9;
   color:#5a493b;
 }
+
+/* ===== 能力与装备：卡片化 ===== */
+.ability-group{
+  margin:10px 0 16px;
+}
+.ability-card-grid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:8px;
+}
+.ability-chip{
+  position:relative;
+  min-width:120px;
+  max-width:100%;
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid rgba(110,80,55,.18);
+  background:linear-gradient(180deg,rgba(255,255,255,.88),rgba(247,240,230,.82));
+  color:#4a3120;
+  box-shadow:0 2px 8px rgba(70,40,20,.10);
+  cursor:pointer;
+  user-select:none;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  text-align:center;
+  font-weight:700;
+  letter-spacing:.4px;
+  font-family:inherit;
+}
+.ability-chip:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 14px rgba(70,40,20,.16);
+}
+.ability-chip:active{
+  transform:translateY(0);
+}
+.ability-chip-name{
+  display:block;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.ability-chip-rank{
+  display:block;
+  margin-top:4px;
+  font-size:.83em;
+  opacity:.92;
+}
+.ability-empty{
+  width:100%;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid rgba(126,90,56,.16);
+  background:rgba(255,251,243,.62);
+  color:#7a6858;
+}
+@keyframes chipFlow{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* 技能 / 魔法 / 装备等级色 */
+.rank-chuji{
+  color:#f2eee8;
+  background:linear-gradient(120deg,#23201d,#4a4540,#817970,#2f2a26);
+  background-size:240% 240%;
+  border-color:rgba(70,65,60,.35);
+}
+.rank-zhongji{
+  color:#fff2df;
+  background:linear-gradient(120deg,#6c3f1d,#b77735,#d59a52,#70431f);
+  background-size:240% 240%;
+  border-color:rgba(126,80,30,.35);
+}
+.rank-shangji{
+  color:#28313b;
+  background:linear-gradient(120deg,#98a4b2,#eef4fb,#b7c2cf,#84919f);
+  background-size:240% 240%;
+  border-color:rgba(120,130,145,.35);
+}
+.rank-shengji{
+  color:#4a5a68;
+  background:linear-gradient(120deg,#e8f1fa,#ffffff,#cfddea,#f7fbff);
+  background-size:240% 240%;
+  border-color:rgba(180,195,210,.35);
+}
+.rank-wangji{
+  color:#fff5d0;
+  background:linear-gradient(120deg,#5c3a96,#9b72d6,#d7b852,#7043ad,#f0d36d);
+  background-size:260% 260%;
+  border-color:rgba(138,101,191,.38);
+  animation:chipFlow 5s linear infinite;
+}
+.rank-diji{
+  color:#f3d989;
+  background:linear-gradient(120deg,#080b10,#252b36,#6f5f2d,#151922,#d0b35e,#0b0e14);
+  background-size:280% 280%;
+  border-color:rgba(94,82,40,.45);
+  animation:chipFlow 5.5s linear infinite;
+}
+.rank-shenji{
+  color:#fff0ed;
+  background:linear-gradient(120deg,#4f0707,#9c1010,#e02a2a,#ff5a4d,#7a0b0b,#d32222);
+  background-size:280% 280%;
+  border-color:rgba(165,28,28,.45);
+  animation:chipFlow 4.6s linear infinite;
+}
+.rank-guigewai{
+  color:#fffdf7;
+  background:linear-gradient(120deg,#ff4fd8,#5ec8ff,#7dff88,#ffe36c,#c987ff,#ff6e6e,#ff4fd8);
+  background-size:340% 340%;
+  border-color:rgba(180,120,220,.42);
+  animation:chipFlow 4s linear infinite;
+}
+
+/* 天赋稀有度色 */
+.rarity-putong{
+  color:#f2eeee;
+  background:linear-gradient(120deg,#1d1b1b,#3d3939,#756f6f,#282525);
+  background-size:240% 240%;
+  border-color:rgba(60,55,55,.35);
+}
+.rarity-xiyou{
+  color:#fbf4ff;
+  background:linear-gradient(120deg,#4c2c8f,#7d45d6,#b178ff,#6635b0);
+  background-size:260% 260%;
+  border-color:rgba(98,63,170,.40);
+  animation:chipFlow 5s linear infinite;
+}
+.rarity-shishi{
+  color:#4e3500;
+  background:linear-gradient(120deg,#b98508,#e7b92f,#fff0a5,#d5a21f,#f5d05e);
+  background-size:260% 260%;
+  border-color:rgba(176,131,18,.42);
+  animation:chipFlow 5s linear infinite;
+}
+.rarity-chuanshuo{
+  color:#fff1f1;
+  background:linear-gradient(120deg,#7a0f0f,#b91d1d,#ef4848,#ff7d7d,#8e1111);
+  background-size:260% 260%;
+  border-color:rgba(150,28,28,.45);
+  animation:chipFlow 4.6s linear infinite;
+}
+
+.ability-modal-mask{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(33,20,12,.42);
+  z-index:9999;
+}
+.ability-modal-mask.show{
+  display:flex;
+}
+.ability-modal{
+  position:relative;
+  width:min(92vw,560px);
+  padding:22px 20px 18px;
+  border-radius:18px;
+  border:2px solid rgba(133,91,56,.34);
+  background:linear-gradient(180deg,#fffdf9,#f9f1e4);
+  box-shadow:0 16px 38px rgba(40,22,8,.30);
+}
+.ability-modal-close{
+  position:absolute;
+  right:12px;
+  top:10px;
+  width:32px;
+  height:32px;
+  border:none;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:18px;
+  background:rgba(122,84,55,.12);
+  color:#5c3b29;
+}
+.ability-modal-title{
+  text-align:center;
+  font-size:1.65em;
+  font-weight:900;
+  color:#3e2618;
+  margin-bottom:8px;
+}
+.ability-modal-rank{
+  display:flex;
+  justify-content:center;
+  margin-bottom:14px;
+}
+.ability-modal-rank .ability-chip{
+  cursor:default;
+  min-width:unset;
+  transform:none;
+}
+.ability-modal-rank .ability-chip:hover{
+  transform:none;
+}
+.ability-modal-desc{
+  padding:14px 16px;
+  border-radius:12px;
+  border:1px solid rgba(130,95,58,.16);
+  background:rgba(255,251,243,.70);
+  color:#4f3a2b;
+  line-height:1.9;
+  text-align:justify;
+}
+
 @media(max-width:520px){
+  .ability-card-grid{gap:8px}
+  .ability-chip{
+    min-width:calc(50% - 4px);
+    font-size:.95em;
+    padding:9px 10px;
+  }
+  .ability-modal{padding:18px 14px 14px}
   .grid{grid-template-columns:1fr}
   .wide{grid-column:auto}
   .mushoku-status-card{padding:12px;border-radius:18px 8px}
@@ -404,7 +621,8 @@ summary{
 
   <details>
     <summary>羁绊</summary>
-<div class="rel-card roxy">
+    <div class="section">
+      <div class="rel-card roxy">
         <div class="rel-head">
           <b class="rel-name" id="roxyName">洛琪希·米格路迪亚</b>
           <span class="rel-badges">
@@ -450,14 +668,31 @@ summary{
   <details>
     <summary>能力与装备</summary>
     <div class="section">
-      <div class="box-title">天赋 / 加护</div>
-      <div class="text-box" id="talentsDetail">暂无天赋与加护。</div>
-      <div class="box-title">技能 / 魔术</div>
-      <div class="text-box" id="skillsDetail">暂无习得技能。</div>
-      <div class="box-title">装备 / 物品</div>
-      <div class="text-box" id="equipmentDetail">暂无装备与物品。</div>
+      <div class="ability-group">
+        <div class="box-title">天赋 / 加护</div>
+        <div class="ability-card-grid" id="talentsDetail"></div>
+      </div>
+
+      <div class="ability-group">
+        <div class="box-title">技能 / 魔术</div>
+        <div class="ability-card-grid" id="skillsDetail"></div>
+      </div>
+
+      <div class="ability-group">
+        <div class="box-title">装备 / 物品</div>
+        <div class="ability-card-grid" id="equipmentDetail"></div>
+      </div>
     </div>
   </details>
+
+  <div class="ability-modal-mask" id="abilityModalMask">
+    <div class="ability-modal">
+      <button class="ability-modal-close" id="abilityModalClose" type="button">×</button>
+      <div class="ability-modal-title" id="abilityModalTitle">未选择项目</div>
+      <div class="ability-modal-rank" id="abilityModalRank"></div>
+      <div class="ability-modal-desc" id="abilityModalDesc">暂无说明。</div>
+    </div>
+  </div>
 
   <details>
     <summary>目标 NPC</summary>
@@ -947,9 +1182,186 @@ function heroineRelationText(key, fallback){
 
   renderOtherRelations();
 
-  html("talentsDetail","talentsDetail","暂无天赋与加护。");
-  html("skillsDetail","skillsDetail","暂无习得技能。");
-  html("equipmentDetail","equipmentDetail","暂无装备与物品。");
+
+  function normalizeRankSlug(raw){
+    var s = String(raw || "").trim()
+      .replace(/\s+/g,"")
+      .replace(/（/g,"(").replace(/）/g,")");
+
+    var map = {
+      "初":"chuji","初级":"chuji",
+      "中":"zhongji","中级":"zhongji",
+      "上":"shangji","上级":"shangji",
+      "圣":"shengji","圣级":"shengji",
+      "王":"wangji","王级":"wangji",
+      "帝":"diji","帝级":"diji",
+      "神":"shenji","神级":"shenji",
+      "规格外":"guigewai",
+      "特殊":"guigewai",
+
+      "普通":"putong",
+      "稀有":"xiyou",
+      "史诗":"shishi",
+      "传说":"chuanshuo"
+    };
+
+    return map[s] || "";
+  }
+
+  function rankClass(rank, kind){
+    var slug = normalizeRankSlug(rank);
+    if (!slug) return "";
+    if (slug === "guigewai") return "rank-guigewai";
+    if (kind === "talent") return "rarity-" + slug;
+    return "rank-" + slug;
+  }
+
+  function splitRichEntries(raw){
+    raw = String(raw || "")
+      .replace(/<br\s*\/?>/gi,"\n")
+      .replace(/\r/g,"\n")
+      .trim();
+
+    if (!raw) return [];
+
+    var lines = raw.split(/\n+/).map(function(s){ return s.trim(); }).filter(Boolean);
+    if (lines.length > 1) return lines;
+
+    return raw.split(/[；;]+/).map(function(s){ return s.trim(); }).filter(Boolean);
+  }
+
+  function parseAbilityEntry(line, kind){
+    var txt = String(line || "").trim();
+    if (!txt) return null;
+
+    var m = txt.match(/^(.+?)\s*[|｜]\s*([^|｜]+)\s*[|｜]\s*(.+)$/);
+    if (m) {
+      return {
+        name: m[1].trim(),
+        rank: m[2].trim(),
+        desc: m[3].trim(),
+        kind: kind
+      };
+    }
+
+    m = txt.match(/^(.+?)\s*[（(]([^()（）]+)[）)]\s*[：:]\s*(.+)$/);
+    if (m) {
+      return {
+        name: m[1].trim(),
+        rank: m[2].trim(),
+        desc: m[3].trim(),
+        kind: kind
+      };
+    }
+
+    m = txt.match(/^(.+?)\s*[：:]\s*(.+)$/);
+    if (m) {
+      return {
+        name: m[1].trim(),
+        rank: kind === "talent" ? "普通" : "初级",
+        desc: m[2].trim(),
+        kind: kind
+      };
+    }
+
+    return {
+      name: txt,
+      rank: kind === "talent" ? "普通" : "初级",
+      desc: "暂无详细说明。",
+      kind: kind
+    };
+  }
+
+  function parseAbilityList(raw, kind){
+    var lines = splitRichEntries(raw);
+    var list = [];
+    for (var i = 0; i < lines.length; i++) {
+      var item = parseAbilityEntry(lines[i], kind);
+      if (item && item.name) list.push(item);
+    }
+    return list;
+  }
+
+  function buildRankChipHtml(rank, kind){
+    var cls = rankClass(rank, kind);
+    return '<span class="ability-chip ' + cls + '"><span class="ability-chip-name">' + escapeHtml(rank || "未标注") + '</span></span>';
+  }
+
+  function buildAbilityChipHtml(item){
+    var cls = rankClass(item.rank, item.kind);
+    return ''
+      + '<button type="button" class="ability-chip ability-item ' + cls + '"'
+      + ' data-name="' + escapeHtml(item.name) + '"'
+      + ' data-rank="' + escapeHtml(item.rank) + '"'
+      + ' data-desc="' + escapeHtml(item.desc) + '"'
+      + ' data-kind="' + escapeHtml(item.kind) + '">'
+      +   '<span class="ability-chip-name">' + escapeHtml(item.name) + '</span>'
+      +   '<span class="ability-chip-rank">' + escapeHtml(item.rank) + '</span>'
+      + '</button>';
+  }
+
+  function renderAbilityGroup(containerId, rawKey, kind, emptyText){
+    var box = document.getElementById(containerId);
+    if (!box) return;
+
+    var raw = get(rawKey, "");
+    var list = parseAbilityList(raw, kind);
+
+    if (!list.length) {
+      box.innerHTML = '<div class="ability-empty">' + escapeHtml(emptyText) + '</div>';
+      return;
+    }
+
+    var htmlOut = "";
+    for (var i = 0; i < list.length; i++) {
+      htmlOut += buildAbilityChipHtml(list[i]);
+    }
+    box.innerHTML = htmlOut;
+  }
+
+  var abilityModalMask = document.getElementById("abilityModalMask");
+  var abilityModalClose = document.getElementById("abilityModalClose");
+  var abilityModalTitle = document.getElementById("abilityModalTitle");
+  var abilityModalRank = document.getElementById("abilityModalRank");
+  var abilityModalDesc = document.getElementById("abilityModalDesc");
+
+  function openAbilityModal(name, rank, desc, kind){
+    if (!abilityModalMask) return;
+    if (abilityModalTitle) abilityModalTitle.textContent = name || "未命名";
+    if (abilityModalRank) abilityModalRank.innerHTML = buildRankChipHtml(rank || "未标注", kind || "skill");
+    if (abilityModalDesc) abilityModalDesc.textContent = (rank || "未标注") + "｜" + (desc || "暂无说明。");
+    abilityModalMask.classList.add("show");
+  }
+
+  function closeAbilityModal(){
+    if (abilityModalMask) abilityModalMask.classList.remove("show");
+  }
+
+  if (abilityModalClose) {
+    abilityModalClose.addEventListener("click", closeAbilityModal);
+  }
+  if (abilityModalMask) {
+    abilityModalMask.addEventListener("click", function(e){
+      if (e.target === abilityModalMask) closeAbilityModal();
+    });
+  }
+
+  document.addEventListener("click", function(e){
+    var btn = e.target.closest(".ability-item");
+    if (!btn || !btn.dataset) return;
+
+    openAbilityModal(
+      btn.dataset.name || "未命名",
+      btn.dataset.rank || "未标注",
+      btn.dataset.desc || "暂无说明。",
+      btn.dataset.kind || "skill"
+    );
+  });
+
+
+  renderAbilityGroup("talentsDetail","talentsDetail","talent","暂无天赋与加护。");
+  renderAbilityGroup("skillsDetail","skillsDetail","skill","暂无习得技能。");
+  renderAbilityGroup("equipmentDetail","equipmentDetail","equipment","暂无装备与物品。");
 
   text("targetName","targetName","未知");
   text("targetRace","targetRace","未知");
