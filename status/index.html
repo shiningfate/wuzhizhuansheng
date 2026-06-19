@@ -324,6 +324,124 @@ summary{
   color:#5a493b;
 }
 
+
+/* ===== 主角档案：战斗评估 ===== */
+.battle-eval{
+  margin:12px 0 10px;
+  padding:11px 12px;
+  border-radius:13px;
+  border:1px solid rgba(99,58,29,.28);
+  background:linear-gradient(180deg,rgba(255,255,255,.30),rgba(255,250,236,.16)),rgba(255,244,216,.38);
+  box-shadow:inset 0 0 12px rgba(91,50,19,.06);
+}
+.battle-rank-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:9px;
+}
+.battle-label{
+  font-weight:900;
+  color:#3d2516;
+  letter-spacing:1px;
+}
+.battle-rank-badge{
+  display:inline-block;
+  min-width:84px;
+  text-align:center;
+  padding:4px 12px;
+  border-radius:999px;
+  border:1px solid rgba(92,65,42,.18);
+  background:rgba(255,251,243,.70);
+  color:#3b2417;
+  font-weight:900;
+  box-shadow:0 1px 5px rgba(70,40,20,.10);
+}
+.battle-eval-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+.battle-eval-box{
+  padding:9px 10px;
+  border-radius:10px;
+  border:1px solid rgba(126,90,56,.16);
+  background:rgba(255,251,243,.58);
+}
+.battle-wide{
+  grid-column:1/-1;
+}
+.battle-eval-title{
+  font-weight:900;
+  color:#4a3120;
+  margin-bottom:4px;
+}
+.battle-eval-text{
+  color:#4f3a2b;
+  line-height:1.75;
+  text-align:justify;
+}
+@keyframes battleFlow{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.battle-rank-none{
+  color:#736a63;
+  background:linear-gradient(120deg,#ece7df,#cfc8bd,#f7f4ee);
+}
+.battle-rank-common{
+  color:#f2eee8;
+  background:linear-gradient(120deg,#23201d,#4a4540,#817970,#2f2a26);
+}
+.battle-rank-primary{
+  color:#fff2df;
+  background:linear-gradient(120deg,#6c3f1d,#b77735,#d59a52,#70431f);
+}
+.battle-rank-middle{
+  color:#fff0d0;
+  background:linear-gradient(120deg,#8a5528,#c7833e,#e0aa66,#7a481f);
+}
+.battle-rank-advanced{
+  color:#28313b;
+  background:linear-gradient(120deg,#98a4b2,#eef4fb,#b7c2cf,#84919f);
+}
+.battle-rank-saint{
+  color:#4a5a68;
+  background:linear-gradient(120deg,#e8f1fa,#ffffff,#cfddea,#f7fbff);
+}
+.battle-rank-king{
+  color:#fff5d0;
+  background:linear-gradient(120deg,#5c3a96,#9b72d6,#d7b852,#7043ad,#f0d36d);
+  background-size:260% 260%;
+  animation:battleFlow 5s linear infinite;
+}
+.battle-rank-emperor{
+  color:#f3d989;
+  background:linear-gradient(120deg,#080b10,#252b36,#6f5f2d,#151922,#d0b35e,#0b0e14);
+  background-size:280% 280%;
+  animation:battleFlow 5.5s linear infinite;
+}
+.battle-rank-god{
+  color:#fff0ed;
+  background:linear-gradient(120deg,#4f0707,#9c1010,#e02a2a,#ff5a4d,#7a0b0b,#d32222);
+  background-size:280% 280%;
+  animation:battleFlow 4.6s linear infinite;
+}
+.battle-rank-great{
+  color:#ffe7b8;
+  background:linear-gradient(120deg,#080607,#6b0909,#d0a13a,#160b09,#a41414,#f0c76c);
+  background-size:300% 300%;
+  animation:battleFlow 4.4s linear infinite;
+}
+.battle-rank-outside{
+  color:#fffdf7;
+  background:linear-gradient(120deg,#ff4fd8,#5ec8ff,#7dff88,#ffe36c,#c987ff,#ff6e6e,#ff4fd8);
+  background-size:340% 340%;
+  animation:battleFlow 4s linear infinite;
+}
+
 /* ===== 能力与装备：卡片化 ===== */
 .ability-section{
   position:relative;
@@ -547,6 +665,9 @@ summary{
 
 
 @media(max-width:520px){
+  .battle-eval-grid{grid-template-columns:1fr}
+  .battle-wide{grid-column:auto}
+  .battle-rank-head{align-items:flex-start}
   .ability-card-grid{gap:6px}
   .ability-chip{
     min-width:64px;
@@ -627,8 +748,31 @@ summary{
       </div>
       <div class="bar-shell"><div class="bar-fill mp-fill" id="mpBar" style="width:0%"></div></div>
 
-      <div class="row"><b>战力概评：</b><span id="pcPowerBrief">未评估</span></div>
-      <div class="row"><b>精神：</b><span id="pcMentalStatus">平稳</span></div>
+      <div class="battle-eval">
+        <div class="battle-rank-head">
+          <span class="battle-label">战斗评估</span>
+          <span class="battle-rank-badge" id="battleRank">普通人</span>
+        </div>
+        <div class="battle-eval-grid">
+          <div class="battle-eval-box battle-wide">
+            <div class="battle-eval-title">战斗风格</div>
+            <div class="battle-eval-text" id="battleStyle">暂无固定战斗风格。</div>
+          </div>
+          <div class="battle-eval-box">
+            <div class="battle-eval-title">战斗优势</div>
+            <div class="battle-eval-text" id="battleAdvantages">暂无明确实战优势。</div>
+          </div>
+          <div class="battle-eval-box">
+            <div class="battle-eval-title">战斗短板</div>
+            <div class="battle-eval-text" id="battleWeaknesses">暂无明确短板。</div>
+          </div>
+          <div class="battle-eval-box battle-wide">
+            <div class="battle-eval-title">当前状态</div>
+            <div class="battle-eval-text" id="battleCurrentStatus">身体与精神状态平稳，当前未处于战斗。</div>
+          </div>
+        </div>
+      </div>
+
       <div class="row"><b>目标：</b><span id="pcCurrentGoal">暂无明确目标</span></div>
 
       <div class="box-title">外貌</div>
@@ -987,6 +1131,33 @@ summary{
     if(el) el.innerHTML = get(key, fallback);
   }
 
+
+  function battleRankSlug(rank){
+    var s = String(rank || "").replace(/\s+/g,"").trim();
+    var map = {
+      "无战力":"none",
+      "普通人":"common",
+      "初级":"primary",
+      "中级":"middle",
+      "上级":"advanced",
+      "圣级":"saint",
+      "王级":"king",
+      "帝级":"emperor",
+      "神级":"god",
+      "列强":"great",
+      "规格外":"outside"
+    };
+    return map[s] || "common";
+  }
+
+  function renderBattleRank(){
+    var el = document.getElementById("battleRank");
+    if(!el) return;
+    var rank = get("battleRank","普通人");
+    el.textContent = rank;
+    el.className = "battle-rank-badge battle-rank-" + battleRankSlug(rank);
+  }
+
   function pct(current, max){
     current = parseFloat(String(current || "").replace(/[^\d.]/g,""));
     max = parseFloat(String(max || "").replace(/[^\d.]/g,""));
@@ -1041,8 +1212,12 @@ summary{
   if(hpBar) hpBar.style.width = pct(hpCurrent,hpMax) + "%";
   if(mpBar) mpBar.style.width = pct(mpCurrent,mpMax) + "%";
 
-  text("pcPowerBrief","pcPowerBrief","未评估");
-  text("pcMentalStatus","pcMentalStatus","平稳");
+  renderBattleRank();
+  html("battleStyle","battleStyle","暂无固定战斗风格。");
+  html("battleAdvantages","battleAdvantages","暂无明确实战优势。");
+  html("battleWeaknesses","battleWeaknesses","暂无明确短板。");
+  html("battleCurrentStatus","battleCurrentStatus","身体与精神状态平稳，当前未处于战斗。");
+
   text("pcCurrentGoal","pcCurrentGoal","暂无明确目标");
   html("pcAppearance","pcAppearance","暂无明确外貌描写。");
 
