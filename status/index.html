@@ -325,6 +325,377 @@ summary{
 }
 
 
+
+
+/* ===== 原著剧情偏移：因果值双轨制 ===== */
+.causal-card{
+  position:relative;
+  overflow:hidden;
+  padding:13px;
+  border-radius:16px;
+  border:1px solid rgba(99,58,29,.25);
+  background:
+    radial-gradient(circle at 18% 20%,rgba(255,207,95,.22),transparent 24%),
+    radial-gradient(circle at 82% 28%,rgba(105,183,255,.18),transparent 26%),
+    linear-gradient(180deg,rgba(255,255,255,.30),rgba(255,250,236,.14)),
+    rgba(255,244,216,.34);
+  box-shadow:inset 0 0 14px rgba(91,50,19,.06);
+}
+.causal-card:before{
+  content:"";
+  position:absolute;
+  inset:-45%;
+  background:
+    conic-gradient(from 0deg,
+      transparent 0deg,
+      rgba(255,210,95,.10) 48deg,
+      transparent 95deg,
+      rgba(120,190,255,.10) 145deg,
+      transparent 210deg,
+      rgba(255,255,255,.10) 260deg,
+      transparent 360deg);
+  animation:causalSkyTurn 16s linear infinite;
+  pointer-events:none;
+}
+.causal-card > *{
+  position:relative;
+  z-index:1;
+}
+@keyframes causalSkyTurn{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+.causal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+.causal-title{
+  font-weight:900;
+  color:#3d2516;
+  letter-spacing:1px;
+}
+.causal-level-badge{
+  display:inline-block;
+  min-width:76px;
+  text-align:center;
+  padding:4px 12px;
+  border-radius:999px;
+  border:1px solid rgba(92,65,42,.18);
+  background:rgba(255,251,243,.75);
+  color:#3b2417;
+  font-weight:900;
+  box-shadow:0 1px 5px rgba(70,40,20,.10);
+}
+.causal-board{
+  position:relative;
+  padding:12px 11px 14px;
+  border-radius:14px;
+  border:1px solid rgba(126,90,56,.16);
+  background:rgba(255,251,243,.58);
+  margin-bottom:10px;
+}
+.causal-dual-label{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:8px;
+  margin-bottom:9px;
+}
+.causal-side{
+  font-weight:900;
+  font-size:.92em;
+  line-height:1.35;
+}
+.causal-side small{
+  display:block;
+  font-weight:700;
+  opacity:.78;
+}
+.causal-side.hitogami{
+  color:#a86714;
+}
+.causal-side.dragon{
+  text-align:right;
+  color:#2e72a8;
+}
+.causal-center-mark{
+  color:#6d5948;
+  font-size:.86em;
+  font-weight:900;
+  white-space:nowrap;
+}
+.causal-track{
+  --fate-pos:50%;
+  position:relative;
+  height:24px;
+  border-radius:999px;
+  background:
+    linear-gradient(90deg,
+      rgba(243,177,48,.95) 0%,
+      rgba(255,235,150,.82) 35%,
+      rgba(255,250,238,.94) 50%,
+      rgba(162,216,255,.86) 65%,
+      rgba(65,143,222,.94) 100%);
+  box-shadow:
+    inset 0 1px 4px rgba(70,40,20,.22),
+    0 2px 8px rgba(70,40,20,.12);
+  overflow:hidden;
+}
+.causal-track:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(110deg,transparent 0%,rgba(255,255,255,.42) 18%,transparent 36%);
+  background-size:210% 100%;
+  animation:causalTrackFlow 3.5s linear infinite;
+}
+@keyframes causalTrackFlow{
+  from{background-position:190% 0}
+  to{background-position:-90% 0}
+}
+.causal-midline{
+  position:absolute;
+  left:50%;
+  top:-4px;
+  bottom:-4px;
+  width:2px;
+  transform:translateX(-50%);
+  background:rgba(70,45,28,.30);
+  box-shadow:0 0 0 1px rgba(255,255,255,.35);
+}
+.causal-slider{
+  position:absolute;
+  left:var(--fate-pos);
+  top:50%;
+  width:34px;
+  height:34px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 30%,#fff 0 18%,#ffe2a2 19% 32%,#9fd6ff 33% 52%,#5c3d2b 53% 100%);
+  border:2px solid rgba(70,42,24,.45);
+  box-shadow:
+    0 0 10px rgba(255,218,115,.42),
+    0 0 15px rgba(105,183,255,.35),
+    0 3px 9px rgba(46,25,10,.28);
+  animation:causalSliderPulse 2.4s ease-in-out infinite;
+}
+@keyframes causalSliderPulse{
+  0%,100%{filter:brightness(1); transform:translate(-50%,-50%) scale(1)}
+  50%{filter:brightness(1.12); transform:translate(-50%,-50%) scale(1.05)}
+}
+.causal-values{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px;
+}
+.causal-value-box{
+  padding:8px 10px;
+  border-radius:10px;
+  background:rgba(255,251,243,.62);
+  border:1px solid rgba(126,90,56,.14);
+}
+.causal-value-box b{
+  display:block;
+  margin-bottom:3px;
+}
+.causal-value-box.hitogami b{color:#a86714}
+.causal-value-box.dragon b{color:#2e72a8}
+.causal-value-num{
+  font-size:1.25em;
+  font-weight:900;
+}
+.causal-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+.causal-box{
+  padding:9px 10px;
+  border-radius:10px;
+  border:1px solid rgba(126,90,56,.16);
+  background:rgba(255,251,243,.58);
+}
+.causal-wide{
+  grid-column:1/-1;
+}
+.causal-box-title{
+  font-weight:900;
+  color:#4a3120;
+  margin-bottom:5px;
+}
+.causal-text{
+  color:#4f3a2b;
+  line-height:1.75;
+  text-align:justify;
+}
+.ripple-list{
+  display:grid;
+  gap:7px;
+}
+.ripple-item{
+  position:relative;
+  padding:8px 10px 8px 28px;
+  border-radius:10px;
+  border:1px solid rgba(126,90,56,.14);
+  background:rgba(255,251,243,.55);
+  color:#4f3a2b;
+  line-height:1.7;
+}
+.ripple-item:before{
+  content:"";
+  position:absolute;
+  left:10px;
+  top:14px;
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:rgba(103,153,207,.80);
+  box-shadow:0 0 0 0 rgba(103,153,207,.46);
+  animation:ripplePulse 2.4s ease-out infinite;
+}
+@keyframes ripplePulse{
+  0%{box-shadow:0 0 0 0 rgba(103,153,207,.45)}
+  70%{box-shadow:0 0 0 9px rgba(103,153,207,0)}
+  100%{box-shadow:0 0 0 0 rgba(103,153,207,0)}
+}
+.causal-dev-low{
+  color:#405a38;
+  background:linear-gradient(120deg,#eaf5df,#b9d99a,#f6fbef);
+}
+.causal-dev-mid{
+  color:#5b461f;
+  background:linear-gradient(120deg,#fff3c6,#e0b35c,#fff8dd);
+}
+.causal-dev-high{
+  color:#fff1df;
+  background:linear-gradient(120deg,#8a4b1e,#c97630,#e9ad64,#7c3e19);
+}
+.causal-dev-severe{
+  color:#fff0ed;
+  background:linear-gradient(120deg,#5d0707,#a41414,#e04832,#7c0c0c);
+}
+.causal-dev-rewrite{
+  color:#fff7d2;
+  background:linear-gradient(120deg,#080607,#6b0909,#d0a13a,#160b09,#a41414,#f0c76c);
+  background-size:300% 300%;
+  animation:battleFlow 4.4s linear infinite;
+}
+
+/* ===== 原著剧情偏移：重设计 ===== */
+.canon-dev-card{
+  padding:12px;
+  border-radius:14px;
+  border:1px solid rgba(99,58,29,.25);
+  background:linear-gradient(180deg,rgba(255,255,255,.30),rgba(255,250,236,.15)),rgba(255,244,216,.36);
+  box-shadow:inset 0 0 12px rgba(91,50,19,.06);
+}
+.canon-dev-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+.canon-dev-title{
+  font-weight:900;
+  color:#3d2516;
+  letter-spacing:1px;
+}
+.canon-dev-badge{
+  display:inline-block;
+  min-width:82px;
+  text-align:center;
+  padding:4px 12px;
+  border-radius:999px;
+  border:1px solid rgba(92,65,42,.18);
+  background:rgba(255,251,243,.72);
+  color:#3b2417;
+  font-weight:900;
+  box-shadow:0 1px 5px rgba(70,40,20,.10);
+}
+.canon-dev-scale{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+  margin:8px 0 12px;
+}
+.canon-dev-step{
+  position:relative;
+  padding:6px 2px;
+  border-radius:999px;
+  text-align:center;
+  font-size:.82em;
+  font-weight:800;
+  color:#7a6858;
+  background:rgba(255,251,243,.55);
+  border:1px solid rgba(126,90,56,.12);
+}
+.canon-dev-step.active{
+  color:#fffaf0;
+  background:linear-gradient(120deg,#5d3425,#9b5b32,#c99152);
+  box-shadow:0 2px 7px rgba(70,40,20,.16);
+}
+.canon-dev-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+.canon-dev-box{
+  padding:9px 10px;
+  border-radius:10px;
+  border:1px solid rgba(126,90,56,.16);
+  background:rgba(255,251,243,.58);
+}
+.canon-dev-wide{
+  grid-column:1/-1;
+}
+.canon-dev-box-title{
+  font-weight:900;
+  color:#4a3120;
+  margin-bottom:5px;
+}
+.canon-dev-text{
+  color:#4f3a2b;
+  line-height:1.75;
+  text-align:justify;
+}
+.canon-dev-list{
+  margin:0;
+  padding-left:1.25em;
+  color:#4f3a2b;
+  line-height:1.75;
+}
+.canon-dev-list li{
+  margin:2px 0;
+}
+.canon-dev-low{
+  color:#405a38;
+  background:linear-gradient(120deg,#eaf5df,#b9d99a,#f6fbef);
+}
+.canon-dev-mid{
+  color:#5b461f;
+  background:linear-gradient(120deg,#fff3c6,#e0b35c,#fff8dd);
+}
+.canon-dev-high{
+  color:#fff1df;
+  background:linear-gradient(120deg,#8a4b1e,#c97630,#e9ad64,#7c3e19);
+}
+.canon-dev-severe{
+  color:#fff0ed;
+  background:linear-gradient(120deg,#5d0707,#a41414,#e04832,#7c0c0c);
+}
+.canon-dev-rewrite{
+  color:#fff7d2;
+  background:linear-gradient(120deg,#080607,#6b0909,#d0a13a,#160b09,#a41414,#f0c76c);
+  background-size:300% 300%;
+  animation:battleFlow 4.4s linear infinite;
+}
+
 /* ===== 主角档案：战斗评估 ===== */
 .battle-eval{
   margin:12px 0 10px;
@@ -665,6 +1036,18 @@ summary{
 
 
 @media(max-width:520px){
+  .causal-grid{grid-template-columns:1fr}
+  .causal-wide{grid-column:auto}
+  .causal-values{grid-template-columns:1fr}
+  .causal-head{align-items:flex-start}
+  .causal-dual-label{grid-template-columns:1fr}
+  .causal-center-mark{text-align:center}
+  .causal-side.dragon{text-align:left}
+  .canon-dev-grid{grid-template-columns:1fr}
+  .canon-dev-wide{grid-column:auto}
+  .canon-dev-head{align-items:flex-start}
+  .canon-dev-scale{gap:4px}
+  .canon-dev-step{font-size:.74em;padding:5px 1px}
   .battle-eval-grid{grid-template-columns:1fr}
   .battle-wide{grid-column:auto}
   .battle-rank-head{align-items:flex-start}
@@ -736,6 +1119,9 @@ summary{
         <span class="pill" id="pcIdentityTags">暂无身份标签</span>
       </div>
 
+      <div class="box-title">外貌</div>
+      <div class="text-box" id="pcAppearance">暂无明确外貌描写。</div>
+
       <div class="bar-title">
         <span>HP</span>
         <span><span id="hpCurrent">？</span> / <span id="hpMax">？</span></span>
@@ -775,8 +1161,6 @@ summary{
 
       <div class="row"><b>目标：</b><span id="pcCurrentGoal">暂无明确目标</span></div>
 
-      <div class="box-title">外貌</div>
-      <div class="text-box" id="pcAppearance">暂无明确外貌描写。</div>
     </div>
   </details>
 
@@ -924,12 +1308,68 @@ summary{
     </div>
   </details>
 
-  <details>
-    <summary>原著剧情偏移度</summary>
-    <div class="section">
-      <div class="row"><b>偏移等级：</b><span id="canonDeviationLevel">低</span></div>
-      <div class="box-title">偏移说明</div>
-      <div class="text-box" id="canonDeviationNote">暂无明显偏移。</div>
+    <details>
+    <summary>原著剧情偏移</summary>
+    <div class="section causal-card">
+      <div class="causal-head">
+        <span class="causal-title">因果值 · 双轨制</span>
+        <span class="causal-level-badge" id="canonDeviationLevel">低</span>
+      </div>
+
+      <div class="causal-board">
+        <div class="causal-dual-label">
+          <div class="causal-side hitogami">人神的关注度<small>诱导线</small></div>
+          <div class="causal-center-mark">自由意志</div>
+          <div class="causal-side dragon">龙神的因果量<small>脱离线</small></div>
+        </div>
+
+        <div class="causal-track" id="causalTrack">
+          <div class="causal-midline"></div>
+          <div class="causal-slider" id="causalSlider"></div>
+        </div>
+
+        <div class="causal-values">
+          <div class="causal-value-box hitogami">
+            <b>人神关注</b>
+            <span class="causal-value-num" id="hitogamiAttention">0</span>
+          </div>
+          <div class="causal-value-box dragon">
+            <b>龙神因果</b>
+            <span class="causal-value-num" id="dragonGodCausality">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="causal-grid">
+        <div class="causal-box">
+          <div class="causal-box-title">当前原著节点</div>
+          <div class="causal-text" id="canonCurrentNode">暂无明确原著节点。</div>
+        </div>
+        <div class="causal-box">
+          <div class="causal-box-title">分歧起点</div>
+          <div class="causal-text" id="canonDivergencePoint">暂无明确分歧。</div>
+        </div>
+        <div class="causal-box">
+          <div class="causal-box-title">诱导线变化</div>
+          <div class="causal-text" id="hitogamiInfluenceNote">暂无明显诱导。</div>
+        </div>
+        <div class="causal-box">
+          <div class="causal-box-title">脱离线变化</div>
+          <div class="causal-text" id="dragonCausalityNote">暂无明显脱离。</div>
+        </div>
+        <div class="causal-box causal-wide">
+          <div class="causal-box-title">天平判定</div>
+          <div class="causal-text" id="causalBalanceNote">当前因果天平接近稳定，原著路线仍可作为主要参考。</div>
+        </div>
+        <div class="causal-box causal-wide">
+          <div class="causal-box-title">振翅之涟漪</div>
+          <div id="canonRipples">暂无已确认涟漪事件。</div>
+        </div>
+        <div class="causal-box causal-wide">
+          <div class="causal-box-title">后续风险</div>
+          <div class="causal-text" id="canonFutureRisk">暂无明显后续风险。</div>
+        </div>
+      </div>
     </div>
   </details>
 
@@ -1131,6 +1571,94 @@ summary{
     if(el) el.innerHTML = get(key, fallback);
   }
 
+
+
+
+  function clampNum(v, min, max){
+    v = Number(v);
+    if(!isFinite(v)) v = 0;
+    return Math.max(min, Math.min(max, v));
+  }
+
+  function renderCausalBalance(){
+    var h = clampNum(get("hitogamiAttention","0"), 0, 100);
+    var d = clampNum(get("dragonGodCausality","0"), 0, 100);
+    var hEl = document.getElementById("hitogamiAttention");
+    var dEl = document.getElementById("dragonGodCausality");
+    var track = document.getElementById("causalTrack");
+    if(hEl) hEl.textContent = String(Math.round(h));
+    if(dEl) dEl.textContent = String(Math.round(d));
+
+    // 50 为中线；人神高则滑块左移，龙神高则右移。
+    var pos = 50 + (d - h) * 0.45;
+    pos = clampNum(pos, 5, 95);
+    if(track) track.style.setProperty("--fate-pos", pos + "%");
+  }
+
+  function renderCanonDeviationLevel(){
+    var el = document.getElementById("canonDeviationLevel");
+    if(!el) return;
+    var level = get("canonDeviationLevel","低");
+    var slug = canonDeviationSlug(level);
+    el.textContent = level;
+    el.className = "causal-level-badge causal-dev-" + slug;
+  }
+
+  function renderRippleList(id, key, fallback){
+    var el = document.getElementById(id);
+    if(!el) return;
+    var items = splitCanonItems(readRaw(key));
+    if(!items.length){
+      el.innerHTML = '<div class="causal-text">' + escapeHtml(fallback) + '</div>';
+      return;
+    }
+    el.innerHTML = '<div class="ripple-list">' + items.map(function(item){
+      return '<div class="ripple-item">' + escapeHtml(item) + '</div>';
+    }).join("") + '</div>';
+  }
+
+  function canonDeviationSlug(level){
+    var s = String(level || "").replace(/\s+/g,"").trim();
+    if(/重写|崩坏|失效|规格外/.test(s)) return "rewrite";
+    if(/严重|极高|剧烈/.test(s)) return "severe";
+    if(/高|大幅|关键/.test(s)) return "high";
+    if(/中|局部|明显/.test(s)) return "mid";
+    return "low";
+  }
+
+
+
+  function splitCanonItems(raw){
+    if(raw === undefined || raw === null) return [];
+    if(Array.isArray(raw)) return raw.map(function(x){return String(x || "").trim();}).filter(Boolean);
+    var str = String(raw || "").trim();
+    if(!str) return [];
+    try{
+      var parsed = JSON.parse(str);
+      if(Array.isArray(parsed)){
+        return parsed.map(function(x){
+          if(typeof x === "object" && x){
+            return x.event || x.name || x.desc || x.description || x.text || JSON.stringify(x);
+          }
+          return String(x || "");
+        }).map(function(x){return String(x || "").trim();}).filter(Boolean);
+      }
+    }catch(e){}
+    return str.split(/\n|；|;/).map(function(x){return String(x || "").replace(/^[-•·]\s*/,"").trim();}).filter(Boolean);
+  }
+
+  function renderCanonList(id, key, fallback){
+    var el = document.getElementById(id);
+    if(!el) return;
+    var items = splitCanonItems(readRaw(key));
+    if(!items.length){
+      el.innerHTML = '<div class="canon-dev-text">' + escapeHtml(fallback) + '</div>';
+      return;
+    }
+    el.innerHTML = '<ul class="canon-dev-list">' + items.map(function(item){
+      return '<li>' + escapeHtml(item) + '</li>';
+    }).join("") + '</ul>';
+  }
 
   function battleRankSlug(rank){
     var s = String(rank || "").replace(/\s+/g,"").trim();
@@ -1579,8 +2107,15 @@ function heroineRelationText(key, fallback){
   html("targetTalentsSkills","targetTalentsSkills","暂无已知天赋或技能。");
   html("targetInnerThought","targetInnerThought","无法得知。");
 
-  text("canonDeviationLevel","canonDeviationLevel","低");
-  html("canonDeviationNote","canonDeviationNote","暂无明显偏移。");
+  renderCanonDeviationLevel();
+  renderCausalBalance();
+  html("canonCurrentNode","canonCurrentNode","暂无明确原著节点。");
+  html("canonDivergencePoint","canonDivergencePoint","暂无明确分歧。");
+  html("hitogamiInfluenceNote","hitogamiInfluenceNote","暂无明显诱导。");
+  html("dragonCausalityNote","dragonCausalityNote","暂无明显脱离。");
+  html("causalBalanceNote","causalBalanceNote","当前因果天平接近稳定，原著路线仍可作为主要参考。");
+  renderRippleList("canonRipples","canonRipples","暂无已确认涟漪事件。");
+  html("canonFutureRisk","canonFutureRisk","暂无明显后续风险。");
 })();
 </script>
 
