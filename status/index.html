@@ -1381,6 +1381,203 @@ details[open] > summary{
   body{font-size:13.6px;padding:8px}.mushoku-status-card{padding:10px;border-radius:16px}.status-header{padding:12px}.status-title{font-size:1.12em}.status-header-grid{grid-template-columns:1fr 1fr}.sum-meta{display:none}summary{padding-right:34px}.section{padding:10px}.status-seal{width:42px;height:42px}
 }
 
+
+
+/* ===== FINAL STRICT OVERRIDE：克制手札UI修正版 =====
+   目的：不再依赖前文同级覆盖，强制压掉旧橙色summary与旧卡片质感。
+   不改任何变量id、JS读取逻辑、三女主颜色、能力弹窗、因果双轨功能。
+*/
+html body{
+  font-size:14px !important;
+  line-height:1.62 !important;
+}
+html body .mushoku-status-card{
+  max-width:760px !important;
+  padding:12px !important;
+  border-radius:20px !important;
+  border:1px solid rgba(86,67,45,.34) !important;
+  color:#342519 !important;
+  background:
+    linear-gradient(90deg,rgba(110,87,55,.035) 1px,transparent 1px),
+    linear-gradient(0deg,rgba(110,87,55,.030) 1px,transparent 1px),
+    radial-gradient(circle at 10% 0%,rgba(255,255,255,.54),transparent 25%),
+    linear-gradient(180deg,#f7efd9 0%,#efe0bd 100%) !important;
+  background-size:22px 22px,22px 22px,auto,auto !important;
+  box-shadow:0 12px 26px rgba(32,19,8,.24), inset 0 0 0 1px rgba(255,255,255,.42) !important;
+}
+html body .mushoku-status-card .status-header{
+  border-radius:17px !important;
+  padding:13px 15px !important;
+  margin:0 0 10px !important;
+  color:#3d2a1c !important;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.66),rgba(255,250,237,.40)),
+    linear-gradient(135deg,#f9f1df,#ead9b8) !important;
+  border:1px solid rgba(122,95,60,.22) !important;
+  box-shadow:0 4px 12px rgba(70,45,20,.08), inset 0 1px 0 rgba(255,255,255,.60) !important;
+}
+html body .mushoku-status-card .status-kicker{
+  color:#8b745c !important;
+}
+html body .mushoku-status-card .status-title{
+  color:#2f2117 !important;
+  font-size:1.18em !important;
+  letter-spacing:.04em !important;
+}
+html body .mushoku-status-card .status-seal{
+  width:42px !important;
+  height:42px !important;
+  color:#4d3420 !important;
+  background:radial-gradient(circle at 35% 28%,#fff3c3,#d8ad65 72%,#9b7042) !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.48),0 2px 7px rgba(35,20,10,.17) !important;
+}
+html body .mushoku-status-card .status-header-grid>div{
+  background:rgba(255,253,248,.44) !important;
+  border:1px solid rgba(130,100,64,.14) !important;
+}
+html body .mushoku-status-card .status-header-grid b{
+  color:#8a7156 !important;
+}
+html body .mushoku-status-card .status-header-grid span{
+  color:#3a281b !important;
+}
+html body .mushoku-status-card details{
+  margin:7px 0 !important;
+}
+html body .mushoku-status-card summary{
+  position:relative !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:10px !important;
+  min-height:37px !important;
+  padding:7px 34px 7px 11px !important;
+  border-radius:11px !important;
+  border:1px solid rgba(82,62,40,.24) !important;
+  color:#392719 !important;
+  font-size:.98em !important;
+  font-weight:900 !important;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.32),rgba(255,255,255,0)),
+    linear-gradient(180deg,#ded0ba 0%,#c7ad88 70%,#b19168 100%) !important;
+  box-shadow:0 1px 5px rgba(54,35,17,.10), inset 0 1px 0 rgba(255,255,255,.46) !important;
+}
+html body .mushoku-status-card details[open] > summary{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0)),
+    linear-gradient(180deg,#d5c1a1 0%,#b99668 70%,#9e7548 100%) !important;
+  box-shadow:0 2px 7px rgba(54,35,17,.12), inset 0 1px 0 rgba(255,255,255,.42) !important;
+}
+html body .mushoku-status-card summary::-webkit-details-marker{display:none !important}
+html body .mushoku-status-card summary::after{
+  content:"▾" !important;
+  position:absolute !important;
+  right:12px !important;
+  top:50% !important;
+  transform:translateY(-50%) rotate(-90deg) !important;
+  color:rgba(55,37,24,.70) !important;
+  font-size:.82em !important;
+}
+html body .mushoku-status-card details[open] > summary::after{
+  transform:translateY(-50%) rotate(0deg) !important;
+}
+html body .mushoku-status-card .sum-left{
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  min-width:0 !important;
+}
+html body .mushoku-status-card .sum-icon{
+  width:21px !important;
+  height:21px !important;
+  border-radius:7px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-size:.78em !important;
+  color:#62462d !important;
+  background:rgba(255,250,239,.48) !important;
+  border:1px solid rgba(255,255,255,.36) !important;
+  box-shadow:inset 0 -1px 0 rgba(90,58,28,.08) !important;
+}
+html body .mushoku-status-card .sum-meta{
+  color:rgba(58,39,25,.72) !important;
+  font-size:.82em !important;
+  font-weight:800 !important;
+  text-align:right !important;
+  overflow:hidden !important;
+  white-space:nowrap !important;
+  text-overflow:ellipsis !important;
+}
+html body .mushoku-status-card .section,
+html body .mushoku-status-card .npc-card,
+html body .mushoku-status-card .npc-thought-card,
+html body .mushoku-status-card .touki-use-card,
+html body .mushoku-status-card .battle-eval,
+html body .mushoku-status-card .causal-card{
+  border-radius:14px !important;
+  border:1px solid rgba(110,84,52,.18) !important;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,250,239,.24)),
+    rgba(255,249,237,.52) !important;
+  box-shadow:0 2px 8px rgba(70,45,20,.055), inset 0 1px 0 rgba(255,255,255,.35) !important;
+}
+html body .mushoku-status-card .section{
+  margin-top:8px !important;
+  padding:12px !important;
+}
+html body .mushoku-status-card .section.grid>div,
+html body .mushoku-status-card .text-box,
+html body .mushoku-status-card .battle-eval-box,
+html body .mushoku-status-card .touki-use-box,
+html body .mushoku-status-card .npc-info-grid>div,
+html body .mushoku-status-card .npc-appearance-box,
+html body .mushoku-status-card .npc-thought-box,
+html body .mushoku-status-card .npc-feature-value,
+html body .mushoku-status-card .causal-box,
+html body .mushoku-status-card .causal-value-box,
+html body .mushoku-status-card .causal-board{
+  border-radius:10px !important;
+  border:1px solid rgba(123,95,60,.13) !important;
+  background:rgba(255,253,248,.50) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35) !important;
+}
+html body .mushoku-status-card .bar-shell{
+  height:10px !important;
+  background:rgba(86,58,31,.17) !important;
+  border:1px solid rgba(70,38,18,.18) !important;
+  box-shadow:inset 0 1px 2px rgba(50,25,10,.12) !important;
+}
+html body .mushoku-status-card .bar-title{
+  font-size:.92em !important;
+  margin-top:9px !important;
+}
+html body .mushoku-status-card .name{
+  font-size:1.22em !important;
+}
+html body .mushoku-status-card .box-title,
+html body .mushoku-status-card .battle-eval-title,
+html body .mushoku-status-card .touki-use-label,
+html body .mushoku-status-card .npc-box-title,
+html body .mushoku-status-card .npc-thought-title,
+html body .mushoku-status-card .causal-box-title{
+  color:#3d281a !important;
+  font-size:.96em !important;
+}
+html body .mushoku-status-card .ability-chip{
+  border-radius:9px !important;
+  background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(246,238,224,.70)) !important;
+  border:1px solid rgba(110,80,55,.16) !important;
+  box-shadow:0 1px 3px rgba(70,40,20,.07), inset 0 1px 0 rgba(255,255,255,.45) !important;
+}
+@media(max-width:520px){
+  html body .mushoku-status-card{padding:10px !important;border-radius:16px !important}
+  html body .mushoku-status-card .status-header{padding:12px !important}
+  html body .mushoku-status-card .status-title{font-size:1.08em !important}
+  html body .mushoku-status-card .sum-meta{display:none !important}
+  html body .mushoku-status-card summary{min-height:36px !important;padding-right:32px !important}
+}
+
 </style>
 </head>
 <body>
