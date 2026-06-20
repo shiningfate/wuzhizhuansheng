@@ -696,6 +696,46 @@ summary{
   animation:battleFlow 4.4s linear infinite;
 }
 
+
+/* ===== 主角档案：斗气运用 ===== */
+.touki-use-card{
+  margin:10px 0 12px;
+  padding:10px 11px;
+  border-radius:12px;
+  border:1px solid rgba(126,90,56,.18);
+  background:
+    radial-gradient(circle at 12% 20%,rgba(223,158,65,.16),transparent 28%),
+    linear-gradient(180deg,rgba(255,255,255,.30),rgba(255,250,236,.14)),
+    rgba(255,244,216,.34);
+  box-shadow:inset 0 0 10px rgba(91,50,19,.06);
+}
+.touki-use-title{
+  font-weight:900;
+  color:#4a2d18;
+  letter-spacing:1px;
+  margin-bottom:7px;
+}
+.touki-use-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.touki-use-box{
+  padding:8px 9px;
+  border-radius:10px;
+  border:1px solid rgba(126,90,56,.14);
+  background:rgba(255,251,243,.60);
+}
+.touki-use-label{
+  font-weight:900;
+  color:#5a351b;
+  margin-bottom:3px;
+}
+.touki-use-text{
+  color:#4f3a2b;
+  line-height:1.65;
+}
+
 /* ===== 主角档案：战斗评估 ===== */
 .battle-eval{
   margin:12px 0 10px;
@@ -1036,6 +1076,7 @@ summary{
 
 
 @media(max-width:520px){
+  .touki-use-grid{grid-template-columns:1fr}
   .causal-grid{grid-template-columns:1fr}
   .causal-wide{grid-column:auto}
   .causal-values{grid-template-columns:1fr}
@@ -1133,6 +1174,20 @@ summary{
         <span><span id="mpCurrent">？</span> / <span id="mpMax">？</span></span>
       </div>
       <div class="bar-shell"><div class="bar-fill mp-fill" id="mpBar" style="width:0%"></div></div>
+
+      <div class="touki-use-card">
+        <div class="touki-use-title">斗气运用</div>
+        <div class="touki-use-grid">
+          <div class="touki-use-box">
+            <div class="touki-use-label">阶位</div>
+            <div class="touki-use-text" id="toukiRank">未觉醒</div>
+          </div>
+          <div class="touki-use-box">
+            <div class="touki-use-label">当前状态</div>
+            <div class="touki-use-text" id="toukiState">未觉醒</div>
+          </div>
+        </div>
+      </div>
 
       <div class="battle-eval">
         <div class="battle-rank-head">
@@ -1735,6 +1790,9 @@ summary{
   if(mpMaxEl) mpMaxEl.textContent = mpMax;
   if(hpBar) hpBar.style.width = pct(hpCurrent,hpMax) + "%";
   if(mpBar) mpBar.style.width = pct(mpCurrent,mpMax) + "%";
+
+  text("toukiRank","toukiRank","未觉醒");
+  html("toukiState","toukiState","未觉醒");
 
   renderBattleRank();
   html("battleStyle","battleStyle","暂无固定战斗风格。");
