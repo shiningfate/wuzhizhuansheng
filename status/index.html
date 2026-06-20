@@ -1113,503 +1113,272 @@ summary{
   }
 }
 
-/* ===== 无职状态栏：UI质感增强覆盖层（保留原变量/功能/代表色/等阶色/因果双轨） ===== */
+
+/* ===== UI重设计：克制羊皮纸/公会手札风，仅改视觉与栏目摘要，不改变量功能 ===== */
 :root{
-  --m-paper:#fbf1da;
-  --m-paper-2:#fffaf0;
-  --m-paper-3:#ead1a0;
-  --m-ink:#352012;
-  --m-muted:#7a604b;
-  --m-line:rgba(103,62,30,.24);
-  --m-line-strong:rgba(84,47,22,.48);
-  --m-wood-1:#d7a05f;
-  --m-wood-2:#a9632c;
-  --m-wood-3:#6f3c1f;
-  --m-gold:#d5a350;
-  --m-blue:#2f89bb;
-  --m-red:#b33e36;
-  --m-purple:#7752bb;
-  --m-shadow:0 12px 26px rgba(40,19,6,.22);
-  --m-inner:inset 0 0 22px rgba(115,68,29,.10);
-}
-html{
-  -webkit-text-size-adjust:100%;
+  --ink:#322217;
+  --muted:#76624f;
+  --line:rgba(91,61,38,.20);
+  --line-strong:rgba(91,61,38,.36);
+  --paper:#f7ecd6;
+  --paper-soft:rgba(255,250,240,.72);
+  --paper-card:rgba(255,252,245,.78);
+  --wood:#8c6d4b;
+  --wood-dark:#5c3a24;
+  --wood-mid:#a78b67;
+  --accent:#9b6d35;
 }
 body{
-  padding:12px;
-  color:var(--m-ink);
-  font-size:15.8px;
-  line-height:1.76;
+  padding:10px;
+  color:var(--ink);
+  font-size:14.5px;
+  line-height:1.66;
   letter-spacing:.015em;
-  font-family:"LXGW WenKai","霞鹜文楷","STKaiti","KaiTi","Noto Serif SC","FangSong",serif;
+  text-rendering:optimizeLegibility;
 }
 .mushoku-status-card{
-  position:relative;
-  max-width:780px;
-  padding:18px;
-  border:1px solid rgba(72,40,19,.72);
-  border-radius:28px 12px 28px 12px;
+  max-width:760px;
+  padding:14px;
+  border:1px solid rgba(74,46,28,.55);
+  border-radius:20px;
   background:
-    radial-gradient(circle at 12% 0%,rgba(255,244,203,.65),transparent 27%),
-    radial-gradient(circle at 100% 8%,rgba(105,164,206,.15),transparent 25%),
-    radial-gradient(circle at 8% 92%,rgba(129,86,48,.16),transparent 30%),
-    linear-gradient(135deg,#fff5df 0%,#f8ead0 48%,#e8c78c 100%);
+    linear-gradient(90deg,rgba(132,92,42,.055) 1px,transparent 1px),
+    linear-gradient(180deg,rgba(132,92,42,.04) 1px,transparent 1px),
+    radial-gradient(circle at 12% 2%,rgba(255,255,255,.42),transparent 26%),
+    radial-gradient(circle at 92% 6%,rgba(92,119,132,.10),transparent 24%),
+    linear-gradient(180deg,#fff9ec 0%,#f6ead4 58%,#e8d0a4 100%);
+  background-size:auto, auto, auto, auto, 100% 100%;
   box-shadow:
-    0 18px 42px rgba(25,12,4,.32),
-    inset 0 0 0 1px rgba(255,255,255,.45),
-    inset 0 0 40px rgba(105,61,24,.16);
-  overflow:hidden;
+    0 12px 28px rgba(31,19,10,.22),
+    inset 0 0 0 1px rgba(255,255,255,.40),
+    inset 0 0 36px rgba(100,64,26,.10);
 }
-.mushoku-status-card:before{
-  content:"";
-  position:absolute;
-  inset:8px;
-  border:1px solid rgba(92,54,26,.18);
-  border-radius:23px 9px 23px 9px;
-  pointer-events:none;
-}
-.mushoku-status-card:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(90deg,rgba(110,70,33,.04) 1px,transparent 1px),
-    linear-gradient(0deg,rgba(110,70,33,.025) 1px,transparent 1px);
-  background-size:18px 18px,22px 22px;
-  mix-blend-mode:multiply;
-  opacity:.45;
-  pointer-events:none;
-}
-.mushoku-status-card > *{
+.status-header{
   position:relative;
+  overflow:hidden;
+  margin:0 0 12px;
+  padding:14px 15px 12px;
+  border-radius:16px;
+  border:1px solid rgba(70,44,27,.32);
+  background:
+    radial-gradient(circle at 90% 10%,rgba(236,206,139,.18),transparent 24%),
+    linear-gradient(135deg,#4b2e22,#6f5138 56%,#9b7a54);
+  color:#fff8e9;
+  box-shadow:0 8px 18px rgba(49,30,16,.18),inset 0 1px 0 rgba(255,255,255,.16);
+}
+.status-header:after{
+  content:"";
+  position:absolute;
+  inset:auto 12px 8px 12px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,241,200,.35),transparent);
+}
+.status-title-row{
+  position:relative;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
   z-index:1;
 }
-
-/* 顶部手札标题 */
-.mushoku-top{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:13px 14px;
-  margin-bottom:12px;
-  border:1px solid rgba(85,48,24,.34);
-  border-radius:18px 8px;
-  background:
-    linear-gradient(180deg,rgba(255,252,244,.72),rgba(247,229,193,.52)),
-    radial-gradient(circle at 12% 20%,rgba(213,163,80,.22),transparent 30%);
-  box-shadow:
-    0 7px 18px rgba(50,25,8,.12),
-    inset 0 0 16px rgba(255,255,255,.26);
+.status-kicker{
+  font-size:.75em;
+  color:rgba(255,244,218,.72);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  margin-bottom:2px;
 }
-.mushoku-emblem{
-  flex:0 0 auto;
-  width:44px;
-  height:44px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  border:1px solid rgba(100,58,27,.36);
-  background:
-    radial-gradient(circle at 35% 28%,#fff6d3 0 18%,#e1b363 19% 52%,#8d542b 53% 100%);
-  color:#4a2713;
+.status-title{
+  font-size:1.26em;
   font-weight:900;
-  font-size:1.08em;
-  box-shadow:0 4px 12px rgba(60,28,8,.20), inset 0 0 8px rgba(255,255,255,.38);
-}
-.mushoku-title-block{
-  flex:1 1 auto;
-  min-width:0;
-}
-.mushoku-title{
-  font-size:1.28em;
-  font-weight:900;
-  letter-spacing:.06em;
-  color:#351f12;
+  letter-spacing:.08em;
   line-height:1.25;
 }
-.mushoku-subtitle{
-  margin-top:4px;
-  color:#7b6049;
-  font-size:.88em;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.mushoku-status-seal{
+.status-seal{
   flex:0 0 auto;
-  max-width:34%;
-  padding:5px 11px;
-  border-radius:999px;
-  border:1px solid rgba(100,58,27,.22);
-  background:rgba(255,251,243,.70);
-  color:#4a3120;
-  font-size:.88em;
-  font-weight:900;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  box-shadow:0 2px 8px rgba(70,40,20,.10);
-}
-
-/* 折叠栏：带图标与摘要 */
-details{
-  margin:10px 0;
-  border-radius:15px;
-  background:rgba(255,250,238,.34);
-  box-shadow:0 4px 14px rgba(45,22,8,.08);
-}
-details > summary{
-  position:relative;
+  width:48px;
+  height:48px;
+  border-radius:50%;
   display:flex;
-  align-items:center;
-  gap:10px;
-  min-height:48px;
-  padding:10px 42px 10px 12px;
-  border:1px solid rgba(91,51,24,.45);
-  border-radius:15px;
-  background:
-    linear-gradient(180deg,rgba(236,185,111,.98),rgba(179,101,45,.98)),
-    radial-gradient(circle at 12% 18%,rgba(255,240,198,.36),transparent 28%);
-  color:#3a2112;
-  font-weight:900;
-  letter-spacing:.035em;
-  text-shadow:0 1px 0 rgba(255,231,184,.45);
-  box-shadow:
-    0 4px 10px rgba(55,27,9,.16),
-    inset 0 1px 0 rgba(255,245,214,.55),
-    inset 0 -12px 18px rgba(108,57,23,.16);
-}
-details > summary::-webkit-details-marker{
-  display:none;
-}
-details > summary::after{
-  content:"▾";
-  position:absolute;
-  right:14px;
-  top:50%;
-  transform:translateY(-50%);
-  color:#5b3018;
-  font-size:1.05em;
-  transition:transform .18s ease;
-}
-details[open] > summary{
-  border-radius:15px 15px 9px 9px;
-}
-details[open] > summary::after{
-  transform:translateY(-50%) rotate(180deg);
-}
-.summary-left{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  min-width:0;
-}
-.summary-icon{
-  width:25px;
-  height:25px;
-  display:inline-flex;
   align-items:center;
   justify-content:center;
-  border-radius:9px;
-  background:rgba(255,248,231,.48);
-  border:1px solid rgba(101,58,27,.14);
-  box-shadow:inset 0 0 7px rgba(255,255,255,.28);
-  font-size:.98em;
+  font-size:.78em;
+  font-weight:900;
+  color:#4b2e22;
+  background:radial-gradient(circle at 35% 28%,#fff1bf,#d1a65c 72%,#8b6236);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.45),0 3px 10px rgba(35,20,10,.22);
 }
-.summary-title{
-  white-space:nowrap;
+.status-header-grid{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  margin-top:12px;
 }
-.summary-hint{
-  margin-left:auto;
+.status-header-grid>div{
   min-width:0;
-  max-width:52%;
-  color:rgba(55,31,17,.72);
-  font-size:.82em;
-  font-weight:800;
-  line-height:1.35;
-  text-align:right;
-  white-space:nowrap;
+  padding:7px 9px;
+  border-radius:10px;
+  background:rgba(255,248,230,.12);
+  border:1px solid rgba(255,248,230,.14);
+}
+.status-header-grid b{
+  display:block;
+  font-size:.76em;
+  color:rgba(255,243,215,.66);
+  margin-bottom:1px;
+}
+.status-header-grid span{
+  display:block;
   overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  font-weight:800;
+  color:#fff8ea;
+}
+details{margin:8px 0}
+summary{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  min-height:42px;
+  padding:8px 36px 8px 12px;
+  border-radius:13px;
+  border:1px solid rgba(84,59,39,.30);
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0)),
+    linear-gradient(180deg,#d7c5aa,#bba381 58%,#a88961);
+  color:#3a2518;
+  font-size:1.02em;
+  font-weight:900;
+  box-shadow:0 2px 8px rgba(53,32,15,.10),inset 0 1px 0 rgba(255,255,255,.38);
+}
+summary::-webkit-details-marker{display:none}
+summary::after{
+  content:"▾";
+  position:absolute;
+  right:13px;
+  top:50%;
+  transform:translateY(-50%) rotate(-90deg);
+  color:rgba(62,39,24,.72);
+  font-size:.86em;
+  transition:transform .18s ease;
+}
+details[open] > summary::after{transform:translateY(-50%) rotate(0deg)}
+details[open] > summary{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.20),rgba(255,255,255,0)),
+    linear-gradient(180deg,#cdb692,#ac875a 62%,#8f6840);
+  color:#2d1c12;
+}
+.sum-left{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-width:0;
+}
+.sum-left>span:last-child{
+  overflow:hidden;
+  white-space:nowrap;
   text-overflow:ellipsis;
 }
-
-/* 内容区：卡片质感与更清晰字体 */
+.sum-icon{
+  flex:0 0 auto;
+  width:24px;
+  height:24px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.82em;
+  font-weight:900;
+  color:#5a3a23;
+  background:rgba(255,249,234,.45);
+  border:1px solid rgba(255,255,255,.35);
+  box-shadow:inset 0 -1px 0 rgba(90,58,28,.10);
+}
+.sum-meta{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:rgba(54,36,24,.78);
+  font-size:.86em;
+  font-weight:800;
+  text-align:right;
+}
 .section{
-  margin-top:9px;
+  margin-top:8px;
   padding:13px;
-  border:1px solid rgba(101,58,27,.25);
+  border:1px solid var(--line);
   border-radius:14px;
-  background:
-    linear-gradient(180deg,rgba(255,253,248,.55),rgba(255,246,225,.34)),
-    rgba(255,242,210,.48);
-  box-shadow:
-    0 5px 16px rgba(48,23,8,.08),
-    inset 0 0 18px rgba(130,78,30,.06);
+  background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,248,234,.20)),rgba(255,249,237,.54);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.30),0 2px 8px rgba(74,45,20,.06);
 }
-.grid{
-  gap:9px;
-}
-.section.grid > div{
+.grid{gap:9px}.section.grid>div{
   padding:8px 10px;
   border-radius:10px;
-  background:rgba(255,252,246,.48);
   border:1px solid rgba(126,90,56,.12);
+  background:rgba(255,253,248,.48);
 }
-.row{
-  margin:7px 0;
-}
-.name{
-  font-size:1.48em;
-  line-height:1.35;
-  color:#332012;
-  letter-spacing:.05em;
-}
-.meta{
-  font-size:.92em;
-  color:#7a624f;
-}
-.pill{
-  padding:3px 10px;
-  border-radius:999px;
-  background:linear-gradient(180deg,rgba(255,247,226,.78),rgba(221,185,129,.34));
-  border:1px solid rgba(128,88,45,.22);
-  box-shadow:0 1px 4px rgba(74,43,18,.08), inset 0 1px 0 rgba(255,255,255,.52);
+.name{font-size:1.24em;letter-spacing:.05em}.meta{font-size:.92em;color:#7b6a58}.pill{
+  padding:3px 9px;
+  background:rgba(177,145,101,.20);
+  border:1px solid rgba(130,91,52,.18);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.32);
 }
 .box-title{
-  position:relative;
-  margin:11px 0 6px;
-  color:#3f2718;
-  font-size:1.02em;
+  margin:10px 0 5px;
+  color:#3e291a;
+  font-size:.96em;
   letter-spacing:.04em;
 }
-.box-title:before,
-.npc-box-title:before,
-.npc-thought-title:before{
-  content:"◆";
-  margin-right:6px;
-  color:rgba(183,126,57,.88);
-  font-size:.78em;
-}
-.text-box,
-.npc-appearance-box,
-.npc-thought-box,
-.battle-eval-text,
-.touki-use-text,
-.causal-text,
-.canon-dev-text{
-  font-size:.96em;
-  line-height:1.82;
-}
-.text-box{
-  padding:11px 12px;
-  border-radius:12px;
+.text-box,.npc-appearance-box,.npc-thought-box{
+  padding:10px 11px;
+  border-radius:11px;
   background:rgba(255,253,248,.62);
   border:1px solid rgba(126,90,56,.14);
-  box-shadow:inset 0 0 10px rgba(100,56,22,.04);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.40);
 }
-
-/* HP/MP 条更像游戏面板 */
-.bar-title{
-  margin-top:11px;
-  font-size:1em;
-  color:#3b2417;
+.bar-title{font-size:.95em;margin-top:10px}.bar-shell{
+  height:14px;
+  background:rgba(72,45,26,.16);
+  border:1px solid rgba(70,38,18,.20);
+  box-shadow:inset 0 1px 3px rgba(48,28,14,.16);
 }
-.bar-shell{
-  height:15px;
-  border-radius:999px;
-  background:rgba(70,40,19,.15);
-  border:1px solid rgba(62,33,15,.22);
-  box-shadow:inset 0 1px 3px rgba(40,20,8,.20);
+.hp-fill{background:linear-gradient(90deg,#7f2924,#b84335,#dc6a50)}
+.mp-fill{background:linear-gradient(90deg,#1d5d7a,#2a8cb3,#5db9d4)}
+.touki-use-card,.battle-eval,.causal-card,.npc-card,.npc-thought-card{
+  border:1px solid rgba(99,58,29,.22);
+  background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,250,236,.15)),rgba(255,246,226,.42);
+  box-shadow:inset 0 0 12px rgba(91,50,19,.055),0 2px 8px rgba(56,29,10,.06);
 }
-.bar-fill{
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.32), 0 1px 5px rgba(40,20,8,.10);
+.touki-use-title,.battle-label,.causal-title{letter-spacing:.06em}.touki-use-box,.battle-eval-box,.causal-box,.causal-value-box,.npc-info-grid>div,.npc-feature-value{
+  background:rgba(255,253,248,.56);
+  border-color:rgba(126,90,56,.13);
 }
-.hp-fill{
-  background:linear-gradient(90deg,#8d251f,#c8483a,#e07155);
+.npc-feature-label{
+  background:linear-gradient(180deg,#d7c6ad,#b99a72);
+  color:#372216;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28);
 }
-.mp-fill{
-  background:linear-gradient(90deg,#17678f,#2e98c4,#6cc5df);
-}
-
-/* 主角、战斗、斗气 */
-.touki-use-card,
-.battle-eval,
-.npc-card,
-.npc-thought-card,
-.causal-card,
-.canon-dev-card{
-  border-color:rgba(101,58,27,.24);
-  box-shadow:
-    0 5px 15px rgba(50,25,8,.08),
-    inset 0 0 14px rgba(103,57,20,.05);
-}
-.touki-use-card{
-  padding:12px;
-  background:
-    radial-gradient(circle at 12% 18%,rgba(228,153,44,.18),transparent 30%),
-    linear-gradient(180deg,rgba(255,253,247,.44),rgba(255,241,210,.22)),
-    rgba(255,244,216,.38);
-}
-.touki-use-title,
-.battle-label,
-.causal-title,
-.canon-dev-title{
-  font-size:1.05em;
-}
-.touki-use-box,
-.battle-eval-box,
-.causal-box,
-.causal-value-box,
-.canon-dev-box,
-.npc-info-grid > div,
-.npc-feature-value{
-  background:rgba(255,253,248,.58);
-  border-color:rgba(126,90,56,.14);
-  box-shadow:inset 0 0 8px rgba(105,60,24,.035);
-}
-.battle-rank-badge,
-.causal-level-badge,
-.canon-dev-badge{
-  box-shadow:0 2px 8px rgba(70,40,20,.12), inset 0 1px 0 rgba(255,255,255,.35);
-}
-
-/* 羁绊卡保留三女主代表色，只增强厚度 */
-.rel-card{
-  padding:12px 13px 15px;
-  border-radius:14px;
-  box-shadow:0 4px 12px rgba(55,27,9,.08), inset 0 0 12px rgba(255,255,255,.12);
-}
-.rel-name{
-  font-size:1.03em;
-}
-.fate-badge{
-  padding:3px 9px;
-}
-
-/* 能力小卡片保留点击弹窗与等阶文字颜色 */
 .ability-chip{
-  min-width:78px;
-  max-width:150px;
-  padding:8px 11px;
-  border-radius:11px;
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.96),rgba(248,237,219,.92)),
-    radial-gradient(circle at 20% 10%,rgba(255,230,176,.36),transparent 40%);
-  border:1px solid rgba(118,82,47,.20);
-  box-shadow:
-    0 3px 8px rgba(65,36,14,.10),
-    inset 0 1px 0 rgba(255,255,255,.65);
-}
-.ability-chip:hover{
-  transform:translateY(-2px);
-  box-shadow:0 7px 15px rgba(65,36,14,.16);
-}
-.ability-card-grid{
-  gap:9px;
+  border-radius:10px;
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(246,238,226,.90));
+  box-shadow:0 2px 6px rgba(70,40,20,.07),inset 0 1px 0 rgba(255,255,255,.62);
 }
 .ability-modal{
   border-radius:18px;
-  background:
-    linear-gradient(180deg,#fffefa,#f7ecd7),
-    radial-gradient(circle at 20% 0%,rgba(220,166,86,.20),transparent 38%);
+  box-shadow:0 16px 34px rgba(40,22,8,.24),inset 0 1px 0 rgba(255,255,255,.72);
 }
-
-/* 目标NPC */
-.npc-card,
-.npc-thought-card{
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.46),rgba(255,244,216,.22)),
-    rgba(255,244,216,.42);
-}
-.npc-name{
-  font-size:1.55em;
-  letter-spacing:.06em;
-}
-.npc-pill{
-  background:linear-gradient(180deg,rgba(232,210,246,.55),rgba(198,165,216,.26));
-  border-color:rgba(118,79,135,.20);
-  box-shadow:0 1px 5px rgba(70,40,20,.07);
-}
-.npc-feature-label{
-  background:linear-gradient(90deg,#b783cf,#e1a2b9);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.35);
-}
-
-/* 地图 */
-.map-frame{
-  border-radius:14px;
-  border-color:rgba(98,60,34,.30);
-  background:rgba(255,252,245,.58);
-  box-shadow:inset 0 0 15px rgba(93,54,23,.08);
-}
-.map-frame img{
-  border-radius:12px;
-}
-
-/* 因果双轨保留原结构，只提升质感 */
-.causal-track{
-  height:25px;
-}
-.causal-slider{
-  width:36px;
-  height:36px;
-}
-
-/* 小屏优化 */
+.map-frame{background:rgba(255,253,248,.56);box-shadow:inset 0 0 16px rgba(80,50,20,.06)}
+.rel-card{box-shadow:0 2px 8px rgba(70,40,20,.06),inset 0 1px 0 rgba(255,255,255,.42)}
+.causal-card{padding:13px}.causal-track{height:22px}.causal-slider{width:31px;height:31px}
 @media(max-width:520px){
-  body{
-    padding:8px;
-    font-size:14.6px;
-  }
-  .mushoku-status-card{
-    padding:12px;
-    border-radius:20px 8px;
-  }
-  .mushoku-top{
-    padding:11px;
-    gap:9px;
-  }
-  .mushoku-emblem{
-    width:38px;
-    height:38px;
-  }
-  .mushoku-title{
-    font-size:1.12em;
-  }
-  .mushoku-status-seal{
-    display:none;
-  }
-  details > summary{
-    min-height:44px;
-    padding:9px 36px 9px 10px;
-  }
-  .summary-hint{
-    max-width:45%;
-    font-size:.76em;
-  }
-  .summary-icon{
-    width:23px;
-    height:23px;
-  }
-  .section{
-    padding:11px;
-  }
-  .name{
-    font-size:1.34em;
-  }
-  .ability-chip{
-    min-width:68px;
-    max-width:132px;
-  }
-}
-@media(max-width:420px){
-  .summary-hint{
-    display:none;
-  }
-  details > summary{
-    padding-right:34px;
-  }
+  body{font-size:13.6px;padding:8px}.mushoku-status-card{padding:10px;border-radius:16px}.status-header{padding:12px}.status-title{font-size:1.12em}.status-header-grid{grid-template-columns:1fr 1fr}.sum-meta{display:none}summary{padding-right:34px}.section{padding:10px}.status-seal{width:42px;height:42px}
 }
 
 </style>
@@ -1618,18 +1387,24 @@ details[open] > summary::after{
 
 <div class="mushoku-status-card">
 
-  <div class="mushoku-top">
-    <div class="mushoku-emblem">六</div>
-    <div class="mushoku-title-block">
-      <div class="mushoku-title">无职转生 · 六面世界旅录</div>
-      <div class="mushoku-subtitle"><span id="headerTime">时间未定</span> ｜ <span id="headerLocation">地点未定</span></div>
+  <div class="status-header">
+    <div class="status-title-row">
+      <div>
+        <div class="status-kicker">Adventurer's Parchment</div>
+        <div class="status-title">无职转生 · 六面世界旅录</div>
+      </div>
+      <div class="status-seal">六面</div>
     </div>
-    <div class="mushoku-status-seal" id="headerBattleRank">普通人</div>
+    <div class="status-header-grid">
+      <div><b>当前</b><span id="headerTime">未知时间</span></div>
+      <div><b>地点</b><span id="headerLocation">未知地点</span></div>
+      <div><b>主角</b><span id="headerPc">未知</span></div>
+      <div><b>状态</b><span id="headerVitals">HP ?/? ｜ MP ?/?</span></div>
+    </div>
   </div>
 
-
   <details open>
-    <summary><span class="summary-left"><span class="summary-icon">📜</span><span class="summary-title">总览</span></span><span class="summary-hint" id="sumOverview">时间与地点</span></summary>
+    <summary><span class="sum-left"><span class="sum-icon">卷</span><span>总览</span></span><span class="sum-meta" id="sumOverview">章 <span id="sumChapter">?</span> ｜ <span id="sumLocation">?</span></span></summary>
     <div class="section grid">
       <div><b>章节：</b><span id="chapter">未知</span></div>
       <div><b>时间：</b><span id="time">未知</span></div>
@@ -1641,7 +1416,7 @@ details[open] > summary::after{
   </details>
 
   <details>
-    <summary><span class="summary-left"><span class="summary-icon">🗺</span><span class="summary-title">世界地图 / 当地情报</span></span><span class="summary-hint" id="sumMap">当前位置情报</span></summary>
+    <summary><span class="sum-left"><span class="sum-icon">图</span><span>世界地图 / 当地情报</span></span><span class="sum-meta" id="sumMap">六面世界地图</span></summary>
     <div class="section">
       <div class="name" id="mapName">六面世界地图</div>
       <div class="meta" id="mapNote">当前路线与当地情报记录。</div>
@@ -1656,7 +1431,7 @@ details[open] > summary::after{
   </details>
 
   <details open>
-    <summary><span class="summary-left"><span class="summary-icon">🧒</span><span class="summary-title">主角档案</span></span><span class="summary-hint" id="sumProfile">HP / MP / 战力</span></summary>
+    <summary><span class="sum-left"><span class="sum-icon">人</span><span>主角档案</span></span><span class="sum-meta" id="sumPc">HP ?/? ｜ MP ?/?</span></summary>
     <div class="section">
       <div class="name" id="pcName">未知</div>
       <div class="meta">
@@ -1730,7 +1505,7 @@ details[open] > summary::after{
   </details>
 
   <details>
-    <summary><span class="summary-left"><span class="summary-icon">💞</span><span class="summary-title">羁绊</span></span><span class="summary-hint" id="sumRelations">命运固定 3人</span></summary>
+    <summary><span class="sum-left"><span class="sum-icon">縁</span><span>羁绊</span></span><span class="sum-meta" id="sumRel">命运固定 3人</span></summary>
     <div class="section">
       <div class="rel-card roxy">
         <div class="rel-head">
@@ -1776,7 +1551,7 @@ details[open] > summary::after{
   </details>
 
   <details>
-    <summary><span class="summary-left"><span class="summary-icon">⚔️</span><span class="summary-title">能力与装备</span></span><span class="summary-hint" id="sumAbilities">天赋 / 技能 / 装备</span></summary>
+    <summary><span class="sum-left"><span class="sum-icon">技</span><span>能力与装备</span></span><span class="sum-meta" id="sumAbility">天赋 0 ｜ 技能 0 ｜ 装备 0</span></summary>
     <div class="section ability-section" id="abilitySection">
       <div class="ability-group">
         <div class="box-title">天赋 / 加护</div>
@@ -1804,7 +1579,7 @@ details[open] > summary::after{
   </details>
 
   <details>
-    <summary><span class="summary-left"><span class="summary-icon">👁</span><span class="summary-title">目标 NPC</span></span><span class="summary-hint" id="sumTarget">暂无明确目标</span></summary>
+    <summary><span class="sum-left"><span class="sum-icon">目</span><span>目标 NPC</span></span><span class="sum-meta" id="sumTarget">暂无明确目标</span></summary>
 
     <div class="npc-card">
       <div class="npc-name" id="targetName">未知</div>
@@ -1874,7 +1649,7 @@ details[open] > summary::after{
   </details>
 
     <details>
-    <summary><span class="summary-left"><span class="summary-icon">🦋</span><span class="summary-title">异世之蝶</span></span><span class="summary-hint" id="sumCausal">偏移与因果</span></summary>
+    <summary><span class="sum-left"><span class="sum-icon">蝶</span><span>异世之蝶</span></span><span class="sum-meta" id="sumCausal">偏移 低 ｜ 人神 0 ｜ 龙神 0</span></summary>
     <div class="section causal-card">
       <div class="causal-head">
         <span class="causal-title">路线</span>
@@ -2680,46 +2455,54 @@ function heroineRelationText(key, fallback){
   html("causalBalanceNote","causalBalanceNote","当前因果天平接近稳定，原著路线仍可作为主要参考。");
   renderRippleList("canonRipples","canonRipples","暂无已确认涟漪事件。");
 
-  function setUiText(id, value){
+  function setTextIfExists(id, value){
     var el = document.getElementById(id);
-    if(el) el.textContent = String(value || "");
+    if(el) el.textContent = value;
   }
-
   function countAbilityItems(rawKey, kind){
+    try { return parseAbilityList(get(rawKey, ""), kind).length; } catch(e) { return 0; }
+  }
+  function countOtherRelations(){
+    var raw = readRaw("otherRelations");
+    if (Array.isArray(raw)) return raw.length;
+    if (!raw) return 0;
     try {
-      return parseAbilityList(get(rawKey, ""), kind).length;
-    } catch(e) {
-      return 0;
-    }
+      var parsed = JSON.parse(String(raw));
+      return Array.isArray(parsed) ? parsed.length : 0;
+    } catch(e) { return 0; }
   }
+  function updateSummaryAndHeader(){
+    var ch = get("chapter","未知");
+    var loc = get("location","未知");
+    var timeVal = get("time","未知");
+    var pc = get("pcName","未知");
+    var rank = get("battleRank","普通人");
+    var hpC = get("hpCurrent","？"), hpM = get("hpMax","？");
+    var mpC = get("mpCurrent","？"), mpM = get("mpMax","？");
+    var mapNameVal = get("mapName","六面世界地图");
+    var target = get("targetName","暂无明确目标");
+    var dev = get("canonDeviationLevel","低");
+    var h = get("hitogamiAttention","0");
+    var d = get("dragonGodCausality","0");
+    var talentN = countAbilityItems("talentsDetail","talent");
+    var skillN = countAbilityItems("skillsDetail","skill");
+    var equipN = countAbilityItems("equipmentDetail","equipment");
+    var otherN = countOtherRelations();
 
-  function renderHeaderAndSummary(){
-    var timeNow = get("time","时间未定");
-    var locNow = get("location","地点未定");
-    var chapterNow = get("chapter","未知");
-    var pcNow = get("pcName","未知");
-    var rankNow = get("battleRank","普通人");
-    var hpNow = get("hpCurrent","？") + "/" + get("hpMax","？");
-    var mpNow = get("mpCurrent","？") + "/" + get("mpMax","？");
-    var targetNow = get("targetName","暂无明确目标");
-    var devNow = get("canonDeviationLevel","低");
-    var hNow = Math.round(clampNum(get("hitogamiAttention","0"),0,100));
-    var dNow = Math.round(clampNum(get("dragonGodCausality","0"),0,100));
-
-    setUiText("headerTime", timeNow);
-    setUiText("headerLocation", locNow);
-    setUiText("headerBattleRank", rankNow);
-
-    setUiText("sumOverview", "章 " + chapterNow + "｜" + locNow);
-    setUiText("sumMap", get("mapName","六面世界地图") + "｜" + get("localNews","").slice(0,18));
-    setUiText("sumProfile", pcNow + "｜HP " + hpNow + "｜MP " + mpNow);
-    setUiText("sumRelations", "命运固定 3人｜其他 " + buildOtherRelations().length + "人");
-    setUiText("sumAbilities", "天赋 " + countAbilityItems("talentsDetail","talent") + "｜技能 " + countAbilityItems("skillsDetail","skill") + "｜装备 " + countAbilityItems("equipmentDetail","equipment"));
-    setUiText("sumTarget", targetNow || "暂无明确目标");
-    setUiText("sumCausal", "偏移 " + devNow + "｜人神 " + hNow + "｜龙神 " + dNow);
+    setTextIfExists("sumChapter", ch);
+    setTextIfExists("sumLocation", loc);
+    setTextIfExists("sumMap", mapNameVal + " ｜ " + get("routeNote","暂无路线").slice(0,18));
+    setTextIfExists("sumPc", pc + " ｜ HP " + hpC + "/" + hpM + " ｜ MP " + mpC + "/" + mpM);
+    setTextIfExists("sumRel", "命运固定 3人 ｜ 其他 " + otherN + "人");
+    setTextIfExists("sumAbility", "天赋 " + talentN + " ｜ 技能 " + skillN + " ｜ 装备 " + equipN);
+    setTextIfExists("sumTarget", target);
+    setTextIfExists("sumCausal", "偏移 " + dev + " ｜ 人神 " + h + " ｜ 龙神 " + d);
+    setTextIfExists("headerTime", timeVal);
+    setTextIfExists("headerLocation", loc);
+    setTextIfExists("headerPc", pc + " ｜ " + rank);
+    setTextIfExists("headerVitals", "HP " + hpC + "/" + hpM + " ｜ MP " + mpC + "/" + mpM);
   }
-
-  renderHeaderAndSummary();
+  updateSummaryAndHeader();
 
 })();
 </script>
