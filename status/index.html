@@ -1589,6 +1589,78 @@ html body .mushoku-status-card .sum-icon{
 }
 html body .mushoku-status-card .ability-modal-desc{white-space:pre-line !important}
 
+
+/* ===== 用户二次修正：恢复深褐标题栏 + 全模块内容底面降饱和 ===== */
+html body .mushoku-status-card .status-header{
+  position:relative !important;
+  overflow:hidden !important;
+  margin:0 0 12px !important;
+  padding:14px 15px 12px !important;
+  border-radius:16px !important;
+  border:1px solid rgba(70,44,27,.32) !important;
+  color:#fff8e9 !important;
+  background:
+    radial-gradient(circle at 88% 10%,rgba(236,206,139,.20),transparent 24%),
+    linear-gradient(135deg,#4b2e22 0%,#6f5138 56%,#9b7a54 100%) !important;
+  box-shadow:
+    0 8px 18px rgba(49,30,16,.18),
+    inset 0 1px 0 rgba(255,255,255,.16) !important;
+}
+html body .mushoku-status-card .status-header:after{
+  content:"" !important;
+  position:absolute !important;
+  inset:auto 12px 8px 12px !important;
+  height:1px !important;
+  background:linear-gradient(90deg,transparent,rgba(255,241,200,.35),transparent) !important;
+}
+html body .mushoku-status-card .status-kicker{
+  color:rgba(255,244,218,.72) !important;
+}
+html body .mushoku-status-card .status-title{
+  color:#fff8e9 !important;
+  font-size:1.26em !important;
+  letter-spacing:.08em !important;
+  text-shadow:0 1px 2px rgba(32,18,8,.28) !important;
+}
+html body .mushoku-status-card .status-seal{
+  color:#4b2e22 !important;
+  background:radial-gradient(circle at 35% 28%,#fff1bf,#d1a65c 72%,#8b6236) !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.45),0 3px 10px rgba(35,20,10,.22) !important;
+}
+
+/* 模块展开后的“大底面”：比小卡片更深、更低饱和，形成层次 */
+html body .mushoku-status-card .section,
+html body .mushoku-status-card .npc-card,
+html body .mushoku-status-card .npc-thought-card,
+html body .mushoku-status-card .touki-use-card,
+html body .mushoku-status-card .battle-eval,
+html body .mushoku-status-card .causal-card{
+  border:1px solid rgba(110,84,52,.21) !important;
+  background:
+    linear-gradient(180deg,rgba(244,236,219,.58),rgba(225,207,176,.64)),
+    rgba(226,207,174,.74) !important;
+  box-shadow:
+    0 2px 8px rgba(70,45,20,.06),
+    inset 0 1px 0 rgba(255,255,255,.28) !important;
+}
+
+/* 模块内部小卡片保持偏白，和外层底面拉开对比 */
+html body .mushoku-status-card .section.grid>div,
+html body .mushoku-status-card .text-box,
+html body .mushoku-status-card .battle-eval-box,
+html body .mushoku-status-card .touki-use-box,
+html body .mushoku-status-card .npc-info-grid>div,
+html body .mushoku-status-card .npc-appearance-box,
+html body .mushoku-status-card .npc-thought-box,
+html body .mushoku-status-card .npc-feature-value,
+html body .mushoku-status-card .causal-box,
+html body .mushoku-status-card .causal-value-box,
+html body .mushoku-status-card .causal-board{
+  border:1px solid rgba(123,95,60,.14) !important;
+  background:rgba(255,253,248,.66) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.46) !important;
+}
+
 </style>
 </head>
 <body>
