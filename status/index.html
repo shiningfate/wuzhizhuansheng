@@ -1072,6 +1072,7 @@ summary{
   color:#4f3a2b;
   line-height:1.85;
   text-align:justify;
+  white-space:pre-line;
 }
 
 
@@ -1578,6 +1579,16 @@ html body .mushoku-status-card .ability-chip{
   html body .mushoku-status-card summary{min-height:36px !important;padding-right:32px !important}
 }
 
+
+/* ===== 用户定制：顶部精简、emoji栏目图标、货币卡 ===== */
+html body .mushoku-status-card .status-header-grid{display:none !important}
+html body .mushoku-status-card .sum-icon{
+  font-size:1.05em !important;
+  line-height:1 !important;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","STKaiti","KaiTi",serif !important;
+}
+html body .mushoku-status-card .ability-modal-desc{white-space:pre-line !important}
+
 </style>
 </head>
 <body>
@@ -1592,16 +1603,10 @@ html body .mushoku-status-card .ability-chip{
       </div>
       <div class="status-seal">六面</div>
     </div>
-    <div class="status-header-grid">
-      <div><b>当前</b><span id="headerTime">未知时间</span></div>
-      <div><b>地点</b><span id="headerLocation">未知地点</span></div>
-      <div><b>主角</b><span id="headerPc">未知</span></div>
-      <div><b>状态</b><span id="headerVitals">HP ?/? ｜ MP ?/?</span></div>
-    </div>
   </div>
 
   <details open>
-    <summary><span class="sum-left"><span class="sum-icon">卷</span><span>总览</span></span><span class="sum-meta" id="sumOverview">章 <span id="sumChapter">?</span> ｜ <span id="sumLocation">?</span></span></summary>
+    <summary><span class="sum-left"><span class="sum-icon">📜</span><span>总览</span></span><span class="sum-meta" id="sumOverview">当前时间</span></summary>
     <div class="section grid">
       <div><b>章节：</b><span id="chapter">未知</span></div>
       <div><b>时间：</b><span id="time">未知</span></div>
@@ -1613,7 +1618,7 @@ html body .mushoku-status-card .ability-chip{
   </details>
 
   <details>
-    <summary><span class="sum-left"><span class="sum-icon">图</span><span>世界地图 / 当地情报</span></span><span class="sum-meta" id="sumMap">六面世界地图</span></summary>
+    <summary><span class="sum-left"><span class="sum-icon">🌏</span><span>世界地图 / 当地情报</span></span><span class="sum-meta" id="sumMap">六面世界地图</span></summary>
     <div class="section">
       <div class="name" id="mapName">六面世界地图</div>
       <div class="meta" id="mapNote">当前路线与当地情报记录。</div>
@@ -1628,7 +1633,7 @@ html body .mushoku-status-card .ability-chip{
   </details>
 
   <details open>
-    <summary><span class="sum-left"><span class="sum-icon">人</span><span>主角档案</span></span><span class="sum-meta" id="sumPc">HP ?/? ｜ MP ?/?</span></summary>
+    <summary><span class="sum-left"><span class="sum-icon">👤</span><span>主角档案</span></span><span class="sum-meta" id="sumPc">HP ?/? ｜ MP ?/?</span></summary>
     <div class="section">
       <div class="name" id="pcName">未知</div>
       <div class="meta">
@@ -1702,7 +1707,7 @@ html body .mushoku-status-card .ability-chip{
   </details>
 
   <details>
-    <summary><span class="sum-left"><span class="sum-icon">縁</span><span>羁绊</span></span><span class="sum-meta" id="sumRel">命运固定 3人</span></summary>
+    <summary><span class="sum-left"><span class="sum-icon">💕</span><span>羁绊</span></span><span class="sum-meta" id="sumRel">命运固定 3人</span></summary>
     <div class="section">
       <div class="rel-card roxy">
         <div class="rel-head">
@@ -1748,20 +1753,20 @@ html body .mushoku-status-card .ability-chip{
   </details>
 
   <details>
-    <summary><span class="sum-left"><span class="sum-icon">技</span><span>能力与装备</span></span><span class="sum-meta" id="sumAbility">天赋 0 ｜ 技能 0 ｜ 装备 0</span></summary>
+    <summary><span class="sum-left"><span class="sum-icon">✨</span><span>能力与资产</span></span><span class="sum-meta" id="sumAbility">天赋 0 ｜ 技能 0 ｜ 背包 0</span></summary>
     <div class="section ability-section" id="abilitySection">
       <div class="ability-group">
-        <div class="box-title">天赋 / 加护</div>
+        <div class="box-title">天赋</div>
         <div class="ability-card-grid" id="talentsDetail"></div>
       </div>
 
       <div class="ability-group">
-        <div class="box-title">技能 / 魔术</div>
+        <div class="box-title">技能</div>
         <div class="ability-card-grid" id="skillsDetail"></div>
       </div>
 
       <div class="ability-group">
-        <div class="box-title">装备 / 物品</div>
+        <div class="box-title">背包</div>
         <div class="ability-card-grid" id="equipmentDetail"></div>
       </div>
       <div class="ability-modal-mask" id="abilityModalMask">
@@ -1776,7 +1781,7 @@ html body .mushoku-status-card .ability-chip{
   </details>
 
   <details>
-    <summary><span class="sum-left"><span class="sum-icon">目</span><span>目标 NPC</span></span><span class="sum-meta" id="sumTarget">暂无明确目标</span></summary>
+    <summary><span class="sum-left"><span class="sum-icon">👁️</span><span>目标 NPC</span></span><span class="sum-meta" id="sumTarget">暂无明确目标</span></summary>
 
     <div class="npc-card">
       <div class="npc-name" id="targetName">未知</div>
@@ -1830,7 +1835,7 @@ html body .mushoku-status-card .ability-chip{
       <div class="npc-info-grid">
         <div><b>立场：</b><span id="targetStance">未知</span></div>
         <div><b>危险：</b><span id="targetDanger">未知</span></div>
-        <div><b>对用户态度：</b><span id="targetAttitude">未知</span></div>
+        <div><b>对主角态度：</b><span id="targetAttitude">未知</span></div>
         <div><b>战力概评：</b><span id="targetPowerBrief">未评估</span></div>
         <div class="npc-info-wide"><b>风险说明：</b><span id="targetRiskNote">暂无。</span></div>
       </div>
@@ -1846,7 +1851,7 @@ html body .mushoku-status-card .ability-chip{
   </details>
 
     <details>
-    <summary><span class="sum-left"><span class="sum-icon">蝶</span><span>异世之蝶</span></span><span class="sum-meta" id="sumCausal">偏移 低 ｜ 人神 0 ｜ 龙神 0</span></summary>
+    <summary><span class="sum-left"><span class="sum-icon">🦋</span><span>异世之蝶</span></span><span class="sum-meta" id="sumCausal">偏移 低 ｜ 人神 0 ｜ 龙神 0</span></summary>
     <div class="section causal-card">
       <div class="causal-head">
         <span class="causal-title">路线</span>
@@ -2573,6 +2578,92 @@ function heroineRelationText(key, fallback){
     box.innerHTML = htmlOut;
   }
 
+  function normalizeCurrencyText(v){
+    if (v === undefined || v === null || v === "") return "";
+    if (typeof v === "object") {
+      var rows = [];
+      var names = [
+        ["金币", ["金币","金","gold","goldCoin","goldCoins","coinGold"]],
+        ["银币", ["银币","银","silver","silverCoin","silverCoins","coinSilver"]],
+        ["铜币", ["铜币","铜","copper","copperCoin","copperCoins","coinCopper"]]
+      ];
+      for (var i=0;i<names.length;i++){
+        var label = names[i][0], keys = names[i][1];
+        for (var j=0;j<keys.length;j++){
+          var val = v[keys[j]];
+          if (val !== undefined && val !== null && String(val).trim() !== "") {
+            rows.push(label + "：" + String(val).trim());
+            break;
+          }
+        }
+      }
+      Object.keys(v).forEach(function(k){
+        if (["金币","金","gold","goldCoin","goldCoins","coinGold","银币","银","silver","silverCoin","silverCoins","coinSilver","铜币","铜","copper","copperCoin","copperCoins","coinCopper"].indexOf(k) >= 0) return;
+        var val = v[k];
+        if (val !== undefined && val !== null && String(val).trim() !== "") rows.push(k + "：" + String(val).trim());
+      });
+      return rows.join("\n");
+    }
+    return String(v).trim();
+  }
+
+  function getFirstRaw(keys){
+    for (var i=0;i<keys.length;i++){
+      var v = readRaw(keys[i]);
+      if (v !== undefined && v !== null && String(v).trim() !== "") return v;
+    }
+    return undefined;
+  }
+
+  function buildCurrencyDetail(){
+    var raw = getFirstRaw([
+      "currencyDetail", "moneyDetail", "walletDetail", "coinDetail", "coinsDetail",
+      "currency", "money", "wallet", "coins", "funds",
+      "货币", "钱袋", "钱包", "金币银币铜币"
+    ]);
+
+    var detail = normalizeCurrencyText(raw);
+
+    if (!detail) {
+      var rows = [];
+      var groups = [
+        ["金币", ["gold", "goldCoin", "goldCoins", "coinGold", "金币", "金"]],
+        ["银币", ["silver", "silverCoin", "silverCoins", "coinSilver", "银币", "银"]],
+        ["铜币", ["copper", "copperCoin", "copperCoins", "coinCopper", "铜币", "铜"]]
+      ];
+      for (var i=0;i<groups.length;i++){
+        var label = groups[i][0], keys = groups[i][1];
+        for (var j=0;j<keys.length;j++){
+          var val = readRaw(keys[j]);
+          if (val !== undefined && val !== null && String(val).trim() !== "") {
+            rows.push(label + "：" + String(val).trim());
+            break;
+          }
+        }
+      }
+      detail = rows.join("\n");
+    }
+
+    return detail || "暂无货币记录。可在 stat_data 中写入 currencyDetail、moneyDetail、gold/silver/copper 或 金币/银币/铜币。";
+  }
+
+  function insertCurrencyChip(){
+    var box = document.getElementById("equipmentDetail");
+    if (!box) return;
+    var empty = box.querySelector(".ability-empty");
+    if (empty) empty.remove();
+    var detail = buildCurrencyDetail();
+    var chip = ''
+      + '<button type="button" class="ability-chip ability-item rank-chuji currency-chip"'
+      + ' data-name="货币"'
+      + ' data-rank="资产"'
+      + ' data-desc="' + escapeHtml(detail) + '"'
+      + ' data-kind="equipment">'
+      + '<span class="ability-chip-name">货币</span>'
+      + '</button>';
+    box.insertAdjacentHTML("afterbegin", chip);
+  }
+
   var abilityModalMask = document.getElementById("abilityModalMask");
   var abilityModalClose = document.getElementById("abilityModalClose");
   var abilityModalTitle = document.getElementById("abilityModalTitle");
@@ -2613,9 +2704,10 @@ function heroineRelationText(key, fallback){
   });
 
 
-  renderAbilityGroup("talentsDetail","talentsDetail","talent","暂无天赋与加护。");
+  renderAbilityGroup("talentsDetail","talentsDetail","talent","暂无天赋。");
   renderAbilityGroup("skillsDetail","skillsDetail","skill","暂无习得技能。");
-  renderAbilityGroup("equipmentDetail","equipmentDetail","equipment","暂无装备与物品。");
+  renderAbilityGroup("equipmentDetail","equipmentDetail","equipment","暂无背包物品。");
+  insertCurrencyChip();
 
   text("targetName","targetName","未知");
   text("targetRace","targetRace","未知");
@@ -2686,18 +2778,13 @@ function heroineRelationText(key, fallback){
     var equipN = countAbilityItems("equipmentDetail","equipment");
     var otherN = countOtherRelations();
 
-    setTextIfExists("sumChapter", ch);
-    setTextIfExists("sumLocation", loc);
+    setTextIfExists("sumOverview", timeVal);
     setTextIfExists("sumMap", mapNameVal + " ｜ " + get("routeNote","暂无路线").slice(0,18));
     setTextIfExists("sumPc", pc + " ｜ HP " + hpC + "/" + hpM + " ｜ MP " + mpC + "/" + mpM);
     setTextIfExists("sumRel", "命运固定 3人 ｜ 其他 " + otherN + "人");
-    setTextIfExists("sumAbility", "天赋 " + talentN + " ｜ 技能 " + skillN + " ｜ 装备 " + equipN);
+    setTextIfExists("sumAbility", "天赋 " + talentN + " ｜ 技能 " + skillN + " ｜ 背包 " + equipN);
     setTextIfExists("sumTarget", target);
     setTextIfExists("sumCausal", "偏移 " + dev + " ｜ 人神 " + h + " ｜ 龙神 " + d);
-    setTextIfExists("headerTime", timeVal);
-    setTextIfExists("headerLocation", loc);
-    setTextIfExists("headerPc", pc + " ｜ " + rank);
-    setTextIfExists("headerVitals", "HP " + hpC + "/" + hpM + " ｜ MP " + mpC + "/" + mpM);
   }
   updateSummaryAndHeader();
 
