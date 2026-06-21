@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>无职状态栏</title>
 <style>
+
 *{box-sizing:border-box}
 body{
   margin:0;
@@ -586,79 +587,7 @@ summary{
   animation:battleFlow 4.4s linear infinite;
 }
 
-/* ===== 原著剧情偏移：重设计 ===== */
-.canon-dev-card{
-  padding:12px;
-  border-radius:14px;
-  border:1px solid rgba(99,58,29,.25);
-  background:linear-gradient(180deg,rgba(255,255,255,.30),rgba(255,250,236,.15)),rgba(255,244,216,.36);
-  box-shadow:inset 0 0 12px rgba(91,50,19,.06);
-}
-.canon-dev-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-bottom:10px;
-}
-.canon-dev-title{
-  font-weight:900;
-  color:#3d2516;
-  letter-spacing:1px;
-}
-.canon-dev-badge{
-  display:inline-block;
-  min-width:82px;
-  text-align:center;
-  padding:4px 12px;
-  border-radius:999px;
-  border:1px solid rgba(92,65,42,.18);
-  background:rgba(255,251,243,.72);
-  color:#3b2417;
-  font-weight:900;
-  box-shadow:0 1px 5px rgba(70,40,20,.10);
-}
-.canon-dev-scale{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:6px;
-  margin:8px 0 12px;
-}
-.canon-dev-step{
-  position:relative;
-  padding:6px 2px;
-  border-radius:999px;
-  text-align:center;
-  font-size:.82em;
-  font-weight:800;
-  color:#7a6858;
-  background:rgba(255,251,243,.55);
-  border:1px solid rgba(126,90,56,.12);
-}
-.canon-dev-step.active{
-  color:#fffaf0;
-  background:linear-gradient(120deg,#5d3425,#9b5b32,#c99152);
-  box-shadow:0 2px 7px rgba(70,40,20,.16);
-}
-.canon-dev-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-}
-.canon-dev-box{
-  padding:9px 10px;
-  border-radius:10px;
-  border:1px solid rgba(126,90,56,.16);
-  background:rgba(255,251,243,.58);
-}
-.canon-dev-wide{
-  grid-column:1/-1;
-}
-.canon-dev-box-title{
-  font-weight:900;
-  color:#4a3120;
-  margin-bottom:5px;
-}
+/* ===== 原著剧情偏移：列表样式（保留给 JS fallback） ===== */
 .canon-dev-text{
   color:#4f3a2b;
   line-height:1.75;
@@ -670,32 +599,7 @@ summary{
   color:#4f3a2b;
   line-height:1.75;
 }
-.canon-dev-list li{
-  margin:2px 0;
-}
-.canon-dev-low{
-  color:#405a38;
-  background:linear-gradient(120deg,#eaf5df,#b9d99a,#f6fbef);
-}
-.canon-dev-mid{
-  color:#5b461f;
-  background:linear-gradient(120deg,#fff3c6,#e0b35c,#fff8dd);
-}
-.canon-dev-high{
-  color:#fff1df;
-  background:linear-gradient(120deg,#8a4b1e,#c97630,#e9ad64,#7c3e19);
-}
-.canon-dev-severe{
-  color:#fff0ed;
-  background:linear-gradient(120deg,#5d0707,#a41414,#e04832,#7c0c0c);
-}
-.canon-dev-rewrite{
-  color:#fff7d2;
-  background:linear-gradient(120deg,#080607,#6b0909,#d0a13a,#160b09,#a41414,#f0c76c);
-  background-size:300% 300%;
-  animation:battleFlow 4.4s linear infinite;
-}
-
+.canon-dev-list li{margin:2px 0}
 
 /* ===== 主角档案：斗气运用 ===== */
 .touki-use-card{
@@ -912,11 +816,6 @@ summary{
   background:rgba(255,251,243,.62);
   color:#7a6858;
 }
-@keyframes chipFlow{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
 @keyframes textSheen{
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
@@ -1085,11 +984,6 @@ summary{
   .causal-dual-label{grid-template-columns:1fr}
   .causal-center-mark{text-align:center}
   .causal-side.dragon{text-align:left}
-  .canon-dev-grid{grid-template-columns:1fr}
-  .canon-dev-wide{grid-column:auto}
-  .canon-dev-head{align-items:flex-start}
-  .canon-dev-scale{gap:4px}
-  .canon-dev-step{font-size:.74em;padding:5px 1px}
   .battle-eval-grid{grid-template-columns:1fr}
   .battle-wide{grid-column:auto}
   .battle-rank-head{align-items:flex-start}
@@ -1114,280 +1008,18 @@ summary{
   }
 }
 
-
-/* ===== UI重设计：克制羊皮纸/公会手札风，仅改视觉与栏目摘要，不改变量功能 ===== */
+/* ===== 合并覆盖层：克制手札UI + 用户修正 + BGM静态涟漪 =====
+   只合并重复视觉覆盖，不改变量 id、HTML 结构或 JS 读取逻辑。
+*/
 :root{
   --ink:#322217;
-  --muted:#76624f;
   --line:rgba(91,61,38,.20);
-  --line-strong:rgba(91,61,38,.36);
-  --paper:#f7ecd6;
-  --paper-soft:rgba(255,250,240,.72);
-  --paper-card:rgba(255,252,245,.78);
-  --wood:#8c6d4b;
-  --wood-dark:#5c3a24;
-  --wood-mid:#a78b67;
-  --accent:#9b6d35;
 }
 body{
-  padding:10px;
   color:var(--ink);
-  font-size:14.5px;
-  line-height:1.66;
   letter-spacing:.015em;
   text-rendering:optimizeLegibility;
 }
-.mushoku-status-card{
-  max-width:760px;
-  padding:14px;
-  border:1px solid rgba(74,46,28,.55);
-  border-radius:20px;
-  background:
-    linear-gradient(90deg,rgba(132,92,42,.055) 1px,transparent 1px),
-    linear-gradient(180deg,rgba(132,92,42,.04) 1px,transparent 1px),
-    radial-gradient(circle at 12% 2%,rgba(255,255,255,.42),transparent 26%),
-    radial-gradient(circle at 92% 6%,rgba(92,119,132,.10),transparent 24%),
-    linear-gradient(180deg,#fff9ec 0%,#f6ead4 58%,#e8d0a4 100%);
-  background-size:auto, auto, auto, auto, 100% 100%;
-  box-shadow:
-    0 12px 28px rgba(31,19,10,.22),
-    inset 0 0 0 1px rgba(255,255,255,.40),
-    inset 0 0 36px rgba(100,64,26,.10);
-}
-.status-header{
-  position:relative;
-  overflow:hidden;
-  margin:0 0 12px;
-  padding:14px 15px 12px;
-  border-radius:16px;
-  border:1px solid rgba(70,44,27,.32);
-  background:
-    radial-gradient(circle at 90% 10%,rgba(236,206,139,.18),transparent 24%),
-    linear-gradient(135deg,#4b2e22,#6f5138 56%,#9b7a54);
-  color:#fff8e9;
-  box-shadow:0 8px 18px rgba(49,30,16,.18),inset 0 1px 0 rgba(255,255,255,.16);
-}
-.status-header:after{
-  content:"";
-  position:absolute;
-  inset:auto 12px 8px 12px;
-  height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,241,200,.35),transparent);
-}
-.status-title-row{
-  position:relative;
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px;
-  z-index:1;
-}
-.status-kicker{
-  font-size:.75em;
-  color:rgba(255,244,218,.72);
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  margin-bottom:2px;
-}
-.status-title{
-  font-size:1.26em;
-  font-weight:900;
-  letter-spacing:.08em;
-  line-height:1.25;
-}
-.status-seal{
-  flex:0 0 auto;
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:.78em;
-  font-weight:900;
-  color:#4b2e22;
-  background:radial-gradient(circle at 35% 28%,#fff1bf,#d1a65c 72%,#8b6236);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.45),0 3px 10px rgba(35,20,10,.22);
-}
-.status-header-grid{
-  position:relative;
-  z-index:1;
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:8px;
-  margin-top:12px;
-}
-.status-header-grid>div{
-  min-width:0;
-  padding:7px 9px;
-  border-radius:10px;
-  background:rgba(255,248,230,.12);
-  border:1px solid rgba(255,248,230,.14);
-}
-.status-header-grid b{
-  display:block;
-  font-size:.76em;
-  color:rgba(255,243,215,.66);
-  margin-bottom:1px;
-}
-.status-header-grid span{
-  display:block;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-  font-weight:800;
-  color:#fff8ea;
-}
-details{margin:8px 0}
-summary{
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  min-height:42px;
-  padding:8px 36px 8px 12px;
-  border-radius:13px;
-  border:1px solid rgba(84,59,39,.30);
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0)),
-    linear-gradient(180deg,#d7c5aa,#bba381 58%,#a88961);
-  color:#3a2518;
-  font-size:1.02em;
-  font-weight:900;
-  box-shadow:0 2px 8px rgba(53,32,15,.10),inset 0 1px 0 rgba(255,255,255,.38);
-}
-summary::-webkit-details-marker{display:none}
-summary::after{
-  content:"▾";
-  position:absolute;
-  right:13px;
-  top:50%;
-  transform:translateY(-50%) rotate(-90deg);
-  color:rgba(62,39,24,.72);
-  font-size:.86em;
-  transition:transform .18s ease;
-}
-details[open] > summary::after{transform:translateY(-50%) rotate(0deg)}
-details[open] > summary{
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.20),rgba(255,255,255,0)),
-    linear-gradient(180deg,#cdb692,#ac875a 62%,#8f6840);
-  color:#2d1c12;
-}
-.sum-left{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  min-width:0;
-}
-.sum-left>span:last-child{
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-}
-.sum-icon{
-  flex:0 0 auto;
-  width:24px;
-  height:24px;
-  border-radius:8px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:.82em;
-  font-weight:900;
-  color:#5a3a23;
-  background:rgba(255,249,234,.45);
-  border:1px solid rgba(255,255,255,.35);
-  box-shadow:inset 0 -1px 0 rgba(90,58,28,.10);
-}
-.sum-meta{
-  min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  color:rgba(54,36,24,.78);
-  font-size:.86em;
-  font-weight:800;
-  text-align:right;
-}
-.section{
-  margin-top:8px;
-  padding:13px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,248,234,.20)),rgba(255,249,237,.54);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.30),0 2px 8px rgba(74,45,20,.06);
-}
-.grid{gap:9px}.section.grid>div{
-  padding:8px 10px;
-  border-radius:10px;
-  border:1px solid rgba(126,90,56,.12);
-  background:rgba(255,253,248,.48);
-}
-.name{font-size:1.24em;letter-spacing:.05em}.meta{font-size:.92em;color:#7b6a58}.pill{
-  padding:3px 9px;
-  background:rgba(177,145,101,.20);
-  border:1px solid rgba(130,91,52,.18);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.32);
-}
-.box-title{
-  margin:10px 0 5px;
-  color:#3e291a;
-  font-size:.96em;
-  letter-spacing:.04em;
-}
-.text-box,.npc-appearance-box,.npc-thought-box{
-  padding:10px 11px;
-  border-radius:11px;
-  background:rgba(255,253,248,.62);
-  border:1px solid rgba(126,90,56,.14);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.40);
-}
-.bar-title{font-size:.95em;margin-top:10px}.bar-shell{
-  height:14px;
-  background:rgba(72,45,26,.16);
-  border:1px solid rgba(70,38,18,.20);
-  box-shadow:inset 0 1px 3px rgba(48,28,14,.16);
-}
-.hp-fill{background:linear-gradient(90deg,#7f2924,#b84335,#dc6a50)}
-.mp-fill{background:linear-gradient(90deg,#1d5d7a,#2a8cb3,#5db9d4)}
-.touki-use-card,.battle-eval,.causal-card,.npc-card,.npc-thought-card{
-  border:1px solid rgba(99,58,29,.22);
-  background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,250,236,.15)),rgba(255,246,226,.42);
-  box-shadow:inset 0 0 12px rgba(91,50,19,.055),0 2px 8px rgba(56,29,10,.06);
-}
-.touki-use-title,.battle-label,.causal-title{letter-spacing:.06em}.touki-use-box,.battle-eval-box,.causal-box,.causal-value-box,.npc-info-grid>div,.npc-feature-value{
-  background:rgba(255,253,248,.56);
-  border-color:rgba(126,90,56,.13);
-}
-.npc-feature-label{
-  background:linear-gradient(180deg,#d7c6ad,#b99a72);
-  color:#372216;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.28);
-}
-.ability-chip{
-  border-radius:10px;
-  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(246,238,226,.90));
-  box-shadow:0 2px 6px rgba(70,40,20,.07),inset 0 1px 0 rgba(255,255,255,.62);
-}
-.ability-modal{
-  border-radius:18px;
-  box-shadow:0 16px 34px rgba(40,22,8,.24),inset 0 1px 0 rgba(255,255,255,.72);
-}
-.map-frame{background:rgba(255,253,248,.56);box-shadow:inset 0 0 16px rgba(80,50,20,.06)}
-.rel-card{box-shadow:0 2px 8px rgba(70,40,20,.06),inset 0 1px 0 rgba(255,255,255,.42)}
-.causal-card{padding:13px}.causal-track{height:22px}.causal-slider{width:31px;height:31px}
-@media(max-width:520px){
-  body{font-size:13.6px;padding:8px}.mushoku-status-card{padding:10px;border-radius:16px}.status-header{padding:12px}.status-title{font-size:1.12em}.status-header-grid{grid-template-columns:1fr 1fr}.sum-meta{display:none}summary{padding-right:34px}.section{padding:10px}.status-seal{width:42px;height:42px}
-}
-
-
-
-/* ===== FINAL STRICT OVERRIDE：克制手札UI修正版 =====
-   目的：不再依赖前文同级覆盖，强制压掉旧橙色summary与旧卡片质感。
-   不改任何变量id、JS读取逻辑、三女主颜色、能力弹窗、因果双轨功能。
-*/
 html body{
   font-size:14px !important;
   line-height:1.62 !important;
@@ -1404,46 +1036,73 @@ html body .mushoku-status-card{
     radial-gradient(circle at 10% 0%,rgba(255,255,255,.54),transparent 25%),
     linear-gradient(180deg,#f7efd9 0%,#efe0bd 100%) !important;
   background-size:22px 22px,22px 22px,auto,auto !important;
-  box-shadow:0 12px 26px rgba(32,19,8,.24), inset 0 0 0 1px rgba(255,255,255,.42) !important;
+  box-shadow:0 12px 26px rgba(32,19,8,.24),inset 0 0 0 1px rgba(255,255,255,.42) !important;
 }
 html body .mushoku-status-card .status-header{
-  border-radius:17px !important;
-  padding:13px 15px !important;
-  margin:0 0 10px !important;
-  color:#3d2a1c !important;
+  position:relative !important;
+  overflow:visible !important;
+  margin:0 0 12px !important;
+  padding:14px 15px 12px !important;
+  border-radius:16px !important;
+  border:1px solid rgba(70,44,27,.32) !important;
+  color:#fff8e9 !important;
   background:
-    linear-gradient(180deg,rgba(255,255,255,.66),rgba(255,250,237,.40)),
-    linear-gradient(135deg,#f9f1df,#ead9b8) !important;
-  border:1px solid rgba(122,95,60,.22) !important;
-  box-shadow:0 4px 12px rgba(70,45,20,.08), inset 0 1px 0 rgba(255,255,255,.60) !important;
+    radial-gradient(circle at 88% 10%,rgba(236,206,139,.20),transparent 24%),
+    linear-gradient(135deg,#4b2e22 0%,#6f5138 56%,#9b7a54 100%) !important;
+  box-shadow:0 8px 18px rgba(49,30,16,.18),inset 0 1px 0 rgba(255,255,255,.16) !important;
 }
-html body .mushoku-status-card .status-kicker{
-  color:#8b745c !important;
+html body .mushoku-status-card .status-header:after{
+  content:"" !important;
+  position:absolute !important;
+  inset:auto 12px 8px 12px !important;
+  height:1px !important;
+  background:linear-gradient(90deg,transparent,rgba(255,241,200,.35),transparent) !important;
+}
+.status-title-row{
+  position:relative;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  z-index:1;
+}
+html body .mushoku-status-card .status-title-row{overflow:visible !important}
+.status-kicker{
+  font-size:.75em;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  margin-bottom:2px;
+}
+html body .mushoku-status-card .status-kicker{color:rgba(255,244,218,.72) !important}
+.status-title{
+  font-weight:900;
+  line-height:1.25;
 }
 html body .mushoku-status-card .status-title{
-  color:#2f2117 !important;
-  font-size:1.18em !important;
-  letter-spacing:.04em !important;
+  color:#fff8e9 !important;
+  font-size:1.26em !important;
+  letter-spacing:.08em !important;
+  text-shadow:0 1px 2px rgba(32,18,8,.28) !important;
+}
+.status-seal{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  font-weight:900;
 }
 html body .mushoku-status-card .status-seal{
   width:42px !important;
   height:42px !important;
-  color:#4d3420 !important;
-  background:radial-gradient(circle at 35% 28%,#fff3c3,#d8ad65 72%,#9b7042) !important;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.48),0 2px 7px rgba(35,20,10,.17) !important;
+  color:#4b2e22 !important;
+  background:radial-gradient(circle at 35% 28%,#fff1bf,#d1a65c 72%,#8b6236) !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.45),0 3px 10px rgba(35,20,10,.22) !important;
 }
-html body .mushoku-status-card .status-header-grid>div{
-  background:rgba(255,253,248,.44) !important;
-  border:1px solid rgba(130,100,64,.14) !important;
-}
-html body .mushoku-status-card .status-header-grid b{
-  color:#8a7156 !important;
-}
-html body .mushoku-status-card .status-header-grid span{
-  color:#3a281b !important;
-}
-html body .mushoku-status-card details{
-  margin:7px 0 !important;
+details{margin:7px 0 !important}
+summary{
+  cursor:pointer;
+  user-select:none;
 }
 html body .mushoku-status-card summary{
   position:relative !important;
@@ -1461,14 +1120,15 @@ html body .mushoku-status-card summary{
   background:
     linear-gradient(180deg,rgba(255,255,255,.32),rgba(255,255,255,0)),
     linear-gradient(180deg,#ded0ba 0%,#c7ad88 70%,#b19168 100%) !important;
-  box-shadow:0 1px 5px rgba(54,35,17,.10), inset 0 1px 0 rgba(255,255,255,.46) !important;
+  box-shadow:0 1px 5px rgba(54,35,17,.10),inset 0 1px 0 rgba(255,255,255,.46) !important;
 }
 html body .mushoku-status-card details[open] > summary{
   background:
     linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0)),
     linear-gradient(180deg,#d5c1a1 0%,#b99668 70%,#9e7548 100%) !important;
-  box-shadow:0 2px 7px rgba(54,35,17,.12), inset 0 1px 0 rgba(255,255,255,.42) !important;
+  box-shadow:0 2px 7px rgba(54,35,17,.12),inset 0 1px 0 rgba(255,255,255,.42) !important;
 }
+summary::-webkit-details-marker,
 html body .mushoku-status-card summary::-webkit-details-marker{display:none !important}
 html body .mushoku-status-card summary::after{
   content:"▾" !important;
@@ -1479,14 +1139,17 @@ html body .mushoku-status-card summary::after{
   color:rgba(55,37,24,.70) !important;
   font-size:.82em !important;
 }
-html body .mushoku-status-card details[open] > summary::after{
-  transform:translateY(-50%) rotate(0deg) !important;
-}
+html body .mushoku-status-card details[open] > summary::after{transform:translateY(-50%) rotate(0deg) !important}
 html body .mushoku-status-card .sum-left{
   display:flex !important;
   align-items:center !important;
   gap:8px !important;
   min-width:0 !important;
+}
+.sum-left>span:last-child{
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
 }
 html body .mushoku-status-card .sum-icon{
   width:21px !important;
@@ -1495,13 +1158,16 @@ html body .mushoku-status-card .sum-icon{
   display:flex !important;
   align-items:center !important;
   justify-content:center !important;
-  font-size:.78em !important;
+  font-size:1.05em !important;
+  line-height:1 !important;
   color:#62462d !important;
   background:rgba(255,250,239,.48) !important;
   border:1px solid rgba(255,255,255,.36) !important;
   box-shadow:inset 0 -1px 0 rgba(90,58,28,.08) !important;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","STKaiti","KaiTi",serif !important;
 }
 html body .mushoku-status-card .sum-meta{
+  min-width:0 !important;
   color:rgba(58,39,25,.72) !important;
   font-size:.82em !important;
   font-weight:800 !important;
@@ -1510,6 +1176,7 @@ html body .mushoku-status-card .sum-meta{
   white-space:nowrap !important;
   text-overflow:ellipsis !important;
 }
+.grid{gap:9px}
 html body .mushoku-status-card .section,
 html body .mushoku-status-card .npc-card,
 html body .mushoku-status-card .npc-thought-card,
@@ -1517,11 +1184,9 @@ html body .mushoku-status-card .touki-use-card,
 html body .mushoku-status-card .battle-eval,
 html body .mushoku-status-card .causal-card{
   border-radius:14px !important;
-  border:1px solid rgba(110,84,52,.18) !important;
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,250,239,.24)),
-    rgba(255,249,237,.52) !important;
-  box-shadow:0 2px 8px rgba(70,45,20,.055), inset 0 1px 0 rgba(255,255,255,.35) !important;
+  border:1px solid rgba(110,84,52,.21) !important;
+  background:linear-gradient(180deg,rgba(244,236,219,.58),rgba(225,207,176,.64)),rgba(226,207,174,.74) !important;
+  box-shadow:0 2px 8px rgba(70,45,20,.06),inset 0 1px 0 rgba(255,255,255,.28) !important;
 }
 html body .mushoku-status-card .section{
   margin-top:8px !important;
@@ -1539,9 +1204,31 @@ html body .mushoku-status-card .causal-box,
 html body .mushoku-status-card .causal-value-box,
 html body .mushoku-status-card .causal-board{
   border-radius:10px !important;
-  border:1px solid rgba(123,95,60,.13) !important;
-  background:rgba(255,253,248,.50) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.35) !important;
+  border:1px solid rgba(123,95,60,.14) !important;
+  background:rgba(255,253,248,.66) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.46) !important;
+}
+.name{font-size:1.22em !important;letter-spacing:.05em}
+.meta{font-size:.92em;color:#7b6a58}
+.pill{
+  padding:3px 9px;
+  background:rgba(177,145,101,.20);
+  border:1px solid rgba(130,91,52,.18);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.32);
+}
+html body .mushoku-status-card .box-title,
+html body .mushoku-status-card .battle-eval-title,
+html body .mushoku-status-card .touki-use-label,
+html body .mushoku-status-card .npc-box-title,
+html body .mushoku-status-card .npc-thought-title,
+html body .mushoku-status-card .causal-box-title{
+  color:#3d281a !important;
+  font-size:.96em !important;
+}
+.text-box,
+.npc-appearance-box,
+.npc-thought-box{
+  padding:10px 11px;
 }
 html body .mushoku-status-card .bar-shell{
   height:10px !important;
@@ -1553,307 +1240,50 @@ html body .mushoku-status-card .bar-title{
   font-size:.92em !important;
   margin-top:9px !important;
 }
-html body .mushoku-status-card .name{
-  font-size:1.22em !important;
-}
-html body .mushoku-status-card .box-title,
-html body .mushoku-status-card .battle-eval-title,
-html body .mushoku-status-card .touki-use-label,
-html body .mushoku-status-card .npc-box-title,
-html body .mushoku-status-card .npc-thought-title,
-html body .mushoku-status-card .causal-box-title{
-  color:#3d281a !important;
-  font-size:.96em !important;
+.hp-fill{background:linear-gradient(90deg,#7f2924,#b84335,#dc6a50)}
+.mp-fill{background:linear-gradient(90deg,#1d5d7a,#2a8cb3,#5db9d4)}
+.touki-use-title,
+.battle-label,
+.causal-title{letter-spacing:.06em}
+.npc-feature-label{
+  background:linear-gradient(180deg,#d7c6ad,#b99a72);
+  color:#372216;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28);
 }
 html body .mushoku-status-card .ability-chip{
   border-radius:9px !important;
   background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(246,238,224,.70)) !important;
   border:1px solid rgba(110,80,55,.16) !important;
-  box-shadow:0 1px 3px rgba(70,40,20,.07), inset 0 1px 0 rgba(255,255,255,.45) !important;
+  box-shadow:0 1px 3px rgba(70,40,20,.07),inset 0 1px 0 rgba(255,255,255,.45) !important;
 }
-@media(max-width:520px){
-  html body .mushoku-status-card{padding:10px !important;border-radius:16px !important}
-  html body .mushoku-status-card .status-header{padding:12px !important}
-  html body .mushoku-status-card .status-title{font-size:1.08em !important}
-  html body .mushoku-status-card .sum-meta{display:none !important}
-  html body .mushoku-status-card summary{min-height:36px !important;padding-right:32px !important}
-}
-
-
-/* ===== 用户定制：顶部精简、emoji栏目图标、货币卡 ===== */
-html body .mushoku-status-card .status-header-grid{display:none !important}
-html body .mushoku-status-card .sum-icon{
-  font-size:1.05em !important;
-  line-height:1 !important;
-  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","STKaiti","KaiTi",serif !important;
+.ability-modal{
+  border-radius:18px;
+  box-shadow:0 16px 34px rgba(40,22,8,.24),inset 0 1px 0 rgba(255,255,255,.72);
 }
 html body .mushoku-status-card .ability-modal-desc{white-space:pre-line !important}
+.map-frame{
+  background:rgba(255,253,248,.56);
+  box-shadow:inset 0 0 16px rgba(80,50,20,.06);
+}
+.rel-card{box-shadow:0 2px 8px rgba(70,40,20,.06),inset 0 1px 0 rgba(255,255,255,.42)}
+.causal-card{padding:13px !important}
+.causal-track{height:22px}
+.causal-slider{width:31px;height:31px}
 
-
-/* ===== 用户二次修正：恢复深褐标题栏 + 全模块内容底面降饱和 ===== */
-html body .mushoku-status-card .status-header{
-  position:relative !important;
-  overflow:hidden !important;
-  margin:0 0 12px !important;
-  padding:14px 15px 12px !important;
-  border-radius:16px !important;
-  border:1px solid rgba(70,44,27,.32) !important;
-  color:#fff8e9 !important;
-  background:
-    radial-gradient(circle at 88% 10%,rgba(236,206,139,.20),transparent 24%),
-    linear-gradient(135deg,#4b2e22 0%,#6f5138 56%,#9b7a54 100%) !important;
-  box-shadow:
-    0 8px 18px rgba(49,30,16,.18),
-    inset 0 1px 0 rgba(255,255,255,.16) !important;
-}
-html body .mushoku-status-card .status-header:after{
-  content:"" !important;
-  position:absolute !important;
-  inset:auto 12px 8px 12px !important;
-  height:1px !important;
-  background:linear-gradient(90deg,transparent,rgba(255,241,200,.35),transparent) !important;
-}
-html body .mushoku-status-card .status-kicker{
-  color:rgba(255,244,218,.72) !important;
-}
-html body .mushoku-status-card .status-title{
-  color:#fff8e9 !important;
-  font-size:1.26em !important;
-  letter-spacing:.08em !important;
-  text-shadow:0 1px 2px rgba(32,18,8,.28) !important;
-}
-html body .mushoku-status-card .status-seal{
-  color:#4b2e22 !important;
-  background:radial-gradient(circle at 35% 28%,#fff1bf,#d1a65c 72%,#8b6236) !important;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.45),0 3px 10px rgba(35,20,10,.22) !important;
-}
-
-/* 模块展开后的“大底面”：比小卡片更深、更低饱和，形成层次 */
-html body .mushoku-status-card .section,
-html body .mushoku-status-card .npc-card,
-html body .mushoku-status-card .npc-thought-card,
-html body .mushoku-status-card .touki-use-card,
-html body .mushoku-status-card .battle-eval,
-html body .mushoku-status-card .causal-card{
-  border:1px solid rgba(110,84,52,.21) !important;
-  background:
-    linear-gradient(180deg,rgba(244,236,219,.58),rgba(225,207,176,.64)),
-    rgba(226,207,174,.74) !important;
-  box-shadow:
-    0 2px 8px rgba(70,45,20,.06),
-    inset 0 1px 0 rgba(255,255,255,.28) !important;
-}
-
-/* 模块内部小卡片保持偏白，和外层底面拉开对比 */
-html body .mushoku-status-card .section.grid>div,
-html body .mushoku-status-card .text-box,
-html body .mushoku-status-card .battle-eval-box,
-html body .mushoku-status-card .touki-use-box,
-html body .mushoku-status-card .npc-info-grid>div,
-html body .mushoku-status-card .npc-appearance-box,
-html body .mushoku-status-card .npc-thought-box,
-html body .mushoku-status-card .npc-feature-value,
-html body .mushoku-status-card .causal-box,
-html body .mushoku-status-card .causal-value-box,
-html body .mushoku-status-card .causal-board{
-  border:1px solid rgba(123,95,60,.14) !important;
-  background:rgba(255,253,248,.66) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.46) !important;
-}
-
-
-
-/* ===== BGM音乐圆章：强制替换六面圆章 + 涟漪 ===== */
-@keyframes mushokuBgmRipple{
-  0%{opacity:.62;transform:scale(.78)}
-  70%{opacity:0;transform:scale(1.55)}
-  100%{opacity:0;transform:scale(1.55)}
-}
-@keyframes mushokuBgmSpin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
-html body .mushoku-status-card .status-seal.bgm-seal{
-  position:relative !important;
-  cursor:pointer !important;
-  overflow:visible !important;
-  isolation:isolate !important;
-  user-select:none !important;
-  font-size:0 !important;
-  line-height:1 !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal .bgm-note{
-  position:relative !important;
-  z-index:2 !important;
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  width:100% !important;
-  height:100% !important;
-  font-family:"Apple Color Emoji","Segoe UI Symbol","Noto Color Emoji","STKaiti","KaiTi",serif !important;
-  font-size:24px !important;
-  font-weight:900 !important;
-  color:#5a371f !important;
-  text-shadow:0 1px 0 rgba(255,255,255,.45) !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal::before,
-html body .mushoku-status-card .status-seal.bgm-seal::after{
-  content:"" !important;
-  position:absolute !important;
-  inset:-7px !important;
-  border-radius:50% !important;
-  border:2px solid rgba(255,235,175,.55) !important;
-  box-shadow:0 0 12px rgba(255,223,145,.34) !important;
-  opacity:0 !important;
-  transform:scale(.82) !important;
-  pointer-events:none !important;
-  z-index:1 !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal.is-playing::before{
-  animation:mushokuBgmRipple 1.65s ease-out infinite !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal.is-playing::after{
-  animation:mushokuBgmRipple 1.65s ease-out .82s infinite !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal.is-playing .bgm-note{
-  animation:mushokuBgmSpin 4.8s linear infinite !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal:not(.is-playing){
-  filter:saturate(.88) brightness(.98) !important;
-}
-
-
-/* ===== BGM音乐圆章：安全视觉版，播放由BGM正则负责，不在状态栏里执行/audiostop ===== */
-html body .mushoku-status-card .status-seal.bgm-seal{
-  cursor:help !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal::before{
-  animation:mushokuBgmRipple 1.65s ease-out infinite !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal::after{
-  animation:mushokuBgmRipple 1.65s ease-out .82s infinite !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal .bgm-note{
-  animation:mushokuBgmSpin 5.6s linear infinite !important;
-}
-
-
-/* ===== FINAL BGM OVERRIDE：去掉难看的旋转，改成呼吸式音乐涟漪 ===== */
-@keyframes mushokuBgmSealBreathSoft{
-  0%,100%{
-    transform:scale(1);
-    box-shadow:
-      inset 0 0 0 1px rgba(255,255,255,.50),
-      0 3px 10px rgba(35,20,10,.22),
-      0 0 0 0 rgba(255,228,156,.00);
-    filter:brightness(1) saturate(1);
-  }
-  50%{
-    transform:scale(1.035);
-    box-shadow:
-      inset 0 0 0 1px rgba(255,255,255,.55),
-      0 4px 12px rgba(35,20,10,.24),
-      0 0 0 5px rgba(255,231,165,.20),
-      0 0 16px rgba(255,222,138,.34);
-    filter:brightness(1.05) saturate(1.04);
-  }
-}
-@keyframes mushokuBgmRippleSoft{
-  0%{
-    opacity:.62;
-    transform:scale(.92);
-  }
-  55%{
-    opacity:.24;
-    transform:scale(1.32);
-  }
-  100%{
-    opacity:0;
-    transform:scale(1.72);
-  }
-}
-html body .mushoku-status-card .status-header{
-  overflow:visible !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal{
-  position:relative !important;
-  overflow:visible !important;
-  isolation:isolate !important;
-  cursor:help !important;
-  animation:mushokuBgmSealBreathSoft 2.8s ease-in-out infinite !important;
-  transform-origin:center center !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal .bgm-note{
-  animation:none !important;
-  transform:none !important;
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  color:#5a371f !important;
-  font-size:23px !important;
-  line-height:1 !important;
-  text-shadow:0 1px 0 rgba(255,255,255,.45),0 0 8px rgba(255,230,170,.32) !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal::before,
-html body .mushoku-status-card .status-seal.bgm-seal::after{
-  content:"" !important;
-  position:absolute !important;
-  left:50% !important;
-  top:50% !important;
-  width:100% !important;
-  height:100% !important;
-  border-radius:50% !important;
-  border:1.5px solid rgba(255,235,174,.64) !important;
-  box-shadow:0 0 10px rgba(255,224,145,.34) !important;
-  opacity:0 !important;
-  transform:translate(-50%,-50%) scale(.92) !important;
-  transform-origin:center center !important;
-  pointer-events:none !important;
-  z-index:-1 !important;
-  animation:mushokuBgmRippleSoft 2.1s ease-out infinite !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal::after{
-  animation-delay:1.05s !important;
-}
-
-
-
-/* ===== FINAL FINAL BGM OVERRIDE：彻底取消旋转，只保留静态音乐符号 + 可见涟漪 ===== */
 @keyframes mushokuBgmSealGlowOnly{
   0%,100%{
     filter:brightness(1) saturate(1);
-    box-shadow:
-      inset 0 0 0 1px rgba(255,255,255,.50),
-      0 3px 10px rgba(35,20,10,.22),
-      0 0 9px rgba(255,222,145,.18) !important;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.50),0 3px 10px rgba(35,20,10,.22),0 0 9px rgba(255,222,145,.18) !important;
   }
   50%{
     filter:brightness(1.06) saturate(1.05);
-    box-shadow:
-      inset 0 0 0 1px rgba(255,255,255,.56),
-      0 4px 12px rgba(35,20,10,.24),
-      0 0 18px rgba(255,224,145,.38) !important;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.56),0 4px 12px rgba(35,20,10,.24),0 0 18px rgba(255,224,145,.38) !important;
   }
 }
 @keyframes mushokuBgmRippleVisible{
-  0%{
-    opacity:.70;
-    transform:translate(-50%,-50%) scale(.88);
-  }
-  62%{
-    opacity:.22;
-    transform:translate(-50%,-50%) scale(1.42);
-  }
-  100%{
-    opacity:0;
-    transform:translate(-50%,-50%) scale(1.76);
-  }
-}
-html body .mushoku-status-card .status-header{
-  overflow:visible !important;
-}
-html body .mushoku-status-card .status-title-row{
-  overflow:visible !important;
+  0%{opacity:.70;transform:translate(-50%,-50%) scale(.88)}
+  62%{opacity:.22;transform:translate(-50%,-50%) scale(1.42)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.76)}
 }
 html body .mushoku-status-card .status-seal.bgm-seal,
 html body .mushoku-status-card .status-seal.bgm-seal.is-playing{
@@ -1862,6 +1292,9 @@ html body .mushoku-status-card .status-seal.bgm-seal.is-playing{
   isolation:isolate !important;
   z-index:10 !important;
   cursor:help !important;
+  user-select:none !important;
+  font-size:0 !important;
+  line-height:1 !important;
   transform:none !important;
   animation:mushokuBgmSealGlowOnly 2.8s ease-in-out infinite !important;
 }
@@ -1877,7 +1310,9 @@ html body .mushoku-status-card .status-seal.bgm-seal.is-playing .bgm-note{
   animation:none !important;
   transform:none !important;
   rotate:0deg !important;
+  font-family:"Apple Color Emoji","Segoe UI Symbol","Noto Color Emoji","STKaiti","KaiTi",serif !important;
   font-size:23px !important;
+  font-weight:900 !important;
   line-height:1 !important;
   color:#5a371f !important;
   text-shadow:0 1px 0 rgba(255,255,255,.45),0 0 8px rgba(255,230,170,.32) !important;
@@ -1895,9 +1330,7 @@ html body .mushoku-status-card .status-seal.bgm-seal.is-playing::after{
   border-radius:50% !important;
   border:2px solid rgba(255,236,178,.74) !important;
   background:transparent !important;
-  box-shadow:
-    0 0 8px rgba(255,226,150,.40),
-    0 0 18px rgba(255,226,150,.22) !important;
+  box-shadow:0 0 8px rgba(255,226,150,.40),0 0 18px rgba(255,226,150,.22) !important;
   opacity:0 !important;
   transform:translate(-50%,-50%) scale(.88) !important;
   transform-origin:center center !important;
@@ -1906,8 +1339,17 @@ html body .mushoku-status-card .status-seal.bgm-seal.is-playing::after{
   animation:mushokuBgmRippleVisible 2.05s ease-out infinite !important;
 }
 html body .mushoku-status-card .status-seal.bgm-seal::after,
-html body .mushoku-status-card .status-seal.bgm-seal.is-playing::after{
-  animation-delay:1.02s !important;
+html body .mushoku-status-card .status-seal.bgm-seal.is-playing::after{animation-delay:1.02s !important}
+
+@media(max-width:520px){
+  body{font-size:13.6px;padding:8px}
+  html body .mushoku-status-card{padding:10px !important;border-radius:16px !important}
+  html body .mushoku-status-card .status-header{padding:12px !important}
+  html body .mushoku-status-card .status-title{font-size:1.08em !important}
+  html body .mushoku-status-card .sum-meta{display:none !important}
+  html body .mushoku-status-card summary{min-height:36px !important;padding-right:32px !important}
+  .section{padding:10px}
+  .status-seal{width:42px;height:42px}
 }
 </style>
 </head>
