@@ -1661,6 +1661,74 @@ html body .mushoku-status-card .causal-board{
   box-shadow:inset 0 1px 0 rgba(255,255,255,.46) !important;
 }
 
+
+
+/* ===== BGM圆章：用音乐符号替换“六面”，播放时显示涟漪 ===== */
+html body .mushoku-status-card .status-seal.bgm-seal{
+  position:relative !important;
+  overflow:visible !important;
+  isolation:isolate !important;
+  cursor:pointer !important;
+  font-size:0 !important;
+  user-select:none !important;
+  background:radial-gradient(circle at 35% 28%,#fff5cf,#d8b66f 72%,#9b7042) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.52),
+    0 3px 10px rgba(35,20,10,.22),
+    0 0 0 1px rgba(255,232,172,.10) !important;
+}
+html body .mushoku-status-card .status-seal.bgm-seal .bgm-note{
+  position:relative !important;
+  z-index:2 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:100% !important;
+  height:100% !important;
+  font-size:24px !important;
+  line-height:1 !important;
+  color:#5b3821 !important;
+  text-shadow:0 1px 1px rgba(255,248,220,.62) !important;
+  font-family:"Times New Roman","STKaiti","KaiTi",serif !important;
+  transform:translateY(-1px) !important;
+}
+html body .mushoku-status-card .status-seal.bgm-seal::before,
+html body .mushoku-status-card .status-seal.bgm-seal::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:-7px !important;
+  border-radius:50% !important;
+  border:2px solid rgba(246,211,126,.52) !important;
+  box-shadow:0 0 14px rgba(246,211,126,.30) !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+  z-index:1 !important;
+}
+html body .mushoku-status-card .status-seal.bgm-seal.is-playing::before{
+  animation:mushokuBgmRipple 1.8s ease-out infinite !important;
+}
+html body .mushoku-status-card .status-seal.bgm-seal.is-playing::after{
+  animation:mushokuBgmRipple 1.8s ease-out .85s infinite !important;
+}
+html body .mushoku-status-card .status-seal.bgm-seal.is-playing .bgm-note{
+  animation:mushokuBgmNotePulse 1.35s ease-in-out infinite !important;
+}
+html body .mushoku-status-card .status-seal.bgm-seal:not(.is-playing){
+  filter:saturate(.82) brightness(.98) !important;
+}
+@keyframes mushokuBgmRipple{
+  0%{transform:scale(.82);opacity:.72}
+  70%{transform:scale(1.42);opacity:0}
+  100%{transform:scale(1.42);opacity:0}
+}
+@keyframes mushokuBgmNotePulse{
+  0%,100%{transform:translateY(-1px) scale(1);filter:brightness(1)}
+  50%{transform:translateY(-1px) scale(1.08);filter:brightness(1.18)}
+}
+@media(max-width:520px){
+  html body .mushoku-status-card .status-seal.bgm-seal .bgm-note{font-size:22px !important}
+}
+
 </style>
 </head>
 <body>
@@ -1673,7 +1741,7 @@ html body .mushoku-status-card .causal-board{
         <div class="status-kicker">Adventurer's Parchment</div>
         <div class="status-title">无职转生 · 六面世界旅录</div>
       </div>
-      <div class="status-seal">六面</div>
+      <div class="status-seal bgm-seal" id="mushokuBgmSeal" title="暂无BGM" aria-label="BGM播放器"><span class="bgm-note">♫</span></div>
     </div>
   </div>
 
@@ -2858,7 +2926,73 @@ function heroineRelationText(key, fallback){
     setTextIfExists("sumTarget", target);
     setTextIfExists("sumCausal", "偏移 " + dev + " ｜ 人神 " + h + " ｜ 龙神 " + d);
   }
+
+
+  function initBgmSeal(){
+    var seal = document.getElementById("mushokuBgmSeal");
+    if(!seal) return;
+
+    function slash(cmd){
+      try{
+        if(typeof triggerSlash === "function"){
+          triggerSlash(cmd);
+          return true;
+        }
+      }catch(e){}
+      try{
+        if(window.parent && window.parent !== window && typeof window.parent.triggerSlash === "function"){
+          window.parent.triggerSlash(cmd);
+          return true;
+        }
+      }catch(e){}
+      return false;
+    }
+
+    function readStorage(key, fallback){
+      try{
+        var v = localStorage.getItem(key);
+        return v === null ? fallback : v;
+      }catch(e){
+        return fallback;
+      }
+    }
+
+    function writeStorage(key, value){
+      try{ localStorage.setItem(key, value); }catch(e){}
+    }
+
+    function syncBgmSeal(){
+      var playing = readStorage("mushokuBgmPlaying", "false") === "true";
+      var label = readStorage("mushokuBgmLabel", "");
+      seal.classList.toggle("is-playing", playing);
+      seal.title = playing ? ("正在播放BGM" + (label ? "：" + label : "")) : "暂无BGM";
+      seal.setAttribute("aria-label", seal.title);
+    }
+
+    seal.addEventListener("click", function(ev){
+      ev.preventDefault();
+      ev.stopPropagation();
+      var playing = readStorage("mushokuBgmPlaying", "false") === "true";
+      var url = readStorage("mushokuCurrentBGM", "");
+
+      if(playing){
+        slash("/audiostop type=bgm");
+        writeStorage("mushokuBgmPlaying", "false");
+      }else if(url){
+        slash("/audioselect type=bgm " + url + "|/audiomode type=bgm mode=single|/audioplay type=bgm");
+        writeStorage("mushokuBgmPlaying", "true");
+      }
+      syncBgmSeal();
+    });
+
+    window.addEventListener("storage", syncBgmSeal);
+    window.addEventListener("mushoku-bgm-state-change", syncBgmSeal);
+    setInterval(syncBgmSeal, 1200);
+    syncBgmSeal();
+  }
+
   updateSummaryAndHeader();
+  initBgmSeal();
 
 })();
 </script>
