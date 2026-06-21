@@ -1721,6 +1721,21 @@ html body .mushoku-status-card .status-seal.bgm-seal.is-playing .bgm-note{
 html body .mushoku-status-card .status-seal.bgm-seal:not(.is-playing){
   filter:saturate(.88) brightness(.98) !important;
 }
+
+
+/* ===== BGM音乐圆章：安全视觉版，播放由BGM正则负责，不在状态栏里执行/audiostop ===== */
+html body .mushoku-status-card .status-seal.bgm-seal{
+  cursor:help !important;
+}
+html body .mushoku-status-card .status-seal.bgm-seal::before{
+  animation:mushokuBgmRipple 1.65s ease-out infinite !important;
+}
+html body .mushoku-status-card .status-seal.bgm-seal::after{
+  animation:mushokuBgmRipple 1.65s ease-out .82s infinite !important;
+}
+html body .mushoku-status-card .status-seal.bgm-seal .bgm-note{
+  animation:mushokuBgmSpin 5.6s linear infinite !important;
+}
 </style>
 </head>
 <body>
@@ -1733,7 +1748,7 @@ html body .mushoku-status-card .status-seal.bgm-seal:not(.is-playing){
         <div class="status-kicker">Adventurer's Parchment</div>
         <div class="status-title">无职转生 · 六面世界旅录</div>
       </div>
-      <div class="status-seal bgm-seal" id="mushokuBgmSeal" title="暂无BGM" aria-label="BGM播放器"><span class="bgm-note">♫</span></div>
+      <div class="status-seal bgm-seal" id="mushokuBgmSeal" title="BGM播放器：播放由BGM正则控制" aria-label="BGM播放器"><span class="bgm-note">♫</span></div>
     </div>
   </div>
 
@@ -2925,56 +2940,22 @@ function heroineRelationText(key, fallback){
     var seal = document.getElementById("mushokuBgmSeal");
     if(!seal) return;
 
-    function slash(cmd){
-      try{
-        if(typeof triggerSlash === "function"){
-          triggerSlash(cmd);
-          return true;
-        }
-      }catch(e){}
-      try{
-        if(window.parent && window.parent !== window && typeof window.parent.triggerSlash === "function"){
-          window.parent.triggerSlash(cmd);
-          return true;
-        }
-      }catch(e){}
-      return false;
-    }
-
     function sync(){
-      var playing = "false";
       var url = "";
       var label = "";
-      try{ playing = localStorage.getItem("mushokuBgmPlaying") || "false"; }catch(e){}
       try{ url = localStorage.getItem("mushokuCurrentBGM") || ""; }catch(e){}
       try{ label = localStorage.getItem("mushokuBgmLabel") || ""; }catch(e){}
 
-      var isPlaying = playing === "true" && !!url;
-      seal.classList.toggle("is-playing", isPlaying);
-      seal.title = isPlaying ? ("正在播放BGM：" + (label || url)) : "暂无BGM";
+      seal.classList.add("is-playing");
+      seal.title = (label || url) ? ("正在播放BGM：" + (label || url)) : "BGM播放器：播放由BGM正则控制";
     }
 
+    /* 不在状态栏里执行 /audiostop 或 /audioplay，避免部分酒馆环境报 Unknown command。
+       BGM播放/切歌/停止全部交给局部BGM正则处理；这里仅显示音乐圆章、涟漪和悬停提示。 */
     seal.addEventListener("click", function(ev){
       ev.preventDefault();
       ev.stopPropagation();
-
-      var playing = "false";
-      var url = "";
-      try{ playing = localStorage.getItem("mushokuBgmPlaying") || "false"; }catch(e){}
-      try{ url = localStorage.getItem("mushokuCurrentBGM") || ""; }catch(e){}
-
-      if(playing === "true"){
-        slash("/audiostop type=bgm");
-        try{ localStorage.setItem("mushokuBgmPlaying", "false"); }catch(e){}
-        sync();
-        return;
-      }
-
-      if(url){
-        slash("/audioselect type=bgm " + url + "|/audiomode type=bgm mode=single|/audioplay type=bgm");
-        try{ localStorage.setItem("mushokuBgmPlaying", "true"); }catch(e){}
-        sync();
-      }
+      sync();
     });
 
     sync();
