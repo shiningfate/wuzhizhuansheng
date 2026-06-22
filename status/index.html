@@ -1796,6 +1796,23 @@ html body .mushoku-status-card .status-seal.bgm-seal.is-playing::after{animation
   }
 }
 
+
+
+/* ===== 精简目标NPC与异世之蝶显示：删去身份/状态行与原著节点显示后，收紧间距 ===== */
+.npc-card .npc-pill-row + .npc-box-title{
+  margin-top:10px !important;
+}
+@media(max-width:520px){
+  .npc-card .npc-pill-row{margin-bottom:6px !important;}
+  .npc-card .npc-pill-row + .npc-box-title{margin-top:8px !important;}
+  .causal-grid{grid-template-columns:1fr 1fr !important;}
+  .causal-wide{grid-column:1/-1 !important;}
+}
+@media(max-width:390px){
+  .causal-grid{grid-template-columns:1fr !important;}
+  .causal-wide{grid-column:auto !important;}
+}
+
 </style>
 </head>
 <body>
@@ -1999,13 +2016,6 @@ html body .mushoku-status-card .status-seal.bgm-seal.is-playing::after{animation
         <span class="npc-pill">年龄：<span id="targetAge">未知</span></span>
       </div>
 
-      <div class="npc-info-grid">
-        <div><b>鉴定：</b><span id="targetIdentifyStatus">未鉴定</span></div>
-        <div><b>称号：</b><span id="targetTitle">未知</span></div>
-        <div class="npc-info-wide"><b>身份标签：</b><span id="targetIdentityTags">暂无</span></div>
-        <div class="npc-info-wide"><b>当前状态：</b><span id="targetBodyStatus">未知</span></div>
-        <div class="npc-info-wide"><b>当前动作：</b><span id="targetCurrentAction">未知</span></div>
-      </div>
 
       <div class="npc-box-title">外貌 / 衣着 / 气质</div>
       <div class="npc-appearance-box" id="targetAppearance">暂无明确外貌描写。</div>
@@ -2090,14 +2100,6 @@ html body .mushoku-status-card .status-seal.bgm-seal.is-playing::after{animation
       </div>
 
       <div class="causal-grid">
-        <div class="causal-box">
-          <div class="causal-box-title">当前原著节点</div>
-          <div class="causal-text" id="canonCurrentNode">暂无明确原著节点。</div>
-        </div>
-        <div class="causal-box">
-          <div class="causal-box-title">分歧起点</div>
-          <div class="causal-text" id="canonDivergencePoint">暂无明确分歧。</div>
-        </div>
         <div class="causal-box">
           <div class="causal-box-title">诱导线变化</div>
           <div class="causal-text" id="hitogamiInfluenceNote">暂无明显诱导。</div>
@@ -2920,11 +2922,6 @@ function heroineRelationText(key, fallback){
   text("targetRace","targetRace","未知");
   text("targetGender","targetGender","未知");
   text("targetAge","targetAge","未知");
-  text("targetIdentifyStatus","targetIdentifyStatus","未鉴定");
-  text("targetTitle","targetTitle","未知");
-  text("targetIdentityTags","targetIdentityTags","暂无");
-  html("targetBodyStatus","targetBodyStatus","未知");
-  html("targetCurrentAction","targetCurrentAction","未知");
   html("targetAppearance","targetAppearance","暂无明确外貌描写。");
 
   html("targetFigureState","targetFigureState","未知");
@@ -2944,8 +2941,6 @@ function heroineRelationText(key, fallback){
 
   renderCanonDeviationLevel();
   renderCausalBalance();
-  html("canonCurrentNode","canonCurrentNode","暂无明确原著节点。");
-  html("canonDivergencePoint","canonDivergencePoint","暂无明确分歧。");
   html("hitogamiInfluenceNote","hitogamiInfluenceNote","暂无明显诱导。");
   html("dragonCausalityNote","dragonCausalityNote","暂无明显脱离。");
   html("causalBalanceNote","causalBalanceNote","当前因果天平接近稳定，原著路线仍可作为主要参考。");
