@@ -1351,6 +1351,451 @@ html body .mushoku-status-card .status-seal.bgm-seal.is-playing::after{animation
   .section{padding:10px}
   .status-seal{width:42px;height:42px}
 }
+
+
+/* ===== 手机端桌面式压缩排版覆盖 v2 =====
+   目标：手机端尽量保留电脑端的双列/横向结构，只压缩字体、间距、卡片尺寸。
+   放在所有原 CSS 之后，避免被旧 @media 覆盖。
+*/
+@media(max-width:520px){
+  html body{
+    padding:3px !important;
+    font-size:11.8px !important;
+    line-height:1.48 !important;
+    -webkit-text-size-adjust:100% !important;
+  }
+
+  html body .mushoku-status-card{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    margin:0 auto !important;
+    padding:7px !important;
+    border-radius:13px !important;
+    border-width:1px !important;
+    box-shadow:0 8px 18px rgba(32,19,8,.22), inset 0 0 0 1px rgba(255,255,255,.34) !important;
+  }
+
+  html body .mushoku-status-card .status-header{
+    margin:0 0 7px !important;
+    padding:8px 9px !important;
+    border-radius:12px !important;
+  }
+  html body .mushoku-status-card .status-title-row{
+    align-items:center !important;
+    gap:7px !important;
+  }
+  html body .mushoku-status-card .status-kicker{
+    font-size:.56em !important;
+    letter-spacing:.07em !important;
+    line-height:1.1 !important;
+    margin-bottom:2px !important;
+  }
+  html body .mushoku-status-card .status-title{
+    font-size:1.02em !important;
+    line-height:1.18 !important;
+    letter-spacing:.035em !important;
+  }
+  html body .mushoku-status-card .status-seal,
+  html body .mushoku-status-card .status-seal.bgm-seal{
+    width:31px !important;
+    height:31px !important;
+    min-width:31px !important;
+  }
+  html body .mushoku-status-card .status-seal.bgm-seal .bgm-note,
+  html body .mushoku-status-card .status-seal.bgm-seal.is-playing .bgm-note{
+    font-size:17px !important;
+  }
+  html body .mushoku-status-card .status-seal.bgm-seal::before,
+  html body .mushoku-status-card .status-seal.bgm-seal::after,
+  html body .mushoku-status-card .status-seal.bgm-seal.is-playing::before,
+  html body .mushoku-status-card .status-seal.bgm-seal.is-playing::after{
+    width:36px !important;
+    height:36px !important;
+  }
+
+  html body .mushoku-status-card details{
+    margin:5px 0 !important;
+  }
+  html body .mushoku-status-card summary{
+    min-height:29px !important;
+    padding:5px 25px 5px 7px !important;
+    border-radius:9px !important;
+    gap:6px !important;
+    font-size:.90em !important;
+    line-height:1.25 !important;
+  }
+  html body .mushoku-status-card summary::after{
+    right:8px !important;
+    font-size:.76em !important;
+  }
+  html body .mushoku-status-card .sum-left{
+    gap:5px !important;
+  }
+  html body .mushoku-status-card .sum-icon{
+    width:17px !important;
+    height:17px !important;
+    min-width:17px !important;
+    border-radius:5px !important;
+    font-size:.88em !important;
+  }
+  html body .mushoku-status-card .sum-meta{
+    display:block !important;
+    max-width:112px !important;
+    font-size:.68em !important;
+    line-height:1.2 !important;
+    opacity:.78 !important;
+  }
+
+  html body .mushoku-status-card .section,
+  html body .mushoku-status-card .npc-card,
+  html body .mushoku-status-card .npc-thought-card,
+  html body .mushoku-status-card .touki-use-card,
+  html body .mushoku-status-card .battle-eval,
+  html body .mushoku-status-card .causal-card{
+    margin-top:5px !important;
+    padding:7px !important;
+    border-radius:10px !important;
+  }
+
+  html body .mushoku-status-card .grid{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:5px !important;
+  }
+  html body .mushoku-status-card .wide{
+    grid-column:1 / -1 !important;
+  }
+  html body .mushoku-status-card .section.grid > div{
+    min-width:0 !important;
+    padding:4px 6px !important;
+    border-radius:7px !important;
+    line-height:1.45 !important;
+  }
+
+  html body .mushoku-status-card .name,
+  html body .mushoku-status-card .npc-name{
+    font-size:1.08em !important;
+    line-height:1.25 !important;
+    margin:3px 0 4px !important;
+    letter-spacing:.04em !important;
+  }
+  html body .mushoku-status-card .meta{
+    font-size:.78em !important;
+    line-height:1.35 !important;
+    margin-bottom:5px !important;
+  }
+  html body .mushoku-status-card .tag-row,
+  html body .mushoku-status-card .npc-pill-row{
+    gap:4px !important;
+    margin:5px 0 !important;
+  }
+  html body .mushoku-status-card .pill,
+  html body .mushoku-status-card .npc-pill,
+  html body .mushoku-status-card .battle-rank-badge,
+  html body .mushoku-status-card .causal-level-badge{
+    min-width:0 !important;
+    padding:2px 6px !important;
+    font-size:.76em !important;
+    line-height:1.35 !important;
+    border-radius:999px !important;
+  }
+
+  html body .mushoku-status-card .box-title,
+  html body .mushoku-status-card .npc-box-title,
+  html body .mushoku-status-card .npc-thought-title,
+  html body .mushoku-status-card .battle-eval-title,
+  html body .mushoku-status-card .touki-use-title,
+  html body .mushoku-status-card .causal-box-title{
+    margin:6px 0 3px !important;
+    font-size:.86em !important;
+    line-height:1.25 !important;
+  }
+  html body .mushoku-status-card .text-box,
+  html body .mushoku-status-card .npc-appearance-box,
+  html body .mushoku-status-card .npc-thought-box,
+  html body .mushoku-status-card .npc-feature-value,
+  html body .mushoku-status-card .battle-eval-box,
+  html body .mushoku-status-card .touki-use-box,
+  html body .mushoku-status-card .causal-box,
+  html body .mushoku-status-card .causal-value-box,
+  html body .mushoku-status-card .ripple-item{
+    padding:5px 6px !important;
+    border-radius:7px !important;
+    line-height:1.45 !important;
+    font-size:.82em !important;
+  }
+
+  html body .mushoku-status-card .map-frame{
+    border-radius:8px !important;
+    min-height:28px !important;
+  }
+  html body .mushoku-status-card .map-frame img{
+    width:100% !important;
+    max-height:none !important;
+  }
+
+  html body .mushoku-status-card .bar-title{
+    margin-top:5px !important;
+    font-size:.78em !important;
+    line-height:1.25 !important;
+  }
+  html body .mushoku-status-card .bar-shell{
+    height:7px !important;
+  }
+
+  html body .mushoku-status-card .touki-use-grid,
+  html body .mushoku-status-card .battle-eval-grid,
+  html body .mushoku-status-card .npc-info-grid,
+  html body .mushoku-status-card .causal-grid,
+  html body .mushoku-status-card .causal-values{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:5px !important;
+  }
+  html body .mushoku-status-card .battle-wide,
+  html body .mushoku-status-card .npc-info-wide,
+  html body .mushoku-status-card .causal-wide{
+    grid-column:1 / -1 !important;
+  }
+  html body .mushoku-status-card .battle-rank-head,
+  html body .mushoku-status-card .causal-head{
+    flex-direction:row !important;
+    align-items:center !important;
+    gap:5px !important;
+    margin-bottom:5px !important;
+  }
+  html body .mushoku-status-card .battle-label,
+  html body .mushoku-status-card .causal-title{
+    font-size:.88em !important;
+  }
+
+  html body .mushoku-status-card .rel-card{
+    margin:5px 0 !important;
+    padding:7px 8px 9px !important;
+    border-radius:9px !important;
+    border-left-width:3px !important;
+  }
+  html body .mushoku-status-card .rel-head{
+    flex-direction:row !important;
+    align-items:flex-start !important;
+    justify-content:space-between !important;
+    gap:5px !important;
+  }
+  html body .mushoku-status-card .rel-name{
+    min-width:0 !important;
+    font-size:.86em !important;
+    line-height:1.25 !important;
+  }
+  html body .mushoku-status-card .rel-badges{
+    flex:0 0 auto !important;
+    gap:3px !important;
+    justify-content:flex-end !important;
+  }
+  html body .mushoku-status-card .fate-badge{
+    padding:1px 5px !important;
+    font-size:.64em !important;
+    line-height:1.35 !important;
+  }
+  html body .mushoku-status-card .row{
+    margin:3px 0 !important;
+    line-height:1.42 !important;
+    font-size:.82em !important;
+  }
+
+  html body .mushoku-status-card .ability-group{
+    margin:6px 0 8px !important;
+  }
+  html body .mushoku-status-card .ability-card-grid{
+    gap:5px !important;
+    margin-top:5px !important;
+  }
+  html body .mushoku-status-card .ability-chip{
+    min-width:45px !important;
+    max-width:96px !important;
+    padding:4px 6px !important;
+    border-radius:7px !important;
+    font-size:.72em !important;
+    line-height:1.28 !important;
+  }
+  html body .mushoku-status-card .ability-chip-name{
+    line-height:1.28 !important;
+  }
+  html body .mushoku-status-card .ability-empty{
+    padding:5px 6px !important;
+    font-size:.78em !important;
+    border-radius:7px !important;
+  }
+
+  html body .mushoku-status-card .npc-info-grid > div{
+    padding:5px 6px !important;
+    border-radius:7px !important;
+    font-size:.80em !important;
+    line-height:1.42 !important;
+  }
+  html body .mushoku-status-card .npc-feature-table{
+    gap:5px !important;
+  }
+  html body .mushoku-status-card .npc-feature-row{
+    display:grid !important;
+    grid-template-columns:52px minmax(0,1fr) !important;
+    gap:5px !important;
+    align-items:stretch !important;
+  }
+  html body .mushoku-status-card .npc-feature-label{
+    min-height:27px !important;
+    padding:3px 4px !important;
+    border-radius:7px !important;
+    font-size:.78em !important;
+    line-height:1.2 !important;
+    writing-mode:horizontal-tb !important;
+  }
+  html body .mushoku-status-card .npc-feature-value{
+    min-height:27px !important;
+  }
+
+  html body .mushoku-status-card .causal-card{
+    overflow:hidden !important;
+  }
+  html body .mushoku-status-card .causal-board{
+    margin-bottom:6px !important;
+    padding:7px !important;
+  }
+  html body .mushoku-status-card .causal-dual-label{
+    display:grid !important;
+    grid-template-columns:1fr auto 1fr !important;
+    align-items:center !important;
+    gap:4px !important;
+    margin-bottom:5px !important;
+  }
+  html body .mushoku-status-card .causal-side{
+    font-size:.70em !important;
+    line-height:1.15 !important;
+  }
+  html body .mushoku-status-card .causal-side small{
+    font-size:.86em !important;
+  }
+  html body .mushoku-status-card .causal-side.dragon{
+    text-align:right !important;
+  }
+  html body .mushoku-status-card .causal-center-mark{
+    font-size:.62em !important;
+    line-height:1.1 !important;
+  }
+  html body .mushoku-status-card .causal-track{
+    height:15px !important;
+  }
+  html body .mushoku-status-card .causal-slider{
+    width:22px !important;
+    height:22px !important;
+  }
+  html body .mushoku-status-card .causal-value-num{
+    font-size:1.05em !important;
+  }
+  html body .mushoku-status-card .ripple-item{
+    padding-left:20px !important;
+  }
+  html body .mushoku-status-card .ripple-item:before{
+    left:7px !important;
+    top:11px !important;
+    width:7px !important;
+    height:7px !important;
+  }
+
+  html body .mushoku-status-card .ability-modal-mask{
+    padding:7px !important;
+    border-radius:10px !important;
+  }
+  html body .mushoku-status-card .ability-modal{
+    width:min(96%,320px) !important;
+    padding:13px 9px 9px !important;
+    border-radius:11px !important;
+  }
+  html body .mushoku-status-card .ability-modal-title{
+    font-size:1.04em !important;
+    margin-bottom:5px !important;
+  }
+  html body .mushoku-status-card .ability-modal-desc{
+    padding:8px !important;
+    font-size:.86em !important;
+    line-height:1.55 !important;
+  }
+  html body .mushoku-status-card .ability-modal-close{
+    width:23px !important;
+    height:23px !important;
+    right:7px !important;
+    top:6px !important;
+  }
+}
+
+@media(max-width:390px){
+  html body{
+    padding:2px !important;
+    font-size:10.8px !important;
+    line-height:1.45 !important;
+  }
+  html body .mushoku-status-card{
+    padding:6px !important;
+    border-radius:12px !important;
+  }
+  html body .mushoku-status-card .status-title{
+    font-size:.96em !important;
+    letter-spacing:.025em !important;
+  }
+  html body .mushoku-status-card .status-kicker{
+    font-size:.50em !important;
+  }
+  html body .mushoku-status-card .status-seal,
+  html body .mushoku-status-card .status-seal.bgm-seal{
+    width:28px !important;
+    height:28px !important;
+    min-width:28px !important;
+  }
+  html body .mushoku-status-card .sum-meta{
+    max-width:88px !important;
+    font-size:.62em !important;
+  }
+  html body .mushoku-status-card summary{
+    min-height:27px !important;
+    padding:4px 23px 4px 6px !important;
+  }
+  html body .mushoku-status-card .grid,
+  html body .mushoku-status-card .touki-use-grid,
+  html body .mushoku-status-card .battle-eval-grid,
+  html body .mushoku-status-card .npc-info-grid,
+  html body .mushoku-status-card .causal-grid,
+  html body .mushoku-status-card .causal-values{
+    gap:4px !important;
+  }
+  html body .mushoku-status-card .npc-feature-row{
+    grid-template-columns:46px minmax(0,1fr) !important;
+    gap:4px !important;
+  }
+  html body .mushoku-status-card .ability-chip{
+    min-width:42px !important;
+    max-width:86px !important;
+    padding:3px 5px !important;
+    font-size:.68em !important;
+  }
+  html body .mushoku-status-card .rel-name{
+    font-size:.80em !important;
+  }
+  html body .mushoku-status-card .fate-badge{
+    font-size:.58em !important;
+    padding:1px 4px !important;
+  }
+  html body .mushoku-status-card .causal-side{
+    font-size:.64em !important;
+  }
+  html body .mushoku-status-card .causal-track{
+    height:13px !important;
+  }
+  html body .mushoku-status-card .causal-slider{
+    width:20px !important;
+    height:20px !important;
+  }
+}
+
 </style>
 </head>
 <body>
