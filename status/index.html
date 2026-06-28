@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>无职转生·六面世界旅录</title>
 <style>
+mushokustatuspatch,mushokustatusdata,statusdatapatch,statusdata,.pp-status-patch,.pp-status-data{display:none!important}
 #chat-ui-rz7m4k2p *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 #chat-ui-rz7m4k2p{
 --pp-bg:#efe2c4;--pp-bg2:#e3d2ab;--pp-ink:#3a2814;--pp-ink2:#6b5436;
@@ -633,16 +634,46 @@ function applyPatchData(dst,patch){
   });
   return changed;
 }
-function patchDataFromDom(){
-  var data={},seen={},found=false,scopes=[],host=root.closest('.mes,.message,.chat-message,.swipe,.last_mes');
-  if(host)scopes.push(host);scopes.push(document);
-  scopes.forEach(function(scope){
+function domScopes(){
+  var scopes=[],host=root.closest('.mes,.message,.chat-message,.swipe,.last_mes');
+  if(host)scopes.push(host);
+  var p=root.parentElement,guard=0;
+  while(p&&guard++<6){if(scopes.indexOf(p)<0)scopes.push(p);p=p.parentElement;}
+  scopes.push(document);
+  return scopes;
+}
+function mergeStatusBlock(dst,s){
+  var d=looseData(s);
+  return mergeInto(dst,d);
+}
+function statusDataFromDom(){
+  var data={},seen={},found=false;
+  domScopes().forEach(function(scope){
     try{
-      Array.prototype.slice.call(scope.querySelectorAll('jsonpatch, JSONPatch')).forEach(function(n){
-        var s=(n.textContent||'').trim();if(!s||seen[s])return;seen[s]=1;var j=tryJson(s);if(applyPatchData(data,j))found=true;
+      Array.prototype.slice.call(scope.querySelectorAll('mushokustatusdata,statusdata,.pp-status-data,[data-pp-status-data]')).forEach(function(n){
+        var s=n.getAttribute&&n.getAttribute('data-pp-status-data')||n.textContent||'';
+        s=s.trim();if(!s||seen[s])return;seen[s]=1;if(mergeStatusBlock(data,s))found=true;
       });
-      var txt=scope.textContent||'';var re=/<JSONPatch>\s*([\s\S]*?)\s*<\/JSONPatch>/ig,m;
-      while((m=re.exec(txt))){var s=m[1].trim();if(!s||seen[s])continue;seen[s]=1;var j=tryJson(s);if(applyPatchData(data,j))found=true;}
+      var html=scope===document?document.documentElement.innerHTML:(scope.innerHTML||'');
+      var txt=(scope.textContent||'')+'\n'+html;
+      var re=/<(?:MushokuStatusData|StatusData)>\s*([\s\S]*?)\s*<\/(?:MushokuStatusData|StatusData)>/ig,m;
+      while((m=re.exec(txt))){var s=m[1].trim();if(!s||seen[s])continue;seen[s]=1;if(mergeStatusBlock(data,s))found=true;}
+    }catch(e){}
+  });
+  return found?data:null;
+}
+function patchDataFromDom(){
+  var data={},seen={},found=false;
+  domScopes().forEach(function(scope){
+    try{
+      Array.prototype.slice.call(scope.querySelectorAll('jsonpatch,JSONPatch,mushokustatuspatch,statusdatapatch,.pp-status-patch,[data-pp-status-patch]')).forEach(function(n){
+        var s=n.getAttribute&&n.getAttribute('data-pp-status-patch')||n.textContent||'';
+        s=s.trim();if(!s||seen[s])return;seen[s]=1;var j=tryJson(htmlDecode(s));if(applyPatchData(data,j))found=true;
+      });
+      var html=scope===document?document.documentElement.innerHTML:(scope.innerHTML||'');
+      var txt=(scope.textContent||'')+'\n'+html;
+      var re=/<(?:JSONPatch|MushokuStatusPatch|StatusDataPatch)>\s*([\s\S]*?)\s*<\/(?:JSONPatch|MushokuStatusPatch|StatusDataPatch)>/ig,m;
+      while((m=re.exec(txt))){var s=m[1].trim();if(!s||seen[s])continue;seen[s]=1;var j=tryJson(htmlDecode(s));if(applyPatchData(data,j))found=true;}
     }catch(e){}
   });
   return found?data:null;
@@ -669,8 +700,9 @@ function contextSources(){
   return out;
 }
 function baseData(){
-  var data=Object.assign({},DEFAULT_DATA||{}),patched=patchDataFromDom();
-  mergeInto(data,patched);
+  var data=Object.assign({},DEFAULT_DATA||{});
+  mergeInto(data,statusDataFromDom());
+  mergeInto(data,patchDataFromDom());
   contextSources().forEach(function(s){mergeInto(data,s);});
   if(root.dataset&&root.dataset.vars)mergeInto(data,root.dataset.vars);
   Array.prototype.slice.call(root.querySelectorAll('.pp-status-data')).forEach(function(n){mergeInto(data,n.textContent||'');});
