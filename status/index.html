@@ -612,6 +612,27 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 #chat-ui-rz7m4k2p .pp-bond.core-sylphy .pp-bondname{color:#206b34!important}
 #chat-ui-rz7m4k2p .pp-bond.core-eris .pp-bondname{color:#972f2f!important}
 
+
+/* ===== 羁绊等级与战力徽章补丁 ===== */
+#chat-ui-rz7m4k2p .pp-rank.rank-flow-low{
+  color:#2f2923!important;
+  text-shadow:0 1px 0 rgba(255,255,255,.22)!important;
+}
+#chat-ui-rz7m4k2p .pp-rank.rank-flow-saint,
+#chat-ui-rz7m4k2p .pp-rank.rank-flow-god{
+  color:#2f2923!important;
+  text-shadow:0 1px 0 rgba(255,255,255,.28)!important;
+}
+#chat-ui-rz7m4k2p .pp-lvhd .pp-bondlv-num{
+  font-size:1.06em!important;
+  font-weight:800!important;
+  letter-spacing:.03em!important;
+  color:var(--pp-ink)!important;
+}
+@media (min-width:700px){
+  #chat-ui-rz7m4k2p .pp-lvhd .pp-bondlv-num{font-size:1.2em!important}
+}
+
 </style>
 </head>
 <body>
@@ -696,9 +717,9 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 <div class="pp-secttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.8l-1.5-1.35C5.2 14.7 2.2 11.95 2.2 8.5 2.2 5.83 4.33 3.7 7 3.7c1.86 0 3.33.93 5 2.85 1.67-1.92 3.14-2.85 5-2.85 2.67 0 4.8 2.13 4.8 4.8 0 3.45-3 6.2-8.3 10.95L12 20.8z"/></svg>羁绊</div>
 <div class="pp-block">
 <div class="pp-blkttl">核心羁绊</div>
-<div class="pp-bond fated core-roxy"><div class="pp-bondtop"><span class="pp-bondname">洛琪希·米格鲁迪亚</span><span class="pp-fated">命运固定</span></div><div class="pp-bondrel" data-var="roxyRelationship">[变量·roxyRelationship]</div><div class="pp-bondst" data-var="roxyState">[变量·roxyState]</div><div class="pp-bondst">上次相遇：<span data-var="roxyLastMet">[变量·roxyLastMet]</span></div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span class="pp-bondlv-num" data-var="roxyBondLv">[变量·roxyBondLv]</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="Lv.0/10" data-pct-var="roxyBondPercent|roxyBondPct"></div></div></div></div>
-<div class="pp-bond fated core-sylphy"><div class="pp-bondtop"><span class="pp-bondname">希露菲叶特</span><span class="pp-fated">命运固定</span></div><div class="pp-bondrel" data-var="sylphyRelationship">[变量·sylphyRelationship]</div><div class="pp-bondst" data-var="sylphyState">[变量·sylphyState]</div><div class="pp-bondst">上次相遇：<span data-var="sylphyLastMet">[变量·sylphyLastMet]</span></div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span class="pp-bondlv-num" data-var="sylphyBondLv">[变量·sylphyBondLv]</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="Lv.0/10" data-pct-var="sylphyBondPercent|sylphyBondPct"></div></div></div></div>
-<div class="pp-bond fated core-eris"><div class="pp-bondtop"><span class="pp-bondname">艾莉丝·伯雷亚斯·格雷拉特</span><span class="pp-fated">命运固定</span></div><div class="pp-bondrel" data-var="erisRelationship">[变量·erisRelationship]</div><div class="pp-bondst" data-var="erisState">[变量·erisState]</div><div class="pp-bondst">上次相遇：<span data-var="erisLastMet">[变量·erisLastMet]</span></div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span class="pp-bondlv-num" data-var="erisBondLv">[变量·erisBondLv]</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="Lv.0/10" data-pct-var="erisBondPercent|erisBondPct"></div></div></div></div>
+<div class="pp-bond fated core-roxy"><div class="pp-bondtop"><span class="pp-bondname">洛琪希·米格鲁迪亚</span><span class="pp-fated">命运固定</span></div><div class="pp-bondrel" data-var="roxyRelationship">[变量·roxyRelationship]</div><div class="pp-bondst" data-var="roxyState">[变量·roxyState]</div><div class="pp-bondst">上次相遇：<span data-var="roxyLastMet">[变量·roxyLastMet]</span></div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span class="pp-bondlv-num" data-var="roxyBondLv">[变量·roxyBondLv]</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="0" data-pct-var="roxyBondPercent|roxyBondPct"></div></div></div></div>
+<div class="pp-bond fated core-sylphy"><div class="pp-bondtop"><span class="pp-bondname">希露菲叶特</span><span class="pp-fated">命运固定</span></div><div class="pp-bondrel" data-var="sylphyRelationship">[变量·sylphyRelationship]</div><div class="pp-bondst" data-var="sylphyState">[变量·sylphyState]</div><div class="pp-bondst">上次相遇：<span data-var="sylphyLastMet">[变量·sylphyLastMet]</span></div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span class="pp-bondlv-num" data-var="sylphyBondLv">[变量·sylphyBondLv]</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="0" data-pct-var="sylphyBondPercent|sylphyBondPct"></div></div></div></div>
+<div class="pp-bond fated core-eris"><div class="pp-bondtop"><span class="pp-bondname">艾莉丝·伯雷亚斯·格雷拉特</span><span class="pp-fated">命运固定</span></div><div class="pp-bondrel" data-var="erisRelationship">[变量·erisRelationship]</div><div class="pp-bondst" data-var="erisState">[变量·erisState]</div><div class="pp-bondst">上次相遇：<span data-var="erisLastMet">[变量·erisLastMet]</span></div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span class="pp-bondlv-num" data-var="erisBondLv">[变量·erisBondLv]</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="0" data-pct-var="erisBondPercent|erisBondPct"></div></div></div></div>
 </div>
 <div class="pp-block">
 <div class="pp-blkttl">其他重要关系</div>
@@ -1017,7 +1038,7 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
   function otherBondHtml(v){
     if(!has(v))return '<div class="pp-detail">暂无其他重要关系。</div>';
     var arr=Array.isArray(v)?v:null; if(!arr){try{var j=JSON.parse(String(v)); if(Array.isArray(j))arr=j;}catch(e){}}
-    if(arr){ if(!arr.length)return '<div class="pp-detail">暂无其他重要关系。</div>'; return arr.map(function(o){ var name=o.name||o.title||'未命名关系', rel=o.relationship||o.relation||'关系未明', state=o.state||o.status||'暂无动向', lv=lvText(o.lv||o.level||'0'), pct=lvPercent(lv); return '<div class="pp-bond"><div class="pp-bondtop"><span class="pp-bondname">'+esc(name)+'</span></div><div class="pp-bondrel">'+esc(rel)+'</div><div class="pp-bondst">'+esc(state)+'</div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span>'+esc(lv)+'</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="'+pct+'"></div></div></div></div>'; }).join(''); }
+    if(arr){ if(!arr.length)return '<div class="pp-detail">暂无其他重要关系。</div>'; return arr.map(function(o){ var name=o.name||o.title||'未命名关系', rel=o.relationship||o.relation||'关系未明', state=o.state||o.status||'暂无动向', lv=lvText(o.lv||o.level||'0'), pct=lvPercent(lv); return '<div class="pp-bond"><div class="pp-bondtop"><span class="pp-bondname">'+esc(name)+'</span></div><div class="pp-bondrel">'+esc(rel)+'</div><div class="pp-bondst">'+esc(state)+'</div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span class="pp-bondlv-num">'+esc(lv)+'</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="'+pct+'"></div></div></div></div>'; }).join(''); }
     return splitLines(v).map(function(x){return '<div class="pp-bond"><div class="pp-bondtop"><span class="pp-bondname">'+esc(x)+'</span></div></div>';}).join('') || '<div class="pp-detail">暂无其他重要关系。</div>';
   }
   function rippleHtml(v){ var arr=splitLines(v); if(!arr.length)return '<div class="pp-detail">暂无重大命运涟漪。</div>'; return arr.map(function(x){return '<div class="pp-ripple"><span>'+esc(x)+'</span></div>';}).join(''); }
@@ -1110,6 +1131,8 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
     var orb=root.querySelector('#pp-orb'), beam=root.querySelector('#pp-beam');
     var h=clamp(num(first(['hitogamiAttention','manGodAttention'],0)),0,100), dg=clamp(num(first(['dragonGodCausality','dragonGodCausalityPercent'],0)),0,100), diff=h-dg, pos=clamp(50-diff/2,12,88);
     if(orb)orb.style.left=pos+'%'; if(beam){beam.style.transform='rotate('+(-clamp(diff*.28,-14,14))+'deg)'; beam.style.transformOrigin='60px 20px';}
+    syncBattleRankBadge();
+    syncCoreBondLevels();
   }
 
   window.ppGo=function(id){ var secs=root.querySelectorAll('.pp-sec'); for(var i=0;i<secs.length;i++)secs[i].classList.remove('on'); var t=root.querySelector('#sec-'+id); if(t)t.classList.add('on'); };
