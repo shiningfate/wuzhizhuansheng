@@ -1,3027 +1,856 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>无职状态栏</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>无职转生·六面世界旅录</title>
 <style>
-
-*{box-sizing:border-box}
-body{
-  margin:0;
-  padding:10px;
-  background:transparent;
-  color:#3b2417;
-  font-family:"STKaiti","KaiTi","FangSong","Noto Serif SC",serif;
+mushokustatuspatch,mushokustatusdata,statusdatapatch,statusdata,.pp-status-patch,.pp-status-data{display:none!important}
+#chat-ui-rz7m4k2p *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+#chat-ui-rz7m4k2p{
+--pp-bg:#efe2c4;--pp-bg2:#e3d2ab;--pp-ink:#3a2814;--pp-ink2:#6b5436;
+--pp-gold:#b8902f;--pp-gold2:#e9c766;--pp-line:#c9b387;--pp-panel:#f6ecd4;
+--pp-blue:#264a7a;--pp-red:#9c3b2e;--pp-purple:#6a3a8a;
+--pp-shadow:rgba(58,40,20,.28);--pp-card:#fbf4e2;
+font-family:"Georgia","Songti SC","STSong",serif;
+width:100%;max-width:34em;margin:0 auto;color:var(--pp-ink);
+font-size:15px;line-height:1.5;position:relative;
+border-radius:.9em;overflow:hidden;
+background:
+radial-gradient(circle at 18% 12%,rgba(184,144,47,.10),transparent 40%),
+radial-gradient(circle at 82% 88%,rgba(106,58,138,.08),transparent 42%),
+repeating-linear-gradient(0deg,rgba(160,130,80,.025) 0,rgba(160,130,80,.025) 1px,transparent 1px,transparent 4px),
+linear-gradient(160deg,var(--pp-bg) 0%,var(--pp-bg2) 100%);
+box-shadow:0 .6em 2em var(--pp-shadow),inset 0 0 0 1px rgba(255,255,255,.3);
+border:.18em solid transparent;
+background-clip:padding-box;
+}
+#chat-ui-rz7m4k2p.dark{
+--pp-bg:#160f22;--pp-bg2:#0e0a18;--pp-ink:#e8dcc4;--pp-ink2:#b6a079;
+--pp-gold:#d9b24a;--pp-gold2:#f4d780;--pp-line:#47365a;--pp-panel:#1c1430;
+--pp-card:#231838;--pp-shadow:rgba(0,0,0,.55);--pp-purple:#a96fd6;
+background:
+radial-gradient(circle at 18% 10%,rgba(217,178,74,.12),transparent 38%),
+radial-gradient(circle at 80% 90%,rgba(169,111,214,.18),transparent 44%),
+radial-gradient(circle at 50% 50%,rgba(38,74,122,.12),transparent 60%),
+linear-gradient(160deg,#1a1228 0%,#0c0816 100%);
+}
+#chat-ui-rz7m4k2p .pp-frame{position:relative;padding:.9em .9em 1.1em}
+#chat-ui-rz7m4k2p .pp-frame::before,#chat-ui-rz7m4k2p .pp-frame::after{
+content:"";position:absolute;width:1.4em;height:1.4em;pointer-events:none;
+border:.14em solid var(--pp-gold);opacity:.7}
+#chat-ui-rz7m4k2p .pp-frame::before{top:.35em;left:.35em;border-right:0;border-bottom:0;border-radius:.4em 0 0 0}
+#chat-ui-rz7m4k2p .pp-frame::after{bottom:.35em;right:.35em;border-left:0;border-top:0;border-radius:0 0 .4em 0}
+#chat-ui-rz7m4k2p .pp-head{text-align:center;padding:.4em 0 .7em;position:relative}
+#chat-ui-rz7m4k2p .pp-title{
+font-size:1.42em;font-weight:700;letter-spacing:.06em;
+background:linear-gradient(95deg,var(--pp-gold),var(--pp-gold2),var(--pp-gold));
+-webkit-background-clip:text;background-clip:text;color:transparent;
+text-shadow:0 .04em .12em rgba(0,0,0,.12);
+filter:drop-shadow(0 0 .15em rgba(184,144,47,.35))}
+#chat-ui-rz7m4k2p .pp-sub{font-size:.66em;letter-spacing:.4em;color:var(--pp-ink2);margin-top:.2em;text-transform:uppercase}
+#chat-ui-rz7m4k2p .pp-rune{display:block;width:8em;height:.9em;margin:.35em auto 0}
+#chat-ui-rz7m4k2p .pp-theme{position:absolute;top:.1em;right:.2em;display:flex;gap:.3em}
+#chat-ui-rz7m4k2p .pp-tbtn{width:1.9em;height:1.9em;border:.1em solid var(--pp-line);border-radius:50%;
+background:var(--pp-panel);cursor:pointer;display:grid;place-items:center;color:var(--pp-gold);
+transition:.3s;box-shadow:0 .1em .3em var(--pp-shadow)}
+#chat-ui-rz7m4k2p .pp-tbtn:hover{transform:rotate(20deg) scale(1.12);border-color:var(--pp-gold)}
+#chat-ui-rz7m4k2p .pp-tbtn svg{width:1.05em;height:1.05em}
+#chat-ui-rz7m4k2p .pp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6em}
+#chat-ui-rz7m4k2p .pp-tile{
+position:relative;background:var(--pp-card);border:.1em solid var(--pp-line);border-radius:.7em;
+padding:.9em .5em;text-align:center;cursor:pointer;overflow:hidden;
+transition:transform .35s cubic-bezier(.2,.8,.2,1.2),box-shadow .35s,border-color .35s;
+box-shadow:0 .15em .5em var(--pp-shadow)}
+#chat-ui-rz7m4k2p .pp-tile::after{content:"";position:absolute;inset:-50%;
+background:conic-gradient(from 0deg,transparent,rgba(233,199,102,.22),transparent 30%);
+opacity:0;transition:opacity .4s;animation:ppspin 6s linear infinite}
+@keyframes ppspin{to{transform:rotate(360deg)}}
+#chat-ui-rz7m4k2p .pp-tile:hover{transform:translateY(-.35em) scale(1.03);border-color:var(--pp-gold);box-shadow:0 .5em 1.1em var(--pp-shadow)}
+#chat-ui-rz7m4k2p .pp-tile:hover::after{opacity:1}
+#chat-ui-rz7m4k2p .pp-tile svg{width:1.9em;height:1.9em;color:var(--pp-gold);position:relative;z-index:1;
+transition:transform .35s;filter:drop-shadow(0 0 .2em rgba(184,144,47,.4))}
+#chat-ui-rz7m4k2p .pp-tile:hover svg{transform:scale(1.15) rotate(-4deg)}
+#chat-ui-rz7m4k2p .pp-tile span{display:block;margin-top:.45em;font-size:.82em;font-weight:600;position:relative;z-index:1}
+#chat-ui-rz7m4k2p .pp-tile small{display:block;font-size:.58em;color:var(--pp-ink2);letter-spacing:.15em;position:relative;z-index:1}
+#chat-ui-rz7m4k2p .pp-sec{display:none;animation:ppfade .4s ease}
+#chat-ui-rz7m4k2p .pp-sec.on{display:block}
+@keyframes ppfade{from{opacity:0;transform:translateY(.6em)}to{opacity:1;transform:none}}
+#chat-ui-rz7m4k2p .pp-back{display:inline-flex;align-items:center;gap:.3em;font-size:.74em;color:var(--pp-ink2);
+cursor:pointer;background:none;border:none;margin-bottom:.6em;transition:.2s;font-family:inherit}
+#chat-ui-rz7m4k2p .pp-back:hover{color:var(--pp-gold);transform:translateX(-.2em)}
+#chat-ui-rz7m4k2p .pp-back svg{width:.9em;height:.9em}
+#chat-ui-rz7m4k2p .pp-secttl{display:flex;align-items:center;gap:.4em;font-size:1.05em;font-weight:700;
+color:var(--pp-gold);margin-bottom:.7em;padding-bottom:.4em;border-bottom:.12em double var(--pp-line)}
+#chat-ui-rz7m4k2p .pp-secttl svg{width:1.15em;height:1.15em}
+#chat-ui-rz7m4k2p .pp-block{background:var(--pp-panel);border:.1em solid var(--pp-line);border-radius:.6em;
+padding:.75em;margin-bottom:.7em;box-shadow:inset 0 0 1.5em rgba(184,144,47,.06)}
+#chat-ui-rz7m4k2p .pp-blkttl{font-size:.82em;font-weight:700;color:var(--pp-ink);margin-bottom:.5em;
+display:flex;align-items:center;gap:.35em;letter-spacing:.05em}
+#chat-ui-rz7m4k2p .pp-blkttl::before{content:"";width:.32em;height:.95em;background:linear-gradient(var(--pp-gold),var(--pp-gold2));border-radius:.2em;display:inline-block}
+#chat-ui-rz7m4k2p .pp-row{display:flex;align-items:flex-start;gap:.5em;padding:.45em 0;border-bottom:.06em dashed var(--pp-line)}
+#chat-ui-rz7m4k2p .pp-row:last-child{border-bottom:0}
+#chat-ui-rz7m4k2p .pp-row .ic{flex:0 0 1.5em;color:var(--pp-gold);display:grid;place-items:center}
+#chat-ui-rz7m4k2p .pp-row .ic svg{width:1.05em;height:1.05em}
+#chat-ui-rz7m4k2p .pp-row .lb{flex:0 0 4.3em;font-size:.76em;color:var(--pp-ink2);font-weight:600;padding-top:.1em}
+#chat-ui-rz7m4k2p .pp-row .vl{flex:1;font-size:.82em;line-height:1.45}
+#chat-ui-rz7m4k2p .pp-tags{display:flex;flex-wrap:wrap;gap:.3em;margin-top:.15em}
+#chat-ui-rz7m4k2p .pp-chip{font-size:.66em;padding:.12em .55em;border-radius:1em;background:rgba(184,144,47,.13);
+border:.06em solid var(--pp-line);color:var(--pp-ink)}
+#chat-ui-rz7m4k2p .pp-map{position:relative;border-radius:.5em;overflow:hidden;border:.1em solid var(--pp-line);
+height:8.5em;background:
+radial-gradient(circle at 30% 40%,#7a9b5e,transparent 25%),
+radial-gradient(circle at 65% 60%,#4a6b8a,transparent 30%),
+linear-gradient(135deg,#d8c79a,#c2ad7d);box-shadow:inset 0 0 2em rgba(58,40,20,.3)}
+#chat-ui-rz7m4k2p .pp-map.has-img{background-size:cover;background-position:center;background-repeat:no-repeat}
+#chat-ui-rz7m4k2p .pp-map.has-img::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+background:linear-gradient(180deg,rgba(20,12,6,.08),rgba(20,12,6,.36))}
+#chat-ui-rz7m4k2p .pp-map .grid{position:absolute;inset:0;z-index:1;
+background-image:repeating-linear-gradient(0deg,rgba(58,40,20,.08) 0 1px,transparent 1px 2.2em),
+repeating-linear-gradient(90deg,rgba(58,40,20,.08) 0 1px,transparent 1px 2.2em)}
+#chat-ui-rz7m4k2p .pp-map .pin{position:absolute;left:48%;top:42%;width:1.3em;height:1.3em;color:var(--pp-red);z-index:2;
+animation:ppbob 1.8s ease-in-out infinite;filter:drop-shadow(0 .15em .2em rgba(0,0,0,.4))}
+@keyframes ppbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-.3em)}}
+#chat-ui-rz7m4k2p .pp-map .loc{position:absolute;left:50%;top:60%;transform:translateX(-50%);font-size:.7em;z-index:2;
+font-weight:700;color:#fff;text-shadow:0 .1em .3em #000;letter-spacing:.1em}
+#chat-ui-rz7m4k2p .pp-mapnote{margin-top:.45em;font-size:.72em;line-height:1.45;color:var(--pp-ink2);padding:.35em .45em;
+background:rgba(184,144,47,.07);border-left:.18em solid var(--pp-gold);border-radius:.35em}
+#chat-ui-rz7m4k2p .pp-news{margin-top:.6em}
+#chat-ui-rz7m4k2p .pp-newsitem{display:flex;gap:.5em;padding:.45em 0;border-bottom:.06em dashed var(--pp-line);font-size:.78em}
+#chat-ui-rz7m4k2p .pp-newsitem:last-child{border-bottom:0}
+#chat-ui-rz7m4k2p .pp-newsitem .dot{flex:0 0 auto;width:.5em;height:.5em;border-radius:50%;background:var(--pp-gold);margin-top:.45em;box-shadow:0 0 .4em var(--pp-gold)}
+#chat-ui-rz7m4k2p .pp-name{text-align:center;font-size:1.4em;font-weight:700;letter-spacing:.05em;
+background:linear-gradient(var(--pp-gold2),var(--pp-gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+#chat-ui-rz7m4k2p .pp-mini{text-align:center;display:flex;justify-content:center;gap:.7em;font-size:.7em;color:var(--pp-ink2);margin:.2em 0 .5em}
+#chat-ui-rz7m4k2p .pp-mini span{display:inline-flex;align-items:center;gap:.25em}
+#chat-ui-rz7m4k2p .pp-bigtags{display:flex;justify-content:center;flex-wrap:wrap;gap:.4em;margin-bottom:.6em}
+#chat-ui-rz7m4k2p .pp-btag{font-size:.78em;font-weight:700;padding:.22em .7em;border-radius:.4em;
+border:.1em solid var(--pp-gold);background:linear-gradient(rgba(184,144,47,.18),rgba(184,144,47,.05));
+color:var(--pp-ink);box-shadow:0 .1em .3em var(--pp-shadow)}
+#chat-ui-rz7m4k2p .pp-appear{font-size:.8em;line-height:1.55;padding:.5em;background:rgba(184,144,47,.07);border-radius:.4em;margin-bottom:.6em;border-left:.2em solid var(--pp-gold)}
+#chat-ui-rz7m4k2p .pp-bar{margin-bottom:.5em}
+#chat-ui-rz7m4k2p .pp-barhd{display:flex;justify-content:space-between;font-size:.7em;font-weight:700;margin-bottom:.15em}
+#chat-ui-rz7m4k2p .pp-bartrack{height:.95em;border-radius:.5em;background:rgba(58,40,20,.18);overflow:hidden;position:relative;border:.06em solid var(--pp-line)}
+#chat-ui-rz7m4k2p .pp-barfill{height:100%;border-radius:.5em;position:relative;transition:width 1s cubic-bezier(.2,.8,.2,1);overflow:hidden}
+#chat-ui-rz7m4k2p .pp-barfill::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);animation:ppflow 2.4s linear infinite}
+@keyframes ppflow{from{transform:translateX(-100%)}to{transform:translateX(220%)}}
+#chat-ui-rz7m4k2p .hpfill{background:linear-gradient(90deg,#7a1f1f,#cf4040,#e86a6a)}
+#chat-ui-rz7m4k2p .mpfill{background:linear-gradient(90deg,#1f3a7a,#3d6acf,#6a9ae8)}
+#chat-ui-rz7m4k2p .pp-2col{display:grid;grid-template-columns:1fr 1fr;gap:.5em}
+#chat-ui-rz7m4k2p .pp-cell{background:rgba(184,144,47,.07);border:.06em solid var(--pp-line);border-radius:.4em;padding:.4em .5em}
+#chat-ui-rz7m4k2p .pp-cell .k{font-size:.62em;color:var(--pp-ink2);letter-spacing:.1em}
+#chat-ui-rz7m4k2p .pp-cell .v{font-size:.82em;font-weight:700;margin-top:.1em}
+#chat-ui-rz7m4k2p .pp-rank{float:right;font-size:.66em;font-weight:700;padding:.18em .6em;border-radius:.3em;color:#fff;letter-spacing:.08em;box-shadow:0 .1em .3em var(--pp-shadow)}
+#chat-ui-rz7m4k2p .r-none{background:#7a6d5a}#chat-ui-rz7m4k2p .r-low{background:#5a8a4a}
+#chat-ui-rz7m4k2p .r-mid{background:#3d7a8a}#chat-ui-rz7m4k2p .r-high{background:#3d5aaa}
+#chat-ui-rz7m4k2p .r-saint{background:linear-gradient(135deg,#b8902f,#e9c766)}
+#chat-ui-rz7m4k2p .r-king{background:linear-gradient(135deg,#8a3d8a,#c766c7)}
+#chat-ui-rz7m4k2p .r-emp{background:linear-gradient(135deg,#9c3b2e,#d96a55)}
+#chat-ui-rz7m4k2p .r-god{background:linear-gradient(135deg,#264a7a,#b8902f,#8a3d8a);background-size:200%;animation:ppshift 3s linear infinite}
+#chat-ui-rz7m4k2p .r-over{background:linear-gradient(135deg,#000,#b8902f,#000);background-size:200%;animation:ppshift 3s linear infinite;border:.06em solid var(--pp-gold2)}
+@keyframes ppshift{to{background-position:200%}}
+#chat-ui-rz7m4k2p .pp-bond{position:relative;background:var(--pp-card);border:.1em solid var(--pp-line);border-radius:.55em;
+padding:.6em;margin-bottom:.55em;box-shadow:0 .15em .5em var(--pp-shadow);transition:.3s;overflow:hidden}
+#chat-ui-rz7m4k2p .pp-bond:hover{border-color:var(--pp-gold);transform:translateX(.2em)}
+#chat-ui-rz7m4k2p .pp-bond.fated{border-color:var(--pp-gold)}
+#chat-ui-rz7m4k2p .pp-bond.fated::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 100% 0,rgba(233,199,102,.14),transparent 40%);pointer-events:none}
+#chat-ui-rz7m4k2p .pp-bondtop{display:flex;justify-content:space-between;align-items:flex-start}
+#chat-ui-rz7m4k2p .pp-bondname{font-size:.92em;font-weight:700}
+#chat-ui-rz7m4k2p .pp-fated{font-size:.6em;font-weight:700;letter-spacing:.15em;
+background:linear-gradient(90deg,#e9c766,#cf4040,#8a3d8a,#3d6acf,#e9c766);background-size:300%;
+-webkit-background-clip:text;background-clip:text;color:transparent;animation:ppshift 4s linear infinite}
+#chat-ui-rz7m4k2p .pp-bondrel{font-size:.74em;color:var(--pp-ink2);margin-top:.25em}
+#chat-ui-rz7m4k2p .pp-bondst{font-size:.74em;margin-top:.15em}
+#chat-ui-rz7m4k2p .pp-lv{margin-top:.4em}
+#chat-ui-rz7m4k2p .pp-lvhd{display:flex;justify-content:space-between;font-size:.62em;color:var(--pp-ink2);margin-bottom:.15em}
+#chat-ui-rz7m4k2p .pp-lvtrack{height:.5em;background:rgba(58,40,20,.18);border-radius:.3em;overflow:hidden}
+#chat-ui-rz7m4k2p .pp-lvfill{height:100%;background:linear-gradient(90deg,var(--pp-purple),var(--pp-gold2));border-radius:.3em;transition:width 1s}
+#chat-ui-rz7m4k2p .pp-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:.5em}
+#chat-ui-rz7m4k2p .pp-list-html{display:block;min-height:1.8em}
+#chat-ui-rz7m4k2p .pp-dynamic-list{min-height:3.3em}
+#chat-ui-rz7m4k2p .pp-moneyline{font-size:.68em;line-height:1.45}
+#chat-ui-rz7m4k2p .pp-moneyline b{color:var(--pp-gold);font-weight:700}
+#chat-ui-rz7m4k2p .pp-mc{perspective:600px;cursor:pointer;height:3.3em}
+#chat-ui-rz7m4k2p .pp-mc-in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+#chat-ui-rz7m4k2p .pp-mc.flip .pp-mc-in{transform:rotateY(180deg)}
+#chat-ui-rz7m4k2p .pp-mc-f,#chat-ui-rz7m4k2p .pp-mc-b{position:absolute;inset:0;backface-visibility:hidden;
+border-radius:.45em;padding:.4em .5em;display:flex;flex-direction:column;justify-content:center;
+background:var(--pp-card);border:.1em solid var(--pp-line);box-shadow:0 .12em .4em var(--pp-shadow)}
+#chat-ui-rz7m4k2p .pp-mc-b{transform:rotateY(180deg);background:var(--pp-panel);overflow-y:auto}
+#chat-ui-rz7m4k2p .pp-mc:hover .pp-mc-f{border-color:var(--pp-gold)}
+#chat-ui-rz7m4k2p .pp-mc-f .nm{font-size:.78em;font-weight:700}
+#chat-ui-rz7m4k2p .pp-mc-f .tip{font-size:.56em;color:var(--pp-ink2);margin-top:.2em;letter-spacing:.1em}
+#chat-ui-rz7m4k2p .pp-mc-b .lv{font-size:.6em;font-weight:700;color:var(--pp-gold)}
+#chat-ui-rz7m4k2p .pp-mc-b .ds{font-size:.6em;line-height:1.35;margin-top:.15em;color:var(--pp-ink)}
+#chat-ui-rz7m4k2p .pp-grade{position:absolute;top:.3em;right:.4em;width:.5em;height:.5em;border-radius:50%}
+#chat-ui-rz7m4k2p .g-common{background:#8a8377}#chat-ui-rz7m4k2p .g-rare{background:#3d7acf}
+#chat-ui-rz7m4k2p .g-epic{background:#9b4bd6}#chat-ui-rz7m4k2p .g-legend{background:linear-gradient(135deg,#e9c766,#cf7a2e)}
+#chat-ui-rz7m4k2p .g-over{background:linear-gradient(135deg,#000,#e9c766);box-shadow:0 0 .4em #e9c766}
+#chat-ui-rz7m4k2p .pp-detail{font-size:.8em;line-height:1.55;padding:.4em 0;border-bottom:.06em dashed var(--pp-line)}
+#chat-ui-rz7m4k2p .pp-detail b{color:var(--pp-gold);font-size:.86em;font-weight:700}
+#chat-ui-rz7m4k2p .pp-bd{display:grid;grid-template-columns:auto 1fr;gap:.2em .6em;font-size:.76em;padding:.3em 0}
+#chat-ui-rz7m4k2p .pp-bd .bk{color:var(--pp-ink2);font-weight:600}
+#chat-ui-rz7m4k2p .pp-danger{display:inline-block;font-size:.66em;font-weight:700;padding:.15em .55em;border-radius:.3em;color:#fff;background:var(--pp-red)}
+#chat-ui-rz7m4k2p .pp-track{position:relative;height:3.6em;margin:.5em 0 1em;display:flex;align-items:center}
+#chat-ui-rz7m4k2p .pp-track .rail{position:absolute;height:.45em;border-radius:.3em}
+#chat-ui-rz7m4k2p .pp-track .rail-g{left:0;width:50%;background:linear-gradient(90deg,#e9c766,#b8902f);box-shadow:0 0 .6em rgba(233,199,102,.6)}
+#chat-ui-rz7m4k2p .pp-track .rail-d{right:0;width:50%;background:linear-gradient(90deg,#1f3a7a,#264a7a);box-shadow:0 0 .6em rgba(38,74,122,.6)}
+#chat-ui-rz7m4k2p .pp-track .lab{position:absolute;top:-.1em;font-size:.58em;font-weight:700;letter-spacing:.1em}
+#chat-ui-rz7m4k2p .pp-track .lab.l{left:0;color:var(--pp-gold)}
+#chat-ui-rz7m4k2p .pp-track .lab.r{right:0;color:var(--pp-blue)}
+#chat-ui-rz7m4k2p .pp-track .lab.m{left:50%;transform:translateX(-50%);bottom:-.2em;top:auto;color:var(--pp-purple)}
+#chat-ui-rz7m4k2p .pp-orb{position:absolute;left:50%;top:50%;width:1.4em;height:1.4em;border-radius:50%;
+transform:translate(-50%,-50%);transition:left 1.1s cubic-bezier(.2,.8,.2,1.2);z-index:2;
+background:conic-gradient(from 0deg,#e9c766,#cf4040,#8a3d8a,#3d6acf,#5a8a4a,#e9c766);
+box-shadow:0 0 .8em rgba(255,255,255,.6),0 0 1.4em rgba(138,61,138,.5);animation:pporb 4s linear infinite}
+@keyframes pporb{to{transform:translate(-50%,-50%) rotate(360deg)}}
+#chat-ui-rz7m4k2p .pp-metrics{display:grid;grid-template-columns:1fr 1fr;gap:.5em;margin-bottom:.7em}
+#chat-ui-rz7m4k2p .pp-metric .mh{display:flex;justify-content:space-between;font-size:.68em;font-weight:700;margin-bottom:.15em}
+#chat-ui-rz7m4k2p .pp-metric.gold .mh{color:var(--pp-gold)}#chat-ui-rz7m4k2p .pp-metric.blue .mh{color:var(--pp-blue)}
+#chat-ui-rz7m4k2p .pp-metric .mt{height:.55em;background:rgba(58,40,20,.18);border-radius:.3em;overflow:hidden}
+#chat-ui-rz7m4k2p .pp-metric.gold .mf{background:linear-gradient(90deg,#b8902f,#e9c766)}
+#chat-ui-rz7m4k2p .pp-metric.blue .mf{background:linear-gradient(90deg,#1f3a7a,#6a9ae8)}
+#chat-ui-rz7m4k2p .pp-metric .mf{height:100%;border-radius:.3em;transition:width 1s}
+#chat-ui-rz7m4k2p .pp-scale{text-align:center;padding:.4em 0}
+#chat-ui-rz7m4k2p .pp-scale svg{width:7em;height:4em}
+#chat-ui-rz7m4k2p .pp-beam{transform-origin:50% 50%;transition:transform 1s cubic-bezier(.2,.8,.2,1.2)}
+#chat-ui-rz7m4k2p .pp-scaletxt{font-size:.78em;margin-top:.3em}
+#chat-ui-rz7m4k2p .pp-scaletxt b{color:var(--pp-gold)}
+#chat-ui-rz7m4k2p .pp-ripple{display:flex;gap:.5em;padding:.5em 0;border-bottom:.06em dashed var(--pp-line);font-size:.78em}
+#chat-ui-rz7m4k2p .pp-ripple:last-child{border-bottom:0}
+#chat-ui-rz7m4k2p .pp-ripple .wing{flex:0 0 auto;color:var(--pp-purple);width:1.1em;animation:ppbob 2.4s ease-in-out infinite}
+#chat-ui-rz7m4k2p .pp-mask{position:absolute;inset:0;background:rgba(20,12,6,.55);backdrop-filter:blur(2px);
+display:none;z-index:20;align-items:center;justify-content:center;padding:1em;animation:ppfade .3s}
+#chat-ui-rz7m4k2p .pp-mask.on{display:flex}
+#chat-ui-rz7m4k2p .pp-modal{background:var(--pp-panel);border:.14em solid var(--pp-gold);border-radius:.7em;
+max-width:90%;padding:1em;box-shadow:0 .5em 2em rgba(0,0,0,.5);animation:pppop .4s cubic-bezier(.2,.8,.2,1.3)}
+@keyframes pppop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+#chat-ui-rz7m4k2p .pp-modal h4{color:var(--pp-gold);font-size:1em;margin-bottom:.4em;display:flex;align-items:center;gap:.3em}
+#chat-ui-rz7m4k2p .pp-modal p{font-size:.82em;line-height:1.55}
+#chat-ui-rz7m4k2p .pp-modal button{margin-top:.7em;width:100%;padding:.45em;border:.1em solid var(--pp-gold);
+background:linear-gradient(rgba(184,144,47,.2),rgba(184,144,47,.05));color:var(--pp-ink);border-radius:.4em;
+cursor:pointer;font-family:inherit;font-weight:700;transition:.2s}
+#chat-ui-rz7m4k2p .pp-modal button:hover{background:var(--pp-gold);color:#fff}
+#chat-ui-rz7m4k2p .pp-toast{position:absolute;left:50%;top:.6em;transform:translateX(-50%) translateY(-150%);
+background:var(--pp-card);border:.12em solid var(--pp-gold);border-radius:.5em;padding:.5em .8em;z-index:30;
+display:flex;align-items:center;gap:.5em;font-size:.78em;font-weight:600;box-shadow:0 .3em 1em rgba(0,0,0,.4);
+opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-width:88%}
+#chat-ui-rz7m4k2p .pp-toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+#chat-ui-rz7m4k2p .pp-toast svg{width:1.1em;height:1.1em;color:var(--pp-gold);flex:0 0 auto}
+#chat-ui-rz7m4k2p .pp-foot{text-align:center;font-size:.58em;color:var(--pp-ink2);letter-spacing:.25em;margin-top:.6em;opacity:.7}
+@media only screen and (max-width:600px){
+#chat-ui-rz7m4k2p{font-size:13.5px}
+#chat-ui-rz7m4k2p .pp-cards{grid-template-columns:1fr 1fr}
+#chat-ui-rz7m4k2p .pp-metrics{grid-template-columns:1fr}
 }
-.mushoku-status-card{
-  max-width:760px;
-  margin:0 auto;
-  padding:16px;
-  border:2px double rgba(82,45,20,.8);
-  border-radius:24px 10px;
-  background:
-    radial-gradient(circle at 12% 8%,rgba(102,80,140,.14),transparent 20%),
-    radial-gradient(circle at 90% 12%,rgba(47,97,126,.12),transparent 22%),
-    linear-gradient(135deg,#fbf2dd,#f8edd5 52%,#e6c891);
-  box-shadow:0 14px 34px rgba(30,15,6,.34),inset 0 0 28px rgba(96,53,24,.18);
-  line-height:1.72;
-  overflow:hidden;
-}
-details{margin:10px 0}
-summary{
-  cursor:pointer;
-  user-select:none;
-  padding:8px 12px;
-  border-radius:12px;
-  border:1px solid rgba(116,69,22,.58);
-  background:linear-gradient(180deg,#dfb676,#b97c3e);
-  color:#442716;
-  font-weight:bold;
-}
-.section{
-  margin-top:8px;
-  padding:11px 13px;
-  border:1px solid rgba(99,58,29,.35);
-  border-radius:13px;
-  background:rgba(255,244,216,.5);
-}
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-.wide{grid-column:1/-1}
-.row{margin:6px 0}
-.name{
-  text-align:center;
-  font-size:1.35em;
-  font-weight:900;
-  margin-bottom:6px;
-}
-.meta{
-  text-align:center;
-  color:#6f5947;
-  margin-bottom:8px;
-}
-.pill{
-  display:inline-block;
-  padding:2px 8px;
-  border-radius:999px;
-  background:rgba(185,142,86,.22);
-  border:1px solid rgba(130,91,52,.18);
-  font-weight:bold;
-}
-.tag-row{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:6px;
-  margin:8px 0;
-}
-.box-title{
-  font-weight:bold;
-  margin:8px 0 4px;
-  color:#4a3120;
-}
-.text-box{
-  padding:9px 10px;
-  border-radius:10px;
-  background:rgba(255,251,243,.62);
-  border:1px solid rgba(130,95,58,.16);
-  text-align:justify;
-}
-.bar-title{
-  display:flex;
-  justify-content:space-between;
-  font-weight:bold;
-  margin-top:8px;
-}
-.bar-shell{
-  height:13px;
-  border-radius:999px;
-  background:rgba(80,45,18,.18);
-  overflow:hidden;
-  border:1px solid rgba(70,38,18,.22);
-}
-.bar-fill{
-  height:100%;
-  border-radius:999px;
-}
-.hp-fill{background:linear-gradient(90deg,#98312a,#d45a43)}
-.mp-fill{background:linear-gradient(90deg,#1b6f9b,#42a8cf)}
-.rel-card{
-  position:relative;
-  overflow:hidden;
-  padding:11px 12px 14px;
-  margin:8px 0;
-  border-radius:12px;
-  border:1px solid rgba(126,90,56,.22);
-  background:rgba(255,250,242,.52);
-}
-.rel-card:after{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  height:4px;
-  opacity:.95;
-}
-.rel-head{
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  align-items:center;
-}
-.rel-name{
-  font-weight:900;
-  letter-spacing:.5px;
-}
-.rel-badges{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-  align-items:center;
-  gap:6px;
-}
-.fate-badge{
-  display:inline-block;
-  padding:2px 8px;
-  border-radius:999px;
-  color:#fffaf3;
-  font-weight:900;
-  font-size:.92em;
-  border:1px solid rgba(255,255,255,.48);
-  background:linear-gradient(120deg,#8c5ad9,#47a4dc,#50b878,#e2ae4a,#d65d79,#8c5ad9);
-  background-size:260% 260%;
-  box-shadow:0 1px 5px rgba(80,45,18,.18),inset 0 0 8px rgba(255,255,255,.22);
-  text-shadow:0 1px 2px rgba(70,35,20,.36);
-}
-.rel-lv{
-  font-weight:900;
-}
-
-.roxy{
-  border-left:4px solid rgba(63,102,142,.78);
-  background:linear-gradient(180deg,rgba(236,248,255,.72),rgba(255,250,242,.54));
-}
-.roxy:after{background:linear-gradient(90deg,rgba(142,206,238,.25),rgba(70,151,205,.9),rgba(202,234,250,.45))}
-.roxy .rel-name{color:#1f5f91}
-.roxy .rel-lv{
-  color:#194f78;
-  background:rgba(154,211,240,.28);
-  border-color:rgba(63,102,142,.28);
-}
-
-.sylphy{
-  border-left:4px solid rgba(76,127,91,.78);
-  background:linear-gradient(180deg,rgba(239,255,242,.72),rgba(255,250,242,.54));
-}
-.sylphy:after{background:linear-gradient(90deg,rgba(169,232,184,.25),rgba(72,161,96,.9),rgba(213,248,220,.45))}
-.sylphy .rel-name{color:#276d3a}
-.sylphy .rel-lv{
-  color:#245f35;
-  background:rgba(164,224,177,.28);
-  border-color:rgba(76,127,91,.28);
-}
-
-.eris{
-  border-left:4px solid rgba(155,74,53,.80);
-  background:linear-gradient(180deg,rgba(255,239,236,.72),rgba(255,250,242,.54));
-}
-.eris:after{background:linear-gradient(90deg,rgba(244,169,154,.25),rgba(196,82,62,.92),rgba(255,215,207,.45))}
-.eris .rel-name{color:#8e2f24}
-.eris .rel-lv{
-  color:#7d2c22;
-  background:rgba(236,163,147,.28);
-  border-color:rgba(155,74,53,.28);
-}
-
-.other-rel{border-left:4px solid rgba(126,90,56,.65)}
-.other-rel:after{background:linear-gradient(90deg,rgba(126,90,56,.18),rgba(126,90,56,.55),rgba(126,90,56,.18))}
-.other-rel-empty{
-  padding:9px 10px;
-  margin:8px 0;
-  border-radius:12px;
-  border:1px solid rgba(126,90,56,.18);
-  background:rgba(255,250,242,.45);
-  color:#7a6858;
-}
-.map-frame{
-  border:1px solid rgba(98,60,34,.34);
-  border-radius:12px;
-  overflow:hidden;
-  background:rgba(255,250,240,.5);
-  min-height:36px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.map-frame img{
-  display:block;
-  max-width:100%;
-  height:auto;
-}
-.empty{
-  color:#7a6858;
-  opacity:.85;
-}
-.npc-card,
-.npc-thought-card {
-  margin-top:10px;
-  padding:13px 15px;
-  border:1px solid rgba(99,58,29,.42);
-  border-radius:15px;
-  background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,250,236,.18)),rgba(255,244,216,.46);
-  box-shadow:inset 0 0 14px rgba(91,50,19,.09),0 2px 7px rgba(56,29,10,.08);
-}
-.npc-name {
-  font-size:1.45em;
-  text-align:center;
-  font-weight:900;
-  color:#3d2516;
-  letter-spacing:1px;
-}
-.npc-pill-row {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:8px;
-  margin:10px 0;
-}
-.npc-pill {
-  display:inline-block;
-  min-width:80px;
-  text-align:center;
-  padding:6px 12px;
-  border-radius:999px;
-  background:rgba(181,138,200,.22);
-  border:1px solid rgba(118,79,135,.2);
-  font-weight:bold;
-  color:#4c314c;
-}
-.npc-info-grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:10px;
-  margin-top:10px;
-}
-.npc-info-grid > div {
-  padding:9px 10px;
-  border-radius:10px;
-  background:rgba(255,250,242,.5);
-  border:1px solid rgba(126,90,56,.16);
-}
-.npc-info-wide {
-  grid-column:1/-1;
-}
-.npc-box-title,
-.npc-thought-title {
-  font-weight:bold;
-  color:#4a3120;
-  margin:12px 0 7px;
-}
-.npc-appearance-box,
-.npc-thought-box {
-  padding:12px 14px;
-  border-radius:10px;
-  background:rgba(255,251,243,.62);
-  border:1px solid rgba(130,95,58,.16);
-  color:#4e3b2f;
-  text-align:justify;
-}
-.npc-feature-table {
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-.npc-feature-row {
-  display:grid;
-  grid-template-columns:88px 1fr;
-  gap:8px;
-  align-items:center;
-}
-.npc-feature-label {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:34px;
-  border-radius:9px;
-  background:linear-gradient(90deg,#c69bd6,#e4a7ba);
-  color:#3b2138;
-  font-weight:bold;
-}
-.npc-feature-value {
-  min-height:34px;
-  padding:6px 10px;
-  border-radius:9px;
-  background:rgba(255,250,242,.58);
-  border:1px solid rgba(132,95,58,.16);
-  color:#5d4534;
-}
-.npc-thought-box {
-  line-height:1.9;
-  color:#5a493b;
-}
-
-
-
-
-/* ===== 原著剧情偏移：因果值双轨制 ===== */
-.causal-card{
-  position:relative;
-  overflow:hidden;
-  padding:13px;
-  border-radius:16px;
-  border:1px solid rgba(99,58,29,.25);
-  background:
-    radial-gradient(circle at 18% 20%,rgba(255,207,95,.22),transparent 24%),
-    radial-gradient(circle at 82% 28%,rgba(105,183,255,.18),transparent 26%),
-    linear-gradient(180deg,rgba(255,255,255,.30),rgba(255,250,236,.14)),
-    rgba(255,244,216,.34);
-  box-shadow:inset 0 0 14px rgba(91,50,19,.06);
-}
-.causal-card:before{
-  content:"";
-  position:absolute;
-  inset:-45%;
-  background:
-    conic-gradient(from 0deg,
-      transparent 0deg,
-      rgba(255,210,95,.10) 48deg,
-      transparent 95deg,
-      rgba(120,190,255,.10) 145deg,
-      transparent 210deg,
-      rgba(255,255,255,.10) 260deg,
-      transparent 360deg);
-  animation:causalSkyTurn 16s linear infinite;
-  pointer-events:none;
-}
-.causal-card > *{
-  position:relative;
-  z-index:1;
-}
-@keyframes causalSkyTurn{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
-.causal-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-bottom:10px;
-}
-.causal-title{
-  font-weight:900;
-  color:#3d2516;
-  letter-spacing:1px;
-}
-.causal-level-badge{
-  display:inline-block;
-  min-width:76px;
-  text-align:center;
-  padding:4px 12px;
-  border-radius:999px;
-  border:1px solid rgba(92,65,42,.18);
-  background:rgba(255,251,243,.75);
-  color:#3b2417;
-  font-weight:900;
-  box-shadow:0 1px 5px rgba(70,40,20,.10);
-}
-.causal-board{
-  position:relative;
-  padding:12px 11px 14px;
-  border-radius:14px;
-  border:1px solid rgba(126,90,56,.16);
-  background:rgba(255,251,243,.58);
-  margin-bottom:10px;
-}
-.causal-dual-label{
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  align-items:center;
-  gap:8px;
-  margin-bottom:9px;
-}
-.causal-side{
-  font-weight:900;
-  font-size:.92em;
-  line-height:1.35;
-}
-.causal-side small{
-  display:block;
-  font-weight:700;
-  opacity:.78;
-}
-.causal-side.hitogami{
-  color:#a86714;
-}
-.causal-side.dragon{
-  text-align:right;
-  color:#2e72a8;
-}
-.causal-center-mark{
-  color:#6d5948;
-  font-size:.86em;
-  font-weight:900;
-  white-space:nowrap;
-}
-.causal-track{
-  --fate-pos:50%;
-  position:relative;
-  height:24px;
-  border-radius:999px;
-  background:
-    linear-gradient(90deg,
-      rgba(243,177,48,.95) 0%,
-      rgba(255,235,150,.82) 35%,
-      rgba(255,250,238,.94) 50%,
-      rgba(162,216,255,.86) 65%,
-      rgba(65,143,222,.94) 100%);
-  box-shadow:
-    inset 0 1px 4px rgba(70,40,20,.22),
-    0 2px 8px rgba(70,40,20,.12);
-  overflow:hidden;
-}
-.causal-track:before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(110deg,transparent 0%,rgba(255,255,255,.42) 18%,transparent 36%);
-  background-size:210% 100%;
-  animation:causalTrackFlow 3.5s linear infinite;
-}
-@keyframes causalTrackFlow{
-  from{background-position:190% 0}
-  to{background-position:-90% 0}
-}
-.causal-midline{
-  position:absolute;
-  left:50%;
-  top:-4px;
-  bottom:-4px;
-  width:2px;
-  transform:translateX(-50%);
-  background:rgba(70,45,28,.30);
-  box-shadow:0 0 0 1px rgba(255,255,255,.35);
-}
-.causal-slider{
-  position:absolute;
-  left:var(--fate-pos);
-  top:50%;
-  width:34px;
-  height:34px;
-  transform:translate(-50%,-50%);
-  border-radius:50%;
-  background:
-    radial-gradient(circle at 35% 30%,#fff 0 18%,#ffe2a2 19% 32%,#9fd6ff 33% 52%,#5c3d2b 53% 100%);
-  border:2px solid rgba(70,42,24,.45);
-  box-shadow:
-    0 0 10px rgba(255,218,115,.42),
-    0 0 15px rgba(105,183,255,.35),
-    0 3px 9px rgba(46,25,10,.28);
-  animation:causalSliderPulse 2.4s ease-in-out infinite;
-}
-@keyframes causalSliderPulse{
-  0%,100%{filter:brightness(1); transform:translate(-50%,-50%) scale(1)}
-  50%{filter:brightness(1.12); transform:translate(-50%,-50%) scale(1.05)}
-}
-.causal-values{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:10px;
-}
-.causal-value-box{
-  padding:8px 10px;
-  border-radius:10px;
-  background:rgba(255,251,243,.62);
-  border:1px solid rgba(126,90,56,.14);
-}
-.causal-value-box b{
-  display:block;
-  margin-bottom:3px;
-}
-.causal-value-box.hitogami b{color:#a86714}
-.causal-value-box.dragon b{color:#2e72a8}
-.causal-value-num{
-  font-size:1.25em;
-  font-weight:900;
-}
-.causal-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-}
-.causal-box{
-  padding:9px 10px;
-  border-radius:10px;
-  border:1px solid rgba(126,90,56,.16);
-  background:rgba(255,251,243,.58);
-}
-.causal-wide{
-  grid-column:1/-1;
-}
-.causal-box-title{
-  font-weight:900;
-  color:#4a3120;
-  margin-bottom:5px;
-}
-.causal-text{
-  color:#4f3a2b;
-  line-height:1.75;
-  text-align:justify;
-}
-.ripple-list{
-  display:grid;
-  gap:7px;
-}
-.ripple-item{
-  position:relative;
-  padding:8px 10px 8px 28px;
-  border-radius:10px;
-  border:1px solid rgba(126,90,56,.14);
-  background:rgba(255,251,243,.55);
-  color:#4f3a2b;
-  line-height:1.7;
-}
-.ripple-item:before{
-  content:"";
-  position:absolute;
-  left:10px;
-  top:14px;
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:rgba(103,153,207,.80);
-  box-shadow:0 0 0 0 rgba(103,153,207,.46);
-  animation:ripplePulse 2.4s ease-out infinite;
-}
-@keyframes ripplePulse{
-  0%{box-shadow:0 0 0 0 rgba(103,153,207,.45)}
-  70%{box-shadow:0 0 0 9px rgba(103,153,207,0)}
-  100%{box-shadow:0 0 0 0 rgba(103,153,207,0)}
-}
-.causal-dev-low{
-  color:#405a38;
-  background:linear-gradient(120deg,#eaf5df,#b9d99a,#f6fbef);
-}
-.causal-dev-mid{
-  color:#5b461f;
-  background:linear-gradient(120deg,#fff3c6,#e0b35c,#fff8dd);
-}
-.causal-dev-high{
-  color:#fff1df;
-  background:linear-gradient(120deg,#8a4b1e,#c97630,#e9ad64,#7c3e19);
-}
-.causal-dev-severe{
-  color:#fff0ed;
-  background:linear-gradient(120deg,#5d0707,#a41414,#e04832,#7c0c0c);
-}
-.causal-dev-rewrite{
-  color:#fff7d2;
-  background:linear-gradient(120deg,#080607,#6b0909,#d0a13a,#160b09,#a41414,#f0c76c);
-  background-size:300% 300%;
-  animation:battleFlow 4.4s linear infinite;
-}
-
-/* ===== 原著剧情偏移：列表样式（保留给 JS fallback） ===== */
-.canon-dev-text{
-  color:#4f3a2b;
-  line-height:1.75;
-  text-align:justify;
-}
-.canon-dev-list{
-  margin:0;
-  padding-left:1.25em;
-  color:#4f3a2b;
-  line-height:1.75;
-}
-.canon-dev-list li{margin:2px 0}
-
-/* ===== 主角档案：斗气运用 ===== */
-.touki-use-card{
-  margin:10px 0 12px;
-  padding:10px 11px;
-  border-radius:12px;
-  border:1px solid rgba(126,90,56,.18);
-  background:
-    radial-gradient(circle at 12% 20%,rgba(223,158,65,.16),transparent 28%),
-    linear-gradient(180deg,rgba(255,255,255,.30),rgba(255,250,236,.14)),
-    rgba(255,244,216,.34);
-  box-shadow:inset 0 0 10px rgba(91,50,19,.06);
-}
-.touki-use-title{
-  font-weight:900;
-  color:#4a2d18;
-  letter-spacing:1px;
-  margin-bottom:7px;
-}
-.touki-use-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-.touki-use-box{
-  padding:8px 9px;
-  border-radius:10px;
-  border:1px solid rgba(126,90,56,.14);
-  background:rgba(255,251,243,.60);
-}
-.touki-use-label{
-  font-weight:900;
-  color:#5a351b;
-  margin-bottom:3px;
-}
-.touki-use-text{
-  color:#4f3a2b;
-  line-height:1.65;
-}
-
-/* ===== 主角档案：战斗评估 ===== */
-.battle-eval{
-  margin:12px 0 10px;
-  padding:11px 12px;
-  border-radius:13px;
-  border:1px solid rgba(99,58,29,.28);
-  background:linear-gradient(180deg,rgba(255,255,255,.30),rgba(255,250,236,.16)),rgba(255,244,216,.38);
-  box-shadow:inset 0 0 12px rgba(91,50,19,.06);
-}
-.battle-rank-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-bottom:9px;
-}
-.battle-label{
-  font-weight:900;
-  color:#3d2516;
-  letter-spacing:1px;
-}
-.battle-rank-badge{
-  display:inline-block;
-  min-width:84px;
-  text-align:center;
-  padding:4px 12px;
-  border-radius:999px;
-  border:1px solid rgba(92,65,42,.18);
-  background:rgba(255,251,243,.70);
-  color:#3b2417;
-  font-weight:900;
-  box-shadow:0 1px 5px rgba(70,40,20,.10);
-}
-.battle-eval-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-}
-.battle-eval-box{
-  padding:9px 10px;
-  border-radius:10px;
-  border:1px solid rgba(126,90,56,.16);
-  background:rgba(255,251,243,.58);
-}
-.battle-wide{
-  grid-column:1/-1;
-}
-.battle-eval-title{
-  font-weight:900;
-  color:#4a3120;
-  margin-bottom:4px;
-}
-.battle-eval-text{
-  color:#4f3a2b;
-  line-height:1.75;
-  text-align:justify;
-}
-@keyframes battleFlow{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-.battle-rank-none{
-  color:#736a63;
-  background:linear-gradient(120deg,#ece7df,#cfc8bd,#f7f4ee);
-}
-.battle-rank-common{
-  color:#f2eee8;
-  background:linear-gradient(120deg,#23201d,#4a4540,#817970,#2f2a26);
-}
-.battle-rank-primary{
-  color:#fff2df;
-  background:linear-gradient(120deg,#6c3f1d,#b77735,#d59a52,#70431f);
-}
-.battle-rank-middle{
-  color:#fff0d0;
-  background:linear-gradient(120deg,#8a5528,#c7833e,#e0aa66,#7a481f);
-}
-.battle-rank-advanced{
-  color:#28313b;
-  background:linear-gradient(120deg,#98a4b2,#eef4fb,#b7c2cf,#84919f);
-}
-.battle-rank-saint{
-  color:#4a5a68;
-  background:linear-gradient(120deg,#e8f1fa,#ffffff,#cfddea,#f7fbff);
-}
-.battle-rank-king{
-  color:#fff5d0;
-  background:linear-gradient(120deg,#5c3a96,#9b72d6,#d7b852,#7043ad,#f0d36d);
-  background-size:260% 260%;
-  animation:battleFlow 5s linear infinite;
-}
-.battle-rank-emperor{
-  color:#f3d989;
-  background:linear-gradient(120deg,#080b10,#252b36,#6f5f2d,#151922,#d0b35e,#0b0e14);
-  background-size:280% 280%;
-  animation:battleFlow 5.5s linear infinite;
-}
-.battle-rank-god{
-  color:#fff0ed;
-  background:linear-gradient(120deg,#4f0707,#9c1010,#e02a2a,#ff5a4d,#7a0b0b,#d32222);
-  background-size:280% 280%;
-  animation:battleFlow 4.6s linear infinite;
-}
-.battle-rank-great{
-  color:#ffe7b8;
-  background:linear-gradient(120deg,#080607,#6b0909,#d0a13a,#160b09,#a41414,#f0c76c);
-  background-size:300% 300%;
-  animation:battleFlow 4.4s linear infinite;
-}
-.battle-rank-outside{
-  color:#fffdf7;
-  background:linear-gradient(120deg,#ff4fd8,#5ec8ff,#7dff88,#ffe36c,#c987ff,#ff6e6e,#ff4fd8);
-  background-size:340% 340%;
-  animation:battleFlow 4s linear infinite;
-}
-
-/* ===== 能力与装备：卡片化 ===== */
-.ability-section{
-  position:relative;
-}
-.ability-group{
-  margin:10px 0 14px;
-}
-.ability-card-grid{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:8px;
-}
-.ability-chip{
-  position:relative;
-  flex:0 0 auto;
-  min-width:72px;
-  max-width:140px;
-  padding:7px 10px;
-  border-radius:8px;
-  border:1px solid rgba(110,80,55,.18);
-  background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(247,240,230,.88));
-  color:#4a3120;
-  box-shadow:0 1px 4px rgba(70,40,20,.08);
-  cursor:pointer;
-  user-select:none;
-  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
-  text-align:center;
-  font-weight:800;
-  letter-spacing:.2px;
-  font-family:inherit;
-}
-.ability-chip:hover{
-  transform:translateY(-1px);
-  box-shadow:0 4px 10px rgba(70,40,20,.12);
-  border-color:rgba(110,80,55,.26);
-}
-.ability-chip:active{
-  transform:translateY(0);
-}
-.ability-chip-name{
-  display:block;
-  white-space:normal;
-  overflow:visible;
-  text-overflow:clip;
-  line-height:1.35;
-  font-size:.93em;
-}
-.ability-chip-rank{
-  display:none;
-}
-.ability-empty{
-  width:100%;
-  padding:10px 12px;
-  border-radius:10px;
-  border:1px solid rgba(126,90,56,.16);
-  background:rgba(255,251,243,.62);
-  color:#7a6858;
-}
-@keyframes textSheen{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-
-/* 卡片本体维持浅色，颜色只作用于文字 */
-.rank-chuji .ability-chip-name,
-.rarity-putong .ability-chip-name{
-  color:#2e2a28;
-  text-shadow:0 1px 0 rgba(255,255,255,.46);
-}
-.rank-zhongji .ability-chip-name{
-  color:#9a5d1f;
-  text-shadow:0 1px 0 rgba(255,250,240,.55);
-}
-.rank-shangji .ability-chip-name{
-  color:#8e98a6;
-  text-shadow:0 1px 0 rgba(255,255,255,.70);
-}
-.rank-shengji .ability-chip-name{
-  color:#a8b9cc;
-  text-shadow:0 1px 0 rgba(255,255,255,.82);
-}
-.rank-wangji .ability-chip-name{
-  background:linear-gradient(120deg,#7f56cc,#d7b44e,#9a6be8,#f0d784,#7f56cc);
-  background-size:240% 240%;
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  -webkit-text-fill-color:transparent;
-  animation:textSheen 5s linear infinite;
-}
-.rank-diji .ability-chip-name{
-  background:linear-gradient(120deg,#11141b,#866f2c,#d7be71,#232833,#11141b);
-  background-size:260% 260%;
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  -webkit-text-fill-color:transparent;
-  animation:textSheen 5.5s linear infinite;
-}
-.rank-shenji .ability-chip-name{
-  background:linear-gradient(120deg,#7e0e0e,#e02a2a,#ff6860,#980f0f,#7e0e0e);
-  background-size:260% 260%;
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  -webkit-text-fill-color:transparent;
-  animation:textSheen 4.6s linear infinite;
-}
-.rank-guigewai .ability-chip-name{
-  background:linear-gradient(120deg,#ff4fd8,#5ec8ff,#7dff88,#ffe36c,#c987ff,#ff6e6e,#ff4fd8);
-  background-size:320% 320%;
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  -webkit-text-fill-color:transparent;
-  animation:textSheen 4s linear infinite;
-}
-
-.rarity-xiyou .ability-chip-name{
-  background:linear-gradient(120deg,#6d43bd,#c097ff,#7f56db,#6d43bd);
-  background-size:220% 220%;
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  -webkit-text-fill-color:transparent;
-  animation:textSheen 5s linear infinite;
-}
-.rarity-shishi .ability-chip-name{
-  background:linear-gradient(120deg,#b7840f,#ffe08a,#d39f18,#b7840f);
-  background-size:220% 220%;
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  -webkit-text-fill-color:transparent;
-  animation:textSheen 5s linear infinite;
-}
-.rarity-chuanshuo .ability-chip-name{
-  background:linear-gradient(120deg,#8b1313,#f04d4d,#ff8a8a,#8b1313);
-  background-size:240% 240%;
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  -webkit-text-fill-color:transparent;
-  animation:textSheen 4.8s linear infinite;
-}
-
-.ability-modal-mask{
-  position:absolute;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:14px;
-  background:rgba(33,20,12,.30);
-  backdrop-filter:blur(1px);
-  z-index:30;
-  border-radius:18px;
-}
-.ability-modal-mask.show{
-  display:flex;
-}
-.ability-modal{
-  position:relative;
-  width:min(90%,420px);
-  padding:18px 18px 15px;
-  border-radius:16px;
-  border:2px solid rgba(133,91,56,.30);
-  background:linear-gradient(180deg,#fffdf9,#f9f1e4);
-  box-shadow:0 10px 28px rgba(40,22,8,.22);
-}
-.ability-modal-close{
-  position:absolute;
-  right:10px;
-  top:8px;
-  width:28px;
-  height:28px;
-  border:none;
-  border-radius:50%;
-  cursor:pointer;
-  font-size:16px;
-  background:rgba(122,84,55,.12);
-  color:#5c3b29;
-}
-.ability-modal-title{
-  text-align:center;
-  font-size:1.35em;
-  font-weight:900;
-  color:#3e2618;
-  margin-bottom:8px;
-}
-.ability-modal-rank{
-  display:flex;
-  justify-content:center;
-  margin-bottom:12px;
-}
-.ability-modal-rank .ability-chip{
-  cursor:default;
-  min-width:unset;
-  max-width:none;
-  padding:5px 10px;
-}
-.ability-modal-rank .ability-chip:hover{
-  transform:none;
-}
-.ability-modal-desc{
-  padding:12px 14px;
-  border-radius:12px;
-  border:1px solid rgba(130,95,58,.16);
-  background:rgba(255,251,243,.70);
-  color:#4f3a2b;
-  line-height:1.85;
-  text-align:justify;
-  white-space:pre-line;
-}
-
-
-@media(max-width:520px){
-  .touki-use-grid{grid-template-columns:1fr}
-  .causal-grid{grid-template-columns:1fr}
-  .causal-wide{grid-column:auto}
-  .causal-values{grid-template-columns:1fr}
-  .causal-head{align-items:flex-start}
-  .causal-dual-label{grid-template-columns:1fr}
-  .causal-center-mark{text-align:center}
-  .causal-side.dragon{text-align:left}
-  .battle-eval-grid{grid-template-columns:1fr}
-  .battle-wide{grid-column:auto}
-  .battle-rank-head{align-items:flex-start}
-  .ability-card-grid{gap:6px}
-  .ability-chip{
-    min-width:64px;
-    max-width:120px;
-    font-size:.88em;
-    padding:6px 8px;
-  }
-  .ability-modal{
-    width:min(94%,360px);
-    padding:16px 12px 12px;
-  }
-  .grid{grid-template-columns:1fr}
-  .wide{grid-column:auto}
-  .mushoku-status-card{padding:12px;border-radius:18px 8px}
-  .rel-head{flex-direction:column;align-items:flex-start}
-  .npc-info-grid,
-  .npc-feature-row {
-    grid-template-columns:1fr;
-  }
-}
-
-/* ===== 合并覆盖层：克制手札UI + 用户修正 + BGM静态涟漪 =====
-   只合并重复视觉覆盖，不改变量 id、HTML 结构或 JS 读取逻辑。
-*/
-:root{
-  --ink:#322217;
-  --line:rgba(91,61,38,.20);
-}
-body{
-  color:var(--ink);
-  letter-spacing:.015em;
-  text-rendering:optimizeLegibility;
-}
-html body{
-  font-size:14px !important;
-  line-height:1.62 !important;
-}
-html body .mushoku-status-card{
-  max-width:760px !important;
-  padding:12px !important;
-  border-radius:20px !important;
-  border:1px solid rgba(86,67,45,.34) !important;
-  color:#342519 !important;
-  background:
-    linear-gradient(90deg,rgba(110,87,55,.035) 1px,transparent 1px),
-    linear-gradient(0deg,rgba(110,87,55,.030) 1px,transparent 1px),
-    radial-gradient(circle at 10% 0%,rgba(255,255,255,.54),transparent 25%),
-    linear-gradient(180deg,#f7efd9 0%,#efe0bd 100%) !important;
-  background-size:22px 22px,22px 22px,auto,auto !important;
-  box-shadow:0 12px 26px rgba(32,19,8,.24),inset 0 0 0 1px rgba(255,255,255,.42) !important;
-}
-html body .mushoku-status-card .status-header{
-  position:relative !important;
-  overflow:visible !important;
-  margin:0 0 12px !important;
-  padding:14px 15px 12px !important;
-  border-radius:16px !important;
-  border:1px solid rgba(70,44,27,.32) !important;
-  color:#fff8e9 !important;
-  background:
-    radial-gradient(circle at 88% 10%,rgba(236,206,139,.20),transparent 24%),
-    linear-gradient(135deg,#4b2e22 0%,#6f5138 56%,#9b7a54 100%) !important;
-  box-shadow:0 8px 18px rgba(49,30,16,.18),inset 0 1px 0 rgba(255,255,255,.16) !important;
-}
-html body .mushoku-status-card .status-header:after{
-  content:"" !important;
-  position:absolute !important;
-  inset:auto 12px 8px 12px !important;
-  height:1px !important;
-  background:linear-gradient(90deg,transparent,rgba(255,241,200,.35),transparent) !important;
-}
-.status-title-row{
-  position:relative;
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px;
-  z-index:1;
-}
-html body .mushoku-status-card .status-title-row{overflow:visible !important}
-.status-kicker{
-  font-size:.75em;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  margin-bottom:2px;
-}
-html body .mushoku-status-card .status-kicker{color:rgba(255,244,218,.72) !important}
-.status-title{
-  font-weight:900;
-  line-height:1.25;
-}
-html body .mushoku-status-card .status-title{
-  color:#fff8e9 !important;
-  font-size:1.26em !important;
-  letter-spacing:.08em !important;
-  text-shadow:0 1px 2px rgba(32,18,8,.28) !important;
-}
-.status-seal{
-  flex:0 0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  font-weight:900;
-}
-html body .mushoku-status-card .status-seal{
-  width:42px !important;
-  height:42px !important;
-  color:#4b2e22 !important;
-  background:radial-gradient(circle at 35% 28%,#fff1bf,#d1a65c 72%,#8b6236) !important;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.45),0 3px 10px rgba(35,20,10,.22) !important;
-}
-details{margin:7px 0 !important}
-summary{
-  cursor:pointer;
-  user-select:none;
-}
-html body .mushoku-status-card summary{
-  position:relative !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:space-between !important;
-  gap:10px !important;
-  min-height:37px !important;
-  padding:7px 34px 7px 11px !important;
-  border-radius:11px !important;
-  border:1px solid rgba(82,62,40,.24) !important;
-  color:#392719 !important;
-  font-size:.98em !important;
-  font-weight:900 !important;
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.32),rgba(255,255,255,0)),
-    linear-gradient(180deg,#ded0ba 0%,#c7ad88 70%,#b19168 100%) !important;
-  box-shadow:0 1px 5px rgba(54,35,17,.10),inset 0 1px 0 rgba(255,255,255,.46) !important;
-}
-html body .mushoku-status-card details[open] > summary{
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0)),
-    linear-gradient(180deg,#d5c1a1 0%,#b99668 70%,#9e7548 100%) !important;
-  box-shadow:0 2px 7px rgba(54,35,17,.12),inset 0 1px 0 rgba(255,255,255,.42) !important;
-}
-summary::-webkit-details-marker,
-html body .mushoku-status-card summary::-webkit-details-marker{display:none !important}
-html body .mushoku-status-card summary::after{
-  content:"▾" !important;
-  position:absolute !important;
-  right:12px !important;
-  top:50% !important;
-  transform:translateY(-50%) rotate(-90deg) !important;
-  color:rgba(55,37,24,.70) !important;
-  font-size:.82em !important;
-}
-html body .mushoku-status-card details[open] > summary::after{transform:translateY(-50%) rotate(0deg) !important}
-html body .mushoku-status-card .sum-left{
-  display:flex !important;
-  align-items:center !important;
-  gap:8px !important;
-  min-width:0 !important;
-}
-.sum-left>span:last-child{
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-}
-html body .mushoku-status-card .sum-icon{
-  width:21px !important;
-  height:21px !important;
-  border-radius:7px !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  font-size:1.05em !important;
-  line-height:1 !important;
-  color:#62462d !important;
-  background:rgba(255,250,239,.48) !important;
-  border:1px solid rgba(255,255,255,.36) !important;
-  box-shadow:inset 0 -1px 0 rgba(90,58,28,.08) !important;
-  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","STKaiti","KaiTi",serif !important;
-}
-html body .mushoku-status-card .sum-meta{
-  min-width:0 !important;
-  color:rgba(58,39,25,.72) !important;
-  font-size:.82em !important;
-  font-weight:800 !important;
-  text-align:right !important;
-  overflow:hidden !important;
-  white-space:nowrap !important;
-  text-overflow:ellipsis !important;
-}
-.grid{gap:9px}
-html body .mushoku-status-card .section,
-html body .mushoku-status-card .npc-card,
-html body .mushoku-status-card .npc-thought-card,
-html body .mushoku-status-card .touki-use-card,
-html body .mushoku-status-card .battle-eval,
-html body .mushoku-status-card .causal-card{
-  border-radius:14px !important;
-  border:1px solid rgba(110,84,52,.21) !important;
-  background:linear-gradient(180deg,rgba(244,236,219,.58),rgba(225,207,176,.64)),rgba(226,207,174,.74) !important;
-  box-shadow:0 2px 8px rgba(70,45,20,.06),inset 0 1px 0 rgba(255,255,255,.28) !important;
-}
-html body .mushoku-status-card .section{
-  margin-top:8px !important;
-  padding:12px !important;
-}
-html body .mushoku-status-card .section.grid>div,
-html body .mushoku-status-card .text-box,
-html body .mushoku-status-card .battle-eval-box,
-html body .mushoku-status-card .touki-use-box,
-html body .mushoku-status-card .npc-info-grid>div,
-html body .mushoku-status-card .npc-appearance-box,
-html body .mushoku-status-card .npc-thought-box,
-html body .mushoku-status-card .npc-feature-value,
-html body .mushoku-status-card .causal-box,
-html body .mushoku-status-card .causal-value-box,
-html body .mushoku-status-card .causal-board{
-  border-radius:10px !important;
-  border:1px solid rgba(123,95,60,.14) !important;
-  background:rgba(255,253,248,.66) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.46) !important;
-}
-.name{font-size:1.22em !important;letter-spacing:.05em}
-.meta{font-size:.92em;color:#7b6a58}
-.pill{
-  padding:3px 9px;
-  background:rgba(177,145,101,.20);
-  border:1px solid rgba(130,91,52,.18);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.32);
-}
-html body .mushoku-status-card .box-title,
-html body .mushoku-status-card .battle-eval-title,
-html body .mushoku-status-card .touki-use-label,
-html body .mushoku-status-card .npc-box-title,
-html body .mushoku-status-card .npc-thought-title,
-html body .mushoku-status-card .causal-box-title{
-  color:#3d281a !important;
-  font-size:.96em !important;
-}
-.text-box,
-.npc-appearance-box,
-.npc-thought-box{
-  padding:10px 11px;
-}
-html body .mushoku-status-card .bar-shell{
-  height:10px !important;
-  background:rgba(86,58,31,.17) !important;
-  border:1px solid rgba(70,38,18,.18) !important;
-  box-shadow:inset 0 1px 2px rgba(50,25,10,.12) !important;
-}
-html body .mushoku-status-card .bar-title{
-  font-size:.92em !important;
-  margin-top:9px !important;
-}
-.hp-fill{background:linear-gradient(90deg,#7f2924,#b84335,#dc6a50)}
-.mp-fill{background:linear-gradient(90deg,#1d5d7a,#2a8cb3,#5db9d4)}
-.touki-use-title,
-.battle-label,
-.causal-title{letter-spacing:.06em}
-.npc-feature-label{
-  background:linear-gradient(180deg,#d7c6ad,#b99a72);
-  color:#372216;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.28);
-}
-html body .mushoku-status-card .ability-chip{
-  border-radius:9px !important;
-  background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(246,238,224,.70)) !important;
-  border:1px solid rgba(110,80,55,.16) !important;
-  box-shadow:0 1px 3px rgba(70,40,20,.07),inset 0 1px 0 rgba(255,255,255,.45) !important;
-}
-.ability-modal{
-  border-radius:18px;
-  box-shadow:0 16px 34px rgba(40,22,8,.24),inset 0 1px 0 rgba(255,255,255,.72);
-}
-html body .mushoku-status-card .ability-modal-desc{white-space:pre-line !important}
-.map-frame{
-  background:rgba(255,253,248,.56);
-  box-shadow:inset 0 0 16px rgba(80,50,20,.06);
-}
-.rel-card{box-shadow:0 2px 8px rgba(70,40,20,.06),inset 0 1px 0 rgba(255,255,255,.42)}
-.causal-card{padding:13px !important}
-.causal-track{height:22px}
-.causal-slider{width:31px;height:31px}
-
-@keyframes mushokuBgmSealGlowOnly{
-  0%,100%{
-    filter:brightness(1) saturate(1);
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.50),0 3px 10px rgba(35,20,10,.22),0 0 9px rgba(255,222,145,.18) !important;
-  }
-  50%{
-    filter:brightness(1.06) saturate(1.05);
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.56),0 4px 12px rgba(35,20,10,.24),0 0 18px rgba(255,224,145,.38) !important;
-  }
-}
-@keyframes mushokuBgmRippleVisible{
-  0%{opacity:.70;transform:translate(-50%,-50%) scale(.88)}
-  62%{opacity:.22;transform:translate(-50%,-50%) scale(1.42)}
-  100%{opacity:0;transform:translate(-50%,-50%) scale(1.76)}
-}
-html body .mushoku-status-card .status-seal.bgm-seal,
-html body .mushoku-status-card .status-seal.bgm-seal.is-playing{
-  position:relative !important;
-  overflow:visible !important;
-  isolation:isolate !important;
-  z-index:10 !important;
-  cursor:help !important;
-  user-select:none !important;
-  font-size:0 !important;
-  line-height:1 !important;
-  transform:none !important;
-  animation:mushokuBgmSealGlowOnly 2.8s ease-in-out infinite !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal .bgm-note,
-html body .mushoku-status-card .status-seal.bgm-seal.is-playing .bgm-note{
-  position:relative !important;
-  z-index:3 !important;
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  width:100% !important;
-  height:100% !important;
-  animation:none !important;
-  transform:none !important;
-  rotate:0deg !important;
-  font-family:"Apple Color Emoji","Segoe UI Symbol","Noto Color Emoji","STKaiti","KaiTi",serif !important;
-  font-size:23px !important;
-  font-weight:900 !important;
-  line-height:1 !important;
-  color:#5a371f !important;
-  text-shadow:0 1px 0 rgba(255,255,255,.45),0 0 8px rgba(255,230,170,.32) !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal::before,
-html body .mushoku-status-card .status-seal.bgm-seal::after,
-html body .mushoku-status-card .status-seal.bgm-seal.is-playing::before,
-html body .mushoku-status-card .status-seal.bgm-seal.is-playing::after{
-  content:"" !important;
-  position:absolute !important;
-  left:50% !important;
-  top:50% !important;
-  width:48px !important;
-  height:48px !important;
-  border-radius:50% !important;
-  border:2px solid rgba(255,236,178,.74) !important;
-  background:transparent !important;
-  box-shadow:0 0 8px rgba(255,226,150,.40),0 0 18px rgba(255,226,150,.22) !important;
-  opacity:0 !important;
-  transform:translate(-50%,-50%) scale(.88) !important;
-  transform-origin:center center !important;
-  pointer-events:none !important;
-  z-index:1 !important;
-  animation:mushokuBgmRippleVisible 2.05s ease-out infinite !important;
-}
-html body .mushoku-status-card .status-seal.bgm-seal::after,
-html body .mushoku-status-card .status-seal.bgm-seal.is-playing::after{animation-delay:1.02s !important}
-
-@media(max-width:520px){
-  body{font-size:13.6px;padding:8px}
-  html body .mushoku-status-card{padding:10px !important;border-radius:16px !important}
-  html body .mushoku-status-card .status-header{padding:12px !important}
-  html body .mushoku-status-card .status-title{font-size:1.08em !important}
-  html body .mushoku-status-card .sum-meta{display:none !important}
-  html body .mushoku-status-card summary{min-height:36px !important;padding-right:32px !important}
-  .section{padding:10px}
-  .status-seal{width:42px;height:42px}
-}
-
-
-/* ===== 手机端桌面式压缩排版覆盖 v2 =====
-   目标：手机端尽量保留电脑端的双列/横向结构，只压缩字体、间距、卡片尺寸。
-   放在所有原 CSS 之后，避免被旧 @media 覆盖。
-*/
-@media(max-width:520px){
-  html body{
-    padding:3px !important;
-    font-size:11.8px !important;
-    line-height:1.48 !important;
-    -webkit-text-size-adjust:100% !important;
-  }
-
-  html body .mushoku-status-card{
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-    margin:0 auto !important;
-    padding:7px !important;
-    border-radius:13px !important;
-    border-width:1px !important;
-    box-shadow:0 8px 18px rgba(32,19,8,.22), inset 0 0 0 1px rgba(255,255,255,.34) !important;
-  }
-
-  html body .mushoku-status-card .status-header{
-    margin:0 0 7px !important;
-    padding:8px 9px !important;
-    border-radius:12px !important;
-  }
-  html body .mushoku-status-card .status-title-row{
-    align-items:center !important;
-    gap:7px !important;
-  }
-  html body .mushoku-status-card .status-kicker{
-    font-size:.56em !important;
-    letter-spacing:.07em !important;
-    line-height:1.1 !important;
-    margin-bottom:2px !important;
-  }
-  html body .mushoku-status-card .status-title{
-    font-size:1.02em !important;
-    line-height:1.18 !important;
-    letter-spacing:.035em !important;
-  }
-  html body .mushoku-status-card .status-seal,
-  html body .mushoku-status-card .status-seal.bgm-seal{
-    width:31px !important;
-    height:31px !important;
-    min-width:31px !important;
-  }
-  html body .mushoku-status-card .status-seal.bgm-seal .bgm-note,
-  html body .mushoku-status-card .status-seal.bgm-seal.is-playing .bgm-note{
-    font-size:17px !important;
-  }
-  html body .mushoku-status-card .status-seal.bgm-seal::before,
-  html body .mushoku-status-card .status-seal.bgm-seal::after,
-  html body .mushoku-status-card .status-seal.bgm-seal.is-playing::before,
-  html body .mushoku-status-card .status-seal.bgm-seal.is-playing::after{
-    width:36px !important;
-    height:36px !important;
-  }
-
-  html body .mushoku-status-card details{
-    margin:5px 0 !important;
-  }
-  html body .mushoku-status-card summary{
-    min-height:29px !important;
-    padding:5px 25px 5px 7px !important;
-    border-radius:9px !important;
-    gap:6px !important;
-    font-size:.90em !important;
-    line-height:1.25 !important;
-  }
-  html body .mushoku-status-card summary::after{
-    right:8px !important;
-    font-size:.76em !important;
-  }
-  html body .mushoku-status-card .sum-left{
-    gap:5px !important;
-  }
-  html body .mushoku-status-card .sum-icon{
-    width:17px !important;
-    height:17px !important;
-    min-width:17px !important;
-    border-radius:5px !important;
-    font-size:.88em !important;
-  }
-  html body .mushoku-status-card .sum-meta{
-    display:block !important;
-    max-width:112px !important;
-    font-size:.68em !important;
-    line-height:1.2 !important;
-    opacity:.78 !important;
-  }
-
-  html body .mushoku-status-card .section,
-  html body .mushoku-status-card .npc-card,
-  html body .mushoku-status-card .npc-thought-card,
-  html body .mushoku-status-card .touki-use-card,
-  html body .mushoku-status-card .battle-eval,
-  html body .mushoku-status-card .causal-card{
-    margin-top:5px !important;
-    padding:7px !important;
-    border-radius:10px !important;
-  }
-
-  html body .mushoku-status-card .grid{
-    display:grid !important;
-    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-    gap:5px !important;
-  }
-  html body .mushoku-status-card .wide{
-    grid-column:1 / -1 !important;
-  }
-  html body .mushoku-status-card .section.grid > div{
-    min-width:0 !important;
-    padding:4px 6px !important;
-    border-radius:7px !important;
-    line-height:1.45 !important;
-  }
-
-  html body .mushoku-status-card .name,
-  html body .mushoku-status-card .npc-name{
-    font-size:1.08em !important;
-    line-height:1.25 !important;
-    margin:3px 0 4px !important;
-    letter-spacing:.04em !important;
-  }
-  html body .mushoku-status-card .meta{
-    font-size:.78em !important;
-    line-height:1.35 !important;
-    margin-bottom:5px !important;
-  }
-  html body .mushoku-status-card .tag-row,
-  html body .mushoku-status-card .npc-pill-row{
-    gap:4px !important;
-    margin:5px 0 !important;
-  }
-  html body .mushoku-status-card .pill,
-  html body .mushoku-status-card .npc-pill,
-  html body .mushoku-status-card .battle-rank-badge,
-  html body .mushoku-status-card .causal-level-badge{
-    min-width:0 !important;
-    padding:2px 6px !important;
-    font-size:.76em !important;
-    line-height:1.35 !important;
-    border-radius:999px !important;
-  }
-
-  html body .mushoku-status-card .box-title,
-  html body .mushoku-status-card .npc-box-title,
-  html body .mushoku-status-card .npc-thought-title,
-  html body .mushoku-status-card .battle-eval-title,
-  html body .mushoku-status-card .touki-use-title,
-  html body .mushoku-status-card .causal-box-title{
-    margin:6px 0 3px !important;
-    font-size:.86em !important;
-    line-height:1.25 !important;
-  }
-  html body .mushoku-status-card .text-box,
-  html body .mushoku-status-card .npc-appearance-box,
-  html body .mushoku-status-card .npc-thought-box,
-  html body .mushoku-status-card .npc-feature-value,
-  html body .mushoku-status-card .battle-eval-box,
-  html body .mushoku-status-card .touki-use-box,
-  html body .mushoku-status-card .causal-box,
-  html body .mushoku-status-card .causal-value-box,
-  html body .mushoku-status-card .ripple-item{
-    padding:5px 6px !important;
-    border-radius:7px !important;
-    line-height:1.45 !important;
-    font-size:.82em !important;
-  }
-
-  html body .mushoku-status-card .map-frame{
-    border-radius:8px !important;
-    min-height:28px !important;
-  }
-  html body .mushoku-status-card .map-frame img{
-    width:100% !important;
-    max-height:none !important;
-  }
-
-  html body .mushoku-status-card .bar-title{
-    margin-top:5px !important;
-    font-size:.78em !important;
-    line-height:1.25 !important;
-  }
-  html body .mushoku-status-card .bar-shell{
-    height:7px !important;
-  }
-
-  html body .mushoku-status-card .touki-use-grid,
-  html body .mushoku-status-card .battle-eval-grid,
-  html body .mushoku-status-card .npc-info-grid,
-  html body .mushoku-status-card .causal-grid,
-  html body .mushoku-status-card .causal-values{
-    display:grid !important;
-    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-    gap:5px !important;
-  }
-  html body .mushoku-status-card .battle-wide,
-  html body .mushoku-status-card .npc-info-wide,
-  html body .mushoku-status-card .causal-wide{
-    grid-column:1 / -1 !important;
-  }
-  html body .mushoku-status-card .battle-rank-head,
-  html body .mushoku-status-card .causal-head{
-    flex-direction:row !important;
-    align-items:center !important;
-    gap:5px !important;
-    margin-bottom:5px !important;
-  }
-  html body .mushoku-status-card .battle-label,
-  html body .mushoku-status-card .causal-title{
-    font-size:.88em !important;
-  }
-
-  html body .mushoku-status-card .rel-card{
-    margin:5px 0 !important;
-    padding:7px 8px 9px !important;
-    border-radius:9px !important;
-    border-left-width:3px !important;
-  }
-  html body .mushoku-status-card .rel-head{
-    flex-direction:row !important;
-    align-items:flex-start !important;
-    justify-content:space-between !important;
-    gap:5px !important;
-  }
-  html body .mushoku-status-card .rel-name{
-    min-width:0 !important;
-    font-size:.86em !important;
-    line-height:1.25 !important;
-  }
-  html body .mushoku-status-card .rel-badges{
-    flex:0 0 auto !important;
-    gap:3px !important;
-    justify-content:flex-end !important;
-  }
-  html body .mushoku-status-card .fate-badge{
-    padding:1px 5px !important;
-    font-size:.64em !important;
-    line-height:1.35 !important;
-  }
-  html body .mushoku-status-card .row{
-    margin:3px 0 !important;
-    line-height:1.42 !important;
-    font-size:.82em !important;
-  }
-
-  html body .mushoku-status-card .ability-group{
-    margin:6px 0 8px !important;
-  }
-  html body .mushoku-status-card .ability-card-grid{
-    gap:5px !important;
-    margin-top:5px !important;
-  }
-  html body .mushoku-status-card .ability-chip{
-    min-width:45px !important;
-    max-width:96px !important;
-    padding:4px 6px !important;
-    border-radius:7px !important;
-    font-size:.72em !important;
-    line-height:1.28 !important;
-  }
-  html body .mushoku-status-card .ability-chip-name{
-    line-height:1.28 !important;
-  }
-  html body .mushoku-status-card .ability-empty{
-    padding:5px 6px !important;
-    font-size:.78em !important;
-    border-radius:7px !important;
-  }
-
-  html body .mushoku-status-card .npc-info-grid > div{
-    padding:5px 6px !important;
-    border-radius:7px !important;
-    font-size:.80em !important;
-    line-height:1.42 !important;
-  }
-  html body .mushoku-status-card .npc-feature-table{
-    gap:5px !important;
-  }
-  html body .mushoku-status-card .npc-feature-row{
-    display:grid !important;
-    grid-template-columns:52px minmax(0,1fr) !important;
-    gap:5px !important;
-    align-items:stretch !important;
-  }
-  html body .mushoku-status-card .npc-feature-label{
-    min-height:27px !important;
-    padding:3px 4px !important;
-    border-radius:7px !important;
-    font-size:.78em !important;
-    line-height:1.2 !important;
-    writing-mode:horizontal-tb !important;
-  }
-  html body .mushoku-status-card .npc-feature-value{
-    min-height:27px !important;
-  }
-
-  html body .mushoku-status-card .causal-card{
-    overflow:hidden !important;
-  }
-  html body .mushoku-status-card .causal-board{
-    margin-bottom:6px !important;
-    padding:7px !important;
-  }
-  html body .mushoku-status-card .causal-dual-label{
-    display:grid !important;
-    grid-template-columns:1fr auto 1fr !important;
-    align-items:center !important;
-    gap:4px !important;
-    margin-bottom:5px !important;
-  }
-  html body .mushoku-status-card .causal-side{
-    font-size:.70em !important;
-    line-height:1.15 !important;
-  }
-  html body .mushoku-status-card .causal-side small{
-    font-size:.86em !important;
-  }
-  html body .mushoku-status-card .causal-side.dragon{
-    text-align:right !important;
-  }
-  html body .mushoku-status-card .causal-center-mark{
-    font-size:.62em !important;
-    line-height:1.1 !important;
-  }
-  html body .mushoku-status-card .causal-track{
-    height:15px !important;
-  }
-  html body .mushoku-status-card .causal-slider{
-    width:22px !important;
-    height:22px !important;
-  }
-  html body .mushoku-status-card .causal-value-num{
-    font-size:1.05em !important;
-  }
-  html body .mushoku-status-card .ripple-item{
-    padding-left:20px !important;
-  }
-  html body .mushoku-status-card .ripple-item:before{
-    left:7px !important;
-    top:11px !important;
-    width:7px !important;
-    height:7px !important;
-  }
-
-  html body .mushoku-status-card .ability-modal-mask{
-    padding:7px !important;
-    border-radius:10px !important;
-  }
-  html body .mushoku-status-card .ability-modal{
-    width:min(96%,320px) !important;
-    padding:13px 9px 9px !important;
-    border-radius:11px !important;
-  }
-  html body .mushoku-status-card .ability-modal-title{
-    font-size:1.04em !important;
-    margin-bottom:5px !important;
-  }
-  html body .mushoku-status-card .ability-modal-desc{
-    padding:8px !important;
-    font-size:.86em !important;
-    line-height:1.55 !important;
-  }
-  html body .mushoku-status-card .ability-modal-close{
-    width:23px !important;
-    height:23px !important;
-    right:7px !important;
-    top:6px !important;
-  }
-}
-
-@media(max-width:390px){
-  html body{
-    padding:2px !important;
-    font-size:10.8px !important;
-    line-height:1.45 !important;
-  }
-  html body .mushoku-status-card{
-    padding:6px !important;
-    border-radius:12px !important;
-  }
-  html body .mushoku-status-card .status-title{
-    font-size:.96em !important;
-    letter-spacing:.025em !important;
-  }
-  html body .mushoku-status-card .status-kicker{
-    font-size:.50em !important;
-  }
-  html body .mushoku-status-card .status-seal,
-  html body .mushoku-status-card .status-seal.bgm-seal{
-    width:28px !important;
-    height:28px !important;
-    min-width:28px !important;
-  }
-  html body .mushoku-status-card .sum-meta{
-    max-width:88px !important;
-    font-size:.62em !important;
-  }
-  html body .mushoku-status-card summary{
-    min-height:27px !important;
-    padding:4px 23px 4px 6px !important;
-  }
-  html body .mushoku-status-card .grid,
-  html body .mushoku-status-card .touki-use-grid,
-  html body .mushoku-status-card .battle-eval-grid,
-  html body .mushoku-status-card .npc-info-grid,
-  html body .mushoku-status-card .causal-grid,
-  html body .mushoku-status-card .causal-values{
-    gap:4px !important;
-  }
-  html body .mushoku-status-card .npc-feature-row{
-    grid-template-columns:46px minmax(0,1fr) !important;
-    gap:4px !important;
-  }
-  html body .mushoku-status-card .ability-chip{
-    min-width:42px !important;
-    max-width:86px !important;
-    padding:3px 5px !important;
-    font-size:.68em !important;
-  }
-  html body .mushoku-status-card .rel-name{
-    font-size:.80em !important;
-  }
-  html body .mushoku-status-card .fate-badge{
-    font-size:.58em !important;
-    padding:1px 4px !important;
-  }
-  html body .mushoku-status-card .causal-side{
-    font-size:.64em !important;
-  }
-  html body .mushoku-status-card .causal-track{
-    height:13px !important;
-  }
-  html body .mushoku-status-card .causal-slider{
-    width:20px !important;
-    height:20px !important;
-  }
-}
-
-
-
-/* ===== 精简目标NPC与异世之蝶显示：删去身份/状态行与原著节点显示后，收紧间距 ===== */
-.npc-card .npc-pill-row + .npc-box-title{
-  margin-top:10px !important;
-}
-@media(max-width:520px){
-  .npc-card .npc-pill-row{margin-bottom:6px !important;}
-  .npc-card .npc-pill-row + .npc-box-title{margin-top:8px !important;}
-  .causal-grid{grid-template-columns:1fr 1fr !important;}
-  .causal-wide{grid-column:1/-1 !important;}
-}
-@media(max-width:390px){
-  .causal-grid{grid-template-columns:1fr !important;}
-  .causal-wide{grid-column:auto !important;}
-}
-
 </style>
 </head>
 <body>
+<div id="chat-ui-rz7m4k2p">
+<script type="application/json" class="pp-status-data" data-source="default">{"activeChapterIndex":"0","activeChapterCode":"CH001","activeChapterName":"CH001｜一卷·第1章 「难道是异世界？」","chapterProgress":"开端","chapterSwitchSignal":"NO","chapterSwitchReason":"暂无","year":407,"month":10,"day":12,"chapter":1,"time":"407年10月12日","weather":"晴","temperature":"微凉","location":"布耶纳村","environment":"阿斯拉王国菲托亚领附近的乡村环境。","people":"主角，家人或附近村民","mapName":"六面世界地图","mapNote":"当前位于中央大陆阿斯拉王国菲托亚领附近。","mapImageUrl":"https://raw.githubusercontent.com/shiningfate/wzzsjpg/main/dc94a7ca6ec9d90d26e9f09d86ee7d5c97196803_raw.jpg","routeNote":"暂无远行路线。","localNews":"暂无重要传闻。","pcName":"主角名","pcRace":"人族","pcGender":"男","pcAge":"幼年","pcBodyStatus":"健康","pcTitle":"无","pcIdentityTags":"格雷拉特家幼子","hpCurrent":"15","hpMax":"100","mpCurrent":"15","mpMax":"100","pcPowerBrief":"幼年期，魔力量异常优秀，身体战力仍弱。","pcMentalStatus":"清醒","pcCurrentGoal":"适应当前生活并观察周围环境。","pcAppearance":"年幼的人族男孩，外表稚嫩。","battleRank":"普通人","toukiRank":"未觉醒","toukiState":"未觉醒","battleStyle":"暂无固定战斗风格。","battleCurrentStatus":"身体状态稳定，精神清醒，当前未处于战斗。","talentsDetail":"","skillsDetail":"","equipmentDetail":"","inventoryDetail":"","currencyDetail":"金币：0\n银币：0\n铜币：0","roxyName":"洛琪希·米格路迪亚","roxyLv":"0","roxyRelationship":"命运固定；尚未相遇 / 未建立羁绊","roxyState":"暂无动向","sylphyName":"希露菲叶特","sylphyLv":"0","sylphyRelationship":"命运固定；尚未相遇 / 未建立羁绊","sylphyState":"暂无动向","erisName":"艾莉丝·伯雷亚斯·格雷拉特","erisLv":"0","erisRelationship":"命运固定；尚未相遇 / 未建立羁绊","erisState":"暂无动向","otherRelations":[{"name":"保罗","lv":"6","relationship":"亲生父子；至亲血脉","state":"布耶纳村家中，维持村中骑士与家长职责，关注鲁迪乌斯的成长与异常早熟表现。"}],"targetName":"暂无明确目标","targetRace":"未知","targetGender":"未知","targetAge":"未知","targetAppearance":"暂无明确目标。","targetFigureState":"未鉴定","targetBreastsStatus":"未鉴定","targetVaginaStatus":"未鉴定","targetAnusAction":"未鉴定","targetFeetsAction":"未鉴定","targetSexualFantasy":"暂无明确线索","targetStance":"未知","targetDanger":"低","targetAttitude":"未知","targetPowerBrief":"暂无明确目标","targetRiskNote":"暂无明显风险。","targetTalentsSkills":"未知","targetInnerThought":"未知","canonDeviationLevel":"低","hitogamiAttention":"0","dragonGodCausality":"0","hitogamiInfluenceNote":"暂无明显诱导。","dragonCausalityNote":"暂无明显脱离。","causalBalanceNote":"当前因果天平接近稳定，原著路线仍可作为主要参考。","canonRipples":"暂无已确认涟漪事件。","canonFutureRisk":"暂无明显后续风险。","roxyLastMet":"尚未相遇","sylphyLastMet":"尚未相遇","erisLastMet":"尚未相遇","gameTitle":"无职转生·六面世界旅录"}</script>
+<script type="application/json" class="pp-status-data" data-source="st-ejs"><%= JSON.stringify(getMessageVar('stat_data', { defaults: {} })) _%></script>
+<script type="application/json" class="pp-status-data" data-source="st-macro">{{getvar::stat_data}}</script>
+<div class="pp-frame">
+<div class="pp-toast" id="pp-toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2 6h6l-5 4 2 7-7-4-7 4 2-7-5-4h6z"/></svg><span id="pp-toast-t">状态已更新</span></div>
 
-<div class="mushoku-status-card">
-
-  <div class="status-header">
-    <div class="status-title-row">
-      <div>
-        <div class="status-kicker">Adventurer's Parchment</div>
-        <div class="status-title">无职转生 · 六面世界旅录</div>
-      </div>
-      <div class="status-seal bgm-seal" id="mushokuBgmSeal" title="BGM播放器：播放由BGM正则控制" aria-label="BGM播放器"><span class="bgm-note">♫</span></div>
-    </div>
-  </div>
-
-  <details open>
-    <summary><span class="sum-left"><span class="sum-icon">📜</span><span>总览</span></span><span class="sum-meta" id="sumOverview">当前时间</span></summary>
-    <div class="section grid">
-      <div><b>章节：</b><span id="chapter">未知</span></div>
-      <div><b>时间：</b><span id="time">未知</span></div>
-      <div><b>天气：</b><span id="weather">未知</span> <span id="temperature"></span></div>
-      <div><b>地点：</b><span id="location">未知</span></div>
-      <div class="wide"><b>环境：</b><span id="environment">未知</span></div>
-      <div class="wide"><b>在场人物：</b><span id="people">未知</span></div>
-    </div>
-  </details>
-
-  <details>
-    <summary><span class="sum-left"><span class="sum-icon">🌏</span><span>世界地图 / 当地情报</span></span><span class="sum-meta" id="sumMap">六面世界地图</span></summary>
-    <div class="section">
-      <div class="name" id="mapName">六面世界地图</div>
-      <div class="meta" id="mapNote">当前路线与当地情报记录。</div>
-      <div class="map-frame" id="mapFrame">
-        <span class="empty">暂无地图图片。</span>
-      </div>
-      <div class="box-title">旅行路线</div>
-      <div class="text-box" id="routeNote">暂无明确路线。</div>
-      <div class="box-title">当地传闻 / 新闻</div>
-      <div class="text-box" id="localNews">暂无新的当地传闻。</div>
-    </div>
-  </details>
-
-  <details open>
-    <summary><span class="sum-left"><span class="sum-icon">👤</span><span>主角档案</span></span><span class="sum-meta" id="sumPc">HP ?/? ｜ MP ?/?</span></summary>
-    <div class="section">
-      <div class="name" id="pcName">未知</div>
-      <div class="meta">
-        <span id="pcRace">未知种族</span>｜
-        <span id="pcGender">未知性别</span>｜
-        <span id="pcAge">未知年龄</span>
-      </div>
-      <div class="tag-row">
-        <span class="pill" id="pcBodyStatus">正常</span>
-        <span class="pill" id="pcTitle">暂无称号</span>
-        <span class="pill" id="pcIdentityTags">暂无身份标签</span>
-      </div>
-
-      <div class="box-title">外貌</div>
-      <div class="text-box" id="pcAppearance">暂无明确外貌描写。</div>
-
-      <div class="bar-title">
-        <span>HP</span>
-        <span><span id="hpCurrent">？</span> / <span id="hpMax">？</span></span>
-      </div>
-      <div class="bar-shell"><div class="bar-fill hp-fill" id="hpBar" style="width:0%"></div></div>
-
-      <div class="bar-title">
-        <span>MP</span>
-        <span><span id="mpCurrent">？</span> / <span id="mpMax">？</span></span>
-      </div>
-      <div class="bar-shell"><div class="bar-fill mp-fill" id="mpBar" style="width:0%"></div></div>
-
-      <div class="touki-use-card">
-        <div class="touki-use-title">斗气运用</div>
-        <div class="touki-use-grid">
-          <div class="touki-use-box">
-            <div class="touki-use-label">阶位</div>
-            <div class="touki-use-text" id="toukiRank">未觉醒</div>
-          </div>
-          <div class="touki-use-box">
-            <div class="touki-use-label">当前状态</div>
-            <div class="touki-use-text" id="toukiState">未觉醒</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="battle-eval">
-        <div class="battle-rank-head">
-          <span class="battle-label">战斗评估</span>
-          <span class="battle-rank-badge" id="battleRank">普通人</span>
-        </div>
-        <div class="battle-eval-grid">
-          <div class="battle-eval-box battle-wide">
-            <div class="battle-eval-title">战斗风格</div>
-            <div class="battle-eval-text" id="battleStyle">暂无固定战斗风格。</div>
-          </div>
-          <div class="battle-eval-box">
-            <div class="battle-eval-title">战斗优势</div>
-            <div class="battle-eval-text" id="battleAdvantages">暂无明确实战优势。</div>
-          </div>
-          <div class="battle-eval-box">
-            <div class="battle-eval-title">战斗短板</div>
-            <div class="battle-eval-text" id="battleWeaknesses">暂无明确短板。</div>
-          </div>
-          <div class="battle-eval-box battle-wide">
-            <div class="battle-eval-title">当前状态</div>
-            <div class="battle-eval-text" id="battleCurrentStatus">身体与精神状态平稳，当前未处于战斗。</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row"><b>目标：</b><span id="pcCurrentGoal">暂无明确目标</span></div>
-
-    </div>
-  </details>
-
-  <details>
-    <summary><span class="sum-left"><span class="sum-icon">💕</span><span>羁绊</span></span><span class="sum-meta" id="sumRel">命运固定 3人</span></summary>
-    <div class="section">
-      <div class="rel-card roxy">
-        <div class="rel-head">
-          <b class="rel-name" id="roxyName">洛琪希·米格路迪亚</b>
-          <span class="rel-badges">
-            <span class="fate-badge">命运固定</span>
-            <span class="pill rel-lv">Lv.<span id="roxyLv">0</span>/10</span>
-          </span>
-        </div>
-        <div class="row"><b>关系：</b><span id="roxyRelationship">尚未相遇 / 未建立羁绊</span></div>
-        <div class="row"><b>状态：</b><span id="roxyState">暂无动向</span></div>
-      </div>
-
-      <div class="rel-card sylphy">
-        <div class="rel-head">
-          <b class="rel-name" id="sylphyName">希露菲叶特</b>
-          <span class="rel-badges">
-            <span class="fate-badge">命运固定</span>
-            <span class="pill rel-lv">Lv.<span id="sylphyLv">0</span>/10</span>
-          </span>
-        </div>
-        <div class="row"><b>关系：</b><span id="sylphyRelationship">尚未相遇 / 未建立羁绊</span></div>
-        <div class="row"><b>状态：</b><span id="sylphyState">暂无动向</span></div>
-      </div>
-
-      <div class="rel-card eris">
-        <div class="rel-head">
-          <b class="rel-name" id="erisName">艾莉丝·伯雷亚斯·格雷拉特</b>
-          <span class="rel-badges">
-            <span class="fate-badge">命运固定</span>
-            <span class="pill rel-lv">Lv.<span id="erisLv">0</span>/10</span>
-          </span>
-        </div>
-        <div class="row"><b>关系：</b><span id="erisRelationship">尚未相遇 / 未建立羁绊</span></div>
-        <div class="row"><b>状态：</b><span id="erisState">暂无动向</span></div>
-      </div>
-
-      <div class="box-title">其他重要关系</div>
-      <div id="otherRelationsList">
-        <div class="other-rel-empty" id="relationSummary">暂无其他重要关系。</div>
-      </div>
-    </div>
-  </details>
-
-  <details>
-    <summary><span class="sum-left"><span class="sum-icon">✨</span><span>能力与资产</span></span><span class="sum-meta" id="sumAbility">天赋 0 ｜ 技能 0 ｜ 背包 0</span></summary>
-    <div class="section ability-section" id="abilitySection">
-      <div class="ability-group">
-        <div class="box-title">天赋</div>
-        <div class="ability-card-grid" id="talentsDetail"></div>
-      </div>
-
-      <div class="ability-group">
-        <div class="box-title">技能</div>
-        <div class="ability-card-grid" id="skillsDetail"></div>
-      </div>
-
-      <div class="ability-group">
-        <div class="box-title">背包</div>
-        <div class="ability-card-grid" id="equipmentDetail"></div>
-      </div>
-      <div class="ability-modal-mask" id="abilityModalMask">
-        <div class="ability-modal">
-          <button class="ability-modal-close" id="abilityModalClose" type="button">×</button>
-          <div class="ability-modal-title" id="abilityModalTitle">未选择项目</div>
-          <div class="ability-modal-rank" id="abilityModalRank"></div>
-          <div class="ability-modal-desc" id="abilityModalDesc">暂无说明。</div>
-        </div>
-      </div>
-    </div>
-  </details>
-
-  <details>
-    <summary><span class="sum-left"><span class="sum-icon">👁️</span><span>目标 NPC</span></span><span class="sum-meta" id="sumTarget">暂无明确目标</span></summary>
-
-    <div class="npc-card">
-      <div class="npc-name" id="targetName">未知</div>
-
-      <div class="npc-pill-row">
-        <span class="npc-pill">种族：<span id="targetRace">未知</span></span>
-        <span class="npc-pill">性别：<span id="targetGender">未知</span></span>
-        <span class="npc-pill">年龄：<span id="targetAge">未知</span></span>
-      </div>
-
-
-      <div class="npc-box-title">外貌 / 衣着 / 气质</div>
-      <div class="npc-appearance-box" id="targetAppearance">暂无明确外貌描写。</div>
-
-      <div class="npc-box-title">身体细节</div>
-      <div class="npc-feature-table">
-        <div class="npc-feature-row">
-          <div class="npc-feature-label">身材</div>
-          <div class="npc-feature-value" id="targetFigureState">未知</div>
-        </div>
-        <div class="npc-feature-row">
-          <div class="npc-feature-label">胸部</div>
-          <div class="npc-feature-value" id="targetBreastsStatus">未知</div>
-        </div>
-        <div class="npc-feature-row">
-          <div class="npc-feature-label">阴部</div>
-          <div class="npc-feature-value" id="targetVaginaStatus">未知</div>
-        </div>
-        <div class="npc-feature-row">
-          <div class="npc-feature-label">屁穴</div>
-          <div class="npc-feature-value" id="targetAnusAction">未知</div>
-        </div>
-        <div class="npc-feature-row">
-          <div class="npc-feature-label">足部</div>
-          <div class="npc-feature-value" id="targetFeetsAction">未知</div>
-        </div>
-        <div class="npc-feature-row">
-          <div class="npc-feature-label">性幻想</div>
-          <div class="npc-feature-value" id="targetSexualFantasy">未知</div>
-        </div>
-      </div>
-
-      <div class="npc-box-title">立场 / 风险</div>
-      <div class="npc-info-grid">
-        <div><b>立场：</b><span id="targetStance">未知</span></div>
-        <div><b>危险：</b><span id="targetDanger">未知</span></div>
-        <div><b>对主角态度：</b><span id="targetAttitude">未知</span></div>
-        <div><b>战力概评：</b><span id="targetPowerBrief">未评估</span></div>
-        <div class="npc-info-wide"><b>风险说明：</b><span id="targetRiskNote">暂无。</span></div>
-      </div>
-
-      <div class="npc-box-title">天赋 / 技能 / 特殊能力</div>
-      <div class="npc-appearance-box" id="targetTalentsSkills">暂无已知天赋或技能。</div>
-    </div>
-
-    <div class="npc-thought-card">
-      <div class="npc-thought-title">目标内心</div>
-      <div class="npc-thought-box" id="targetInnerThought">无法得知。</div>
-    </div>
-  </details>
-
-    <details>
-    <summary><span class="sum-left"><span class="sum-icon">🦋</span><span>异世之蝶</span></span><span class="sum-meta" id="sumCausal">偏移 低 ｜ 人神 0 ｜ 龙神 0</span></summary>
-    <div class="section causal-card">
-      <div class="causal-head">
-        <span class="causal-title">路线</span>
-        <span class="causal-level-badge" id="canonDeviationLevel">低</span>
-      </div>
-
-      <div class="causal-board">
-        <div class="causal-dual-label">
-          <div class="causal-side hitogami">人神的关注度<small>诱导线</small></div>
-          <div class="causal-center-mark">自由意志</div>
-          <div class="causal-side dragon">龙神的因果量<small>脱离线</small></div>
-        </div>
-
-        <div class="causal-track" id="causalTrack">
-          <div class="causal-midline"></div>
-          <div class="causal-slider" id="causalSlider"></div>
-        </div>
-
-        <div class="causal-values">
-          <div class="causal-value-box hitogami">
-            <b>人神关注</b>
-            <span class="causal-value-num" id="hitogamiAttention">0</span>
-          </div>
-          <div class="causal-value-box dragon">
-            <b>龙神因果</b>
-            <span class="causal-value-num" id="dragonGodCausality">0</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="causal-grid">
-        <div class="causal-box">
-          <div class="causal-box-title">诱导线变化</div>
-          <div class="causal-text" id="hitogamiInfluenceNote">暂无明显诱导。</div>
-        </div>
-        <div class="causal-box">
-          <div class="causal-box-title">脱离线变化</div>
-          <div class="causal-text" id="dragonCausalityNote">暂无明显脱离。</div>
-        </div>
-        <div class="causal-box causal-wide">
-          <div class="causal-box-title">天平判定</div>
-          <div class="causal-text" id="causalBalanceNote">当前因果天平接近稳定，原著路线仍可作为主要参考。</div>
-        </div>
-        <div class="causal-box causal-wide">
-          <div class="causal-box-title">振翅之涟漪</div>
-          <div id="canonRipples">暂无已确认涟漪事件。</div>
-        </div>
-      </div>
-    </div>
-  </details>
-
+<div class="pp-head">
+<div class="pp-theme">
+<button class="pp-tbtn" id="pp-themebtn" title="切换魔法皮肤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></button>
+</div>
+<h1 class="pp-title" data-var="game-title">无职转生·六面世界旅录</h1>
+<div class="pp-sub">SIX·FACED·WORLD·CHRONICLE</div>
+<svg class="pp-rune" viewBox="0 0 120 12"><path d="M2 6h30M88 6h30" stroke="#b8902f" stroke-width="1.4"/><path d="M60 1l5 5-5 5-5-5z" fill="none" stroke="#b8902f" stroke-width="1.4"/><circle cx="42" cy="6" r="2.2" fill="#b8902f"/><circle cx="78" cy="6" r="2.2" fill="#b8902f"/></svg>
 </div>
 
+<div class="pp-sec on" id="sec-home">
+<div class="pp-grid">
+<div class="pp-tile" onclick="ppGo('overview')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7l2.5 4.5L12 16l-2.5-4.5z"/></svg><span>总览</span><small>OVERVIEW</small></div>
+<div class="pp-tile" onclick="ppGo('map')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span>世界地图</span><small>当地情报</small></div>
+<div class="pp-tile" onclick="ppGo('hero')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-4 3-6 7-6s7 2 7 6"/></svg><span>主角档案</span><small>PROFILE</small></div>
+<div class="pp-tile" onclick="ppGo('bond')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5 6 5c2 0 3 1.2 4 2.5C11 6.2 12 5 14 5c3.5 0 5 4 3.5 7C19 16.5 12 21 12 21z"/></svg><span>羁绊</span><small>BONDS</small></div>
+<div class="pp-tile" onclick="ppGo('ability')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3l7 7-9 9-7-7 9-9z"/><path d="M9 8l2 2"/><circle cx="6" cy="18" r="2"/></svg><span>能力资产</span><small>ASSETS</small></div>
+<div class="pp-tile" onclick="ppGo('npc')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7" r="3.5"/><path d="M5 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><circle cx="12" cy="7" r="6.5" stroke-dasharray="2 2"/></svg><span>目标NPC</span><small>TARGET</small></div>
+<div class="pp-tile" onclick="ppGo('butterfly')" style="grid-column:1/4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v16M12 8C9 3 3 4 3 9c0 4 6 5 9 3M12 8c3-5 9-4 9 1 0 4-6 5-9 3"/></svg><span>异世之蝶</span><small>BUTTERFLY · 因果路线</small></div>
+</div>
+<div class="pp-foot">· 蝶翼一振 · 命运改流 ·</div>
+</div>
+
+<div class="pp-sec" id="sec-overview">
+<button class="pp-back" onclick="ppBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>返回</button>
+<div class="pp-secttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7l2.5 4.5L12 16l-2.5-4.5z"/></svg>总览</div>
+<div class="pp-block">
+<div class="pp-row"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 4v16M4 9h4"/></svg></span><span class="lb">当前章节</span><span class="vl" data-var="chapter">[变量·activeChapterName]</span></div>
+<div class="pp-row"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="lb">当前时间</span><span class="vl" data-var="time">[变量·time]</span></div>
+<div class="pp-row"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19"/></svg></span><span class="lb">天气</span><span class="vl" data-var="weather">[变量·weather]</span></div>
+<div class="pp-row"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6-7-11a7 7 0 0114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="lb">地点</span><span class="vl" data-var="place">[变量·location]</span></div>
+<div class="pp-row"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3 3-4.5 6-4.5M14 20c0-2.5 2-3.5 3-3.5"/></svg></span><span class="lb">在场人物</span><span class="vl"><span data-var="present">[变量·people]</span><span class="pp-tags" data-var-html="presentTagsHtml">[变量·presentTagsHtml]</span></span></div>
+</div>
+</div>
+
+<div class="pp-sec" id="sec-map">
+<button class="pp-back" onclick="ppBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>返回</button>
+<div class="pp-secttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/></svg>世界地图 / 当地情报</div>
+<div class="pp-block">
+<div class="pp-blkttl">疆域舆图</div>
+<div class="pp-map" id="pp-mapbox"><div class="grid"></div><svg class="pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a6 6 0 00-6 6c0 5 6 12 6 12s6-7 6-12a6 6 0 00-6-6z"/></svg><div class="loc" data-var="map-loc">[变量·location]</div></div>
+<div class="pp-mapnote" data-var="mapNote">[变量·mapNote]</div>
+</div>
+<div class="pp-block">
+<div class="pp-blkttl">当地传闻 / 新闻</div>
+<div class="pp-news pp-list-html" id="local-news-list" data-var-html="localNewsListHtml">[变量·localNewsListHtml]</div>
+</div>
+</div>
+
+<div class="pp-sec" id="sec-hero">
+<button class="pp-back" onclick="ppBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>返回</button>
+<div class="pp-name" data-var="pcName">[变量·pcName]</div>
+<div class="pp-mini"><span data-var="pcRace">[变量·pcRace]</span><span data-var="pcGender">[变量·pcGender]</span><span data-var="pcAge">[变量·pcAge]</span></div>
+<div class="pp-bigtags"><span class="pp-btag" data-var="pcBodyStatus">[变量·pcBodyStatus]</span><span class="pp-btag" data-var="pcTitle">[变量·pcTitle]</span><span class="pp-btag" data-var="pcIdentityTags">[变量·pcIdentityTags]</span></div>
+<div class="pp-appear" data-var="pcAppearance">[变量·pcAppearance]</div>
+<div class="pp-block">
+<div class="pp-bar"><div class="pp-barhd"><span>生命 HP</span><span data-var="hp">[变量·hpCurrent] / [变量·hpMax]</span></div><div class="pp-bartrack"><div class="pp-barfill hpfill" data-pct="0" data-pct-var="hpPercent|heroHpPercent|heroHPPercent" data-pct-current="hpCurrent|heroHP|heroHp|hp" data-pct-max="hpMax|heroHPMax|heroHpMax"></div></div></div>
+<div class="pp-bar"><div class="pp-barhd"><span>魔力 MP</span><span data-var="mp">[变量·mpCurrent] / [变量·mpMax]</span></div><div class="pp-bartrack"><div class="pp-barfill mpfill" data-pct="0" data-pct-var="mpPercent|heroMpPercent|heroMPPercent" data-pct-current="mpCurrent|heroMP|heroMp|mp" data-pct-max="mpMax|heroMPMax|heroMpMax"></div></div></div>
+</div>
+<div class="pp-block">
+<div class="pp-blkttl">斗气运用</div>
+<div class="pp-2col"><div class="pp-cell"><div class="k">阶位</div><div class="v" data-var="toukiRank">[变量·toukiRank]</div></div><div class="pp-cell"><div class="k">当前状态</div><div class="v" data-var="toukiState">[变量·toukiState]</div></div></div>
+</div>
+<div class="pp-block">
+<div class="pp-blkttl">战斗评估<span class="pp-rank r-high" data-var="battleRank">[变量·battleRank]</span></div>
+<div class="pp-2col"><div class="pp-cell"><div class="k">战斗风格</div><div class="v" data-var="battleStyle">[变量·battleStyle]</div></div><div class="pp-cell"><div class="k">当前状态</div><div class="v" data-var="battleCurrentStatus">[变量·battleCurrentStatus]</div></div></div>
+</div>
+<div class="pp-block">
+<div class="pp-blkttl">当前模板</div>
+<div class="pp-detail" data-var="pcPowerBrief">[变量·pcPowerBrief]</div>
+</div>
+</div>
+
+<div class="pp-sec" id="sec-bond">
+<button class="pp-back" onclick="ppBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>返回</button>
+<div class="pp-secttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5 6 5c2 0 3 1.2 4 2.5C11 6.2 12 5 14 5c3.5 0 5 4 3.5 7C19 16.5 12 21 12 21z"/></svg>羁绊</div>
+<div class="pp-block">
+<div class="pp-blkttl">核心羁绊</div>
+<div class="pp-bond fated core-roxy"><div class="pp-bondtop"><span class="pp-bondname">洛琪希·米格鲁迪亚</span><span class="pp-fated">命运固定</span></div><div class="pp-bondrel" data-var="roxyRelationship">[变量·roxyRelationship]</div><div class="pp-bondst" data-var="roxyState">[变量·roxyState]</div><div class="pp-bondst">上次相遇：<span data-var="roxyLastMet">[变量·roxyLastMet]</span></div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span data-var="roxyBondLv">[变量·roxyBondLv]</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="0" data-pct-var="roxyBondPercent|roxyBondPct"></div></div></div></div>
+<div class="pp-bond fated core-sylphy"><div class="pp-bondtop"><span class="pp-bondname">希露菲叶特</span><span class="pp-fated">命运固定</span></div><div class="pp-bondrel" data-var="sylphyRelationship">[变量·sylphyRelationship]</div><div class="pp-bondst" data-var="sylphyState">[变量·sylphyState]</div><div class="pp-bondst">上次相遇：<span data-var="sylphyLastMet">[变量·sylphyLastMet]</span></div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span data-var="sylphyBondLv">[变量·sylphyBondLv]</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="0" data-pct-var="sylphyBondPercent|sylphyBondPct"></div></div></div></div>
+<div class="pp-bond fated core-eris"><div class="pp-bondtop"><span class="pp-bondname">艾莉丝·伯雷亚斯·格雷拉特</span><span class="pp-fated">命运固定</span></div><div class="pp-bondrel" data-var="erisRelationship">[变量·erisRelationship]</div><div class="pp-bondst" data-var="erisState">[变量·erisState]</div><div class="pp-bondst">上次相遇：<span data-var="erisLastMet">[变量·erisLastMet]</span></div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span data-var="erisBondLv">[变量·erisBondLv]</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="0" data-pct-var="erisBondPercent|erisBondPct"></div></div></div></div>
+</div>
+<div class="pp-block">
+<div class="pp-blkttl">其他重要关系</div>
+<div class="pp-list-html" id="other-bond-list" data-var-html="otherBondListHtml">[变量·otherBondListHtml]</div>
+</div>
+</div>
+
+<div class="pp-sec" id="sec-ability">
+<button class="pp-back" onclick="ppBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>返回</button>
+<div class="pp-secttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3l7 7-9 9-7-7 9-9z"/><path d="M9 8l2 2"/><circle cx="6" cy="18" r="2"/></svg>能力与资产</div>
+<div class="pp-block">
+<div class="pp-blkttl">天赋</div>
+<div class="pp-cards pp-dynamic-list" id="talent-list" data-var-html="talentListHtml">[变量·talentListHtml]</div>
+</div>
+<div class="pp-block">
+<div class="pp-blkttl">技能</div>
+<div class="pp-cards pp-dynamic-list" id="skill-list" data-var-html="skillListHtml">[变量·skillListHtml]</div>
+</div>
+<div class="pp-block">
+<div class="pp-blkttl">资金</div>
+<div class="pp-cards">
+<div class="pp-mc money-card" onclick="ppFlip(this)"><div class="pp-mc-in"><div class="pp-mc-f"><span class="pp-grade g-legend"></span><span class="nm">资金</span><span class="tip">点击查看</span></div><div class="pp-mc-b"><span class="lv">财库</span><span class="ds pp-moneyline">金币 <b data-var="money-gold">[变量·moneyGold]</b><br>银币 <b data-var="money-silver">[变量·moneySilver]</b><br>铜币 <b data-var="money-copper">[变量·moneyCopper]</b><br><span data-var="money-other">[变量·moneyOther]</span></span></div></div></div>
+</div>
+</div>
+<div class="pp-block">
+<div class="pp-blkttl">背包</div>
+<div class="pp-cards pp-dynamic-list" id="inventory-list" data-var-html="inventoryListHtml">[变量·inventoryListHtml]</div>
+</div>
+</div>
+
+<div class="pp-sec" id="sec-npc">
+<button class="pp-back" onclick="ppBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>返回</button>
+<div class="pp-name" data-var="targetName">[变量·targetName]</div>
+<div class="pp-mini"><span data-var="targetRace">[变量·targetRace]</span><span data-var="targetGender">[变量·targetGender]</span><span data-var="targetAge">[变量·targetAge]</span></div>
+<div class="pp-block">
+<div class="pp-blkttl">外貌 / 衣着 / 气质</div>
+<div class="pp-detail" data-var="targetAppearance">[变量·targetAppearance]</div>
+</div>
+<div class="pp-block">
+<div class="pp-blkttl">身体细节</div>
+<div class="pp-bd"><span class="bk">身材</span><span data-var="targetFigureState">[变量·targetFigureState]</span><span class="bk">胸部</span><span data-var="targetBreastsStatus">[变量·targetBreastsStatus]</span><span class="bk">阴部</span><span data-var="targetVaginaStatus">[变量·targetVaginaStatus]</span><span class="bk">臀部</span><span data-var="targetAnusAction">[变量·targetAnusAction]</span><span class="bk">足部</span><span data-var="targetFeetsAction">[变量·targetFeetsAction]</span></div>
+</div>
+<div class="pp-block">
+<div class="pp-blkttl">性幻想</div>
+<div class="pp-detail" data-var="targetSexualFantasy">[变量·targetSexualFantasy]</div>
+</div>
+<div class="pp-block">
+<div class="pp-blkttl">立场 / 风险</div>
+<div class="pp-bd"><span class="bk">立场</span><span data-var="targetStance">[变量·targetStance]</span><span class="bk">危险度</span><span><span class="pp-danger" data-var="targetDanger">[变量·targetDanger]</span></span><span class="bk">战力概评</span><span data-var="targetPowerBrief">[变量·targetPowerBrief]</span><span class="bk">风险说明</span><span data-var="targetRiskNote">[变量·targetRiskNote]</span></div>
+</div>
+<div class="pp-block">
+<div class="pp-blkttl">天赋 / 技能 / 特殊能力</div>
+<div class="pp-detail" data-var="targetTalentsSkills">[变量·targetTalentsSkills]</div>
+</div>
+<div class="pp-block">
+<div class="pp-blkttl">目标内心想法</div>
+<div class="pp-detail" data-var="targetInnerThought">[变量·targetInnerThought]</div>
+</div>
+</div>
+
+<div class="pp-sec" id="sec-butterfly">
+<button class="pp-back" onclick="ppBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>返回</button>
+<div class="pp-secttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v16M12 8C9 3 3 4 3 9c0 4 6 5 9 3M12 8c3-5 9-4 9 1 0 4-6 5-9 3"/></svg>异世之蝶</div>
+<div class="pp-block">
+<div class="pp-blkttl">路线 · 双轨因果</div>
+<div class="pp-track">
+<span class="lab l">人神 · 诱导线</span><span class="lab r">龙神 · 脱离线</span><span class="lab m">自由意志</span>
+<div class="rail rail-g"></div><div class="rail rail-d"></div>
+<div class="pp-orb" id="pp-orb"></div>
+</div>
+<div class="pp-metrics">
+<div class="pp-metric gold"><div class="mh"><span>人神关注</span><span><span data-var="hitogamiAttention">[变量·hitogamiAttention]</span>/100</span></div><div class="mt"><div class="mf" data-pct="0" data-pct-var="manGodAttention|manGodAttentionPercent"></div></div></div>
+<div class="pp-metric blue"><div class="mh"><span>龙神因果</span><span><span data-var="dragonGodCausality">[变量·dragonGodCausality]</span>/100</span></div><div class="mt"><div class="mf" data-pct="0" data-pct-var="dragonGodCausality|dragonGodCausalityPercent"></div></div></div>
+</div>
+</div>
+<div class="pp-block">
+<div class="pp-blkttl">天平判定 · 原著偏离</div>
+<div class="pp-scale">
+<svg viewBox="0 0 120 70"><line x1="60" y1="6" x2="60" y2="58" stroke="#b8902f" stroke-width="3"/><circle cx="60" cy="58" r="5" fill="#b8902f"/><g class="pp-beam" id="pp-beam"><line x1="20" y1="20" x2="100" y2="20" stroke="#b8902f" stroke-width="3"/><path d="M20 20l-8 18h16z" fill="none" stroke="#b8902f" stroke-width="2"/><path d="M100 20l-8 18h16z" fill="none" stroke="#264a7a" stroke-width="2"/><circle cx="60" cy="6" r="4" fill="#e9c766"/></g></svg>
+<div class="pp-scaletxt">当前判定：<b data-var="canonDeviationLevel">[变量·canonDeviationLevel]</b></div>
+</div>
+</div>
+<div class="pp-block">
+<div class="pp-blkttl">振翅之涟漪</div>
+<div class="pp-list-html" id="ripple-list" data-var-html="rippleListHtml">[变量·rippleListHtml]</div>
+</div>
+</div>
+
+<div class="pp-mask" id="pp-mask" onclick="ppCloseModal(event)">
+<div class="pp-modal" onclick="event.stopPropagation()">
+<h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.1em;height:1.1em"><path d="M12 2l2 6h6l-5 4 2 7-7-4-7 4 2-7-5-4h6z"/></svg><span id="pp-modal-t">提示</span></h4>
+<p id="pp-modal-c">内容</p>
+<button onclick="ppCloseModal()">知晓了</button>
+</div>
+</div>
+
+<div class="pp-foot">· 旅录铭刻于羊皮 · 蝶影翩跹于六界 ·</div>
+</div>
+</div>
 <script>
 (function(){
-  function safeGetParent(){
-    try {
-      if (window.parent && window.parent !== window) return window.parent;
-    } catch(e){}
-    return null;
-  }
+var root=document.getElementById('chat-ui-rz7m4k2p');
+if(!root)return;
+var currentData={},toastTimer;
+var DEFAULT_DATA={"activeChapterIndex":"0","activeChapterCode":"CH001","activeChapterName":"CH001｜一卷·第1章 「难道是异世界？」","chapterProgress":"开端","chapterSwitchSignal":"NO","chapterSwitchReason":"暂无","year":407,"month":10,"day":12,"chapter":1,"time":"407年10月12日","weather":"晴","temperature":"微凉","location":"布耶纳村","environment":"阿斯拉王国菲托亚领附近的乡村环境。","people":"主角，家人或附近村民","mapName":"六面世界地图","mapNote":"当前位于中央大陆阿斯拉王国菲托亚领附近。","mapImageUrl":"https://raw.githubusercontent.com/shiningfate/wzzsjpg/main/dc94a7ca6ec9d90d26e9f09d86ee7d5c97196803_raw.jpg","routeNote":"暂无远行路线。","localNews":"暂无重要传闻。","pcName":"主角名","pcRace":"人族","pcGender":"男","pcAge":"幼年","pcBodyStatus":"健康","pcTitle":"无","pcIdentityTags":"格雷拉特家幼子","hpCurrent":"15","hpMax":"100","mpCurrent":"15","mpMax":"100","pcPowerBrief":"幼年期，魔力量异常优秀，身体战力仍弱。","pcMentalStatus":"清醒","pcCurrentGoal":"适应当前生活并观察周围环境。","pcAppearance":"年幼的人族男孩，外表稚嫩。","battleRank":"普通人","toukiRank":"未觉醒","toukiState":"未觉醒","battleStyle":"暂无固定战斗风格。","battleCurrentStatus":"身体状态稳定，精神清醒，当前未处于战斗。","talentsDetail":"","skillsDetail":"","equipmentDetail":"","inventoryDetail":"","currencyDetail":"金币：0\n银币：0\n铜币：0","roxyName":"洛琪希·米格路迪亚","roxyLv":"0","roxyRelationship":"命运固定；尚未相遇 / 未建立羁绊","roxyState":"暂无动向","sylphyName":"希露菲叶特","sylphyLv":"0","sylphyRelationship":"命运固定；尚未相遇 / 未建立羁绊","sylphyState":"暂无动向","erisName":"艾莉丝·伯雷亚斯·格雷拉特","erisLv":"0","erisRelationship":"命运固定；尚未相遇 / 未建立羁绊","erisState":"暂无动向","otherRelations":[{"name":"保罗","lv":"6","relationship":"亲生父子；至亲血脉","state":"布耶纳村家中，维持村中骑士与家长职责，关注鲁迪乌斯的成长与异常早熟表现。"}],"targetName":"暂无明确目标","targetRace":"未知","targetGender":"未知","targetAge":"未知","targetAppearance":"暂无明确目标。","targetFigureState":"未鉴定","targetBreastsStatus":"未鉴定","targetVaginaStatus":"未鉴定","targetAnusAction":"未鉴定","targetFeetsAction":"未鉴定","targetSexualFantasy":"暂无明确线索","targetStance":"未知","targetDanger":"低","targetAttitude":"未知","targetPowerBrief":"暂无明确目标","targetRiskNote":"暂无明显风险。","targetTalentsSkills":"未知","targetInnerThought":"未知","canonDeviationLevel":"低","hitogamiAttention":"0","dragonGodCausality":"0","hitogamiInfluenceNote":"暂无明显诱导。","dragonCausalityNote":"暂无明显脱离。","causalBalanceNote":"当前因果天平接近稳定，原著路线仍可作为主要参考。","canonRipples":"暂无已确认涟漪事件。","canonFutureRisk":"暂无明显后续风险。","roxyLastMet":"尚未相遇","sylphyLastMet":"尚未相遇","erisLastMet":"尚未相遇","gameTitle":"无职转生·六面世界旅录"};
 
-  function parseMaybeJson(v){
-    if (v === undefined || v === null || v === "") return null;
-    if (typeof v === "object") return v;
-    if (typeof v === "string") {
-      try { return JSON.parse(v); } catch(e) {}
+var ALIAS={
+  'game-title':['gameTitle'],chapter:['activeChapterName'],place:['location'],present:['people'],
+  'map-loc':['mapLocation','location','mapNote'],mapNote:['mapLocationNote','mapDesc'],mapImageUrl:['mapUrl','mapURL','mapurl','mapImage','mapSrc'],
+  pcName:['heroName'],pcRace:['heroRace'],pcGender:['heroSex','heroGender'],pcAge:['heroAge'],
+  pcBodyStatus:['heroState'],pcTitle:['heroTitle'],pcIdentityTags:['heroIdentity','heroIdentityTags'],pcAppearance:['heroAppearance'],
+  hp:['hpText','heroHpText','heroHPText'],mp:['mpText','heroMpText','heroMPText'],
+  hpPercent:['heroHpPercent','heroHPPercent'],mpPercent:['heroMpPercent','heroMPPercent'],
+  hpCurrent:['heroHP','heroHp','hp'],hpMax:['heroHPMax','heroHpMax'],
+  mpCurrent:['heroMP','heroMp','mp'],mpMax:['heroMPMax','heroMpMax'],
+  toukiRank:['heroAuraRank','auraRank'],toukiState:['heroAuraState','auraState'],
+  battleRank:['heroPowerRank'],battleStyle:['heroFightStyle'],battleCurrentStatus:['heroFightState'],pcPowerBrief:['heroTemplate','pcCurrentGoal'],
+  roxyRelationship:['roxyRelation'],roxyLastMet:['roxyLastMeet','roxyLastSeen'],roxyBondLv:['roxyLvText','roxyLv','roxyBondLevel'],roxyBondPercent:['roxyBondPct'],
+  sylphyRelationship:['sylphyRelation'],sylphyLastMet:['sylphyLastMeet','sylphyLastSeen'],sylphyBondLv:['sylphyLvText','sylphyLv','sylphyBondLevel'],sylphyBondPercent:['sylphyBondPct'],
+  erisRelationship:['erisRelation'],erisLastMet:['erisLastMeet','erisLastSeen'],erisBondLv:['erisLvText','erisLv','erisBondLevel'],erisBondPercent:['erisBondPct'],
+  'money-gold':['moneyGold'],'money-silver':['moneySilver'],'money-copper':['moneyCopper'],'money-other':['moneyOther'],
+  targetName:['targetNpcName'],targetRace:['targetNpcRace'],targetGender:['targetNpcSex','targetNpcGender'],targetAge:['targetNpcAge'],
+  targetAppearance:['targetNpcAppearance'],targetFigureState:['targetNpcBody'],targetBreastsStatus:['targetNpcChest'],
+  targetVaginaStatus:['targetNpcPelvic'],targetAnusAction:['targetNpcHip'],targetFeetsAction:['targetNpcFeet'],targetSexualFantasy:['targetNpcFantasy'],
+  targetStance:['targetNpcStance'],targetDanger:['targetNpcDanger'],targetPowerBrief:['targetNpcPower'],targetRiskNote:['targetNpcRisk'],
+  targetTalentsSkills:['targetNpcSkills'],targetInnerThought:['targetNpcMind'],
+  hitogamiAttention:['manGodAttention'],manGodAttention:['hitogamiAttention'],manGodAttentionPercent:['hitogamiAttention'],
+  dragonGodCausalityPercent:['dragonGodCausality'],canonDeviationLevel:['originalDeviation']
+};
+
+function $(s){return root.querySelector(s);}
+function $all(s){return Array.prototype.slice.call(root.querySelectorAll(s));}
+function has(v){return v!==undefined&&v!==null&&String(v)!=='';}
+function esc(v){return String(v==null?'':v).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function text(v){return Array.isArray(v)?v.join('、'):(typeof v==='object'?JSON.stringify(v):String(v));}
+function num(v){var m=String(v||'').match(/-?\d+(?:\.\d+)?/);return m?Number(m[0]):0;}
+function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
+function camel(k){return String(k||'').replace(/[-_]+([a-zA-Z0-9])/g,function(_,c){return c.toUpperCase();});}
+function addKey(list,k){String(k||'').split('|').forEach(function(x){x=x.trim();if(x&&list.indexOf(x)<0)list.push(x);});}
+function candidates(key){
+  var list=[],c=camel(key),a=ALIAS[key]||ALIAS[c];
+  addKey(list,key); if(Array.isArray(a))a.forEach(function(x){addKey(list,x);}); addKey(list,c);
+  return list;
+}
+function pathGet(obj,path){
+  var cur=obj,parts=String(path||'').split('.');
+  for(var i=0;i<parts.length;i++){if(cur==null)return undefined;cur=cur[parts[i]];}
+  return cur;
+}
+function get(data,key){
+  var gv=readByGetvarKey(key);
+  if(has(gv))return gv;
+  var list=candidates(key);
+  for(var i=0;i<list.length;i++){var v=pathGet(data,list[i]);if(has(v))return v;}
+  return undefined;
+}
+function first(data,keys){
+  keys=Array.isArray(keys)?keys:String(keys||'').split('|');
+  for(var i=0;i<keys.length;i++){var v=get(data,String(keys[i]).trim());if(has(v))return v;}
+  return undefined;
+}
+function percent(cur,max){var m=num(max);return m>0?clamp(num(cur)/m*100,0,100):undefined;}
+function lvText(v){
+  if(!has(v))return 'Lv.0/10';
+  var s=String(v); if(/^\s*Lv\.?/i.test(s))return s;
+  return /^\s*\d+(?:\.\d+)?\s*(?:\/\s*10)?\s*$/.test(s)?'Lv.'+s.replace(/\s*\/\s*10\s*$/,'')+'/10':s;
+}
+function lvPercent(v){
+  if(!has(v))return 0;
+  var s=String(v),m=s.match(/(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)/);
+  if(m)return percent(m[1],m[2]);
+  m=s.match(/\d+(?:\.\d+)?/);return m?clamp(Number(m[0])*10,0,100):0;
+}
+function splitLines(v){
+  if(!has(v))return [];
+  if(Array.isArray(v))return v;
+  return String(v).split(/\n+|；|;|\|\|/).map(function(x){return x.trim().replace(/^[-•*]\s*/,'');}).filter(Boolean);
+}
+function gradeClass(s){
+  s=String(s||'');
+  if(/规格外|彩色|超规格/.test(s))return 'g-over';
+  if(/传说|红色/.test(s))return 'g-legend';
+  if(/史诗|金色/.test(s))return 'g-epic';
+  if(/稀有|紫色/.test(s))return 'g-rare';
+  return 'g-common';
+}
+function isCoreBondName(s){return /洛琪希|罗琪希|Roxy|希露菲|Sylph|艾莉丝|Eris/i.test(String(s||''));}
+function chipHtml(v){
+  var arr=[];
+  splitLines(v).forEach(function(x){String(x).split(/[、,，/|]/).forEach(function(y){y=y.trim();if(y)arr.push(y);});});
+  return arr.length?arr.slice(0,12).map(function(x){return '<span class="pp-chip">'+esc(x)+'</span>';}).join(''):'<span class="pp-chip">暂无标签</span>';
+}
+function newsHtml(v){
+  var arr=splitLines(v);
+  if(!arr.length)return '<div class="pp-newsitem"><span class="dot"></span><span>暂无重要传闻。</span></div>';
+  return arr.map(function(x){return '<div class="pp-newsitem"><span class="dot"></span><span>'+esc(x)+'</span></div>';}).join('');
+}
+function cardHtml(v,emptyText){
+  var arr=splitLines(v);
+  if(!arr.length)return '<div class="pp-detail">'+esc(emptyText||'暂无记录。')+'</div>';
+  return arr.map(function(item){
+    var name='',lv='',desc='';
+    if(item&&typeof item==='object'){
+      name=item.name||item.title||item.skill||item.talent||item.item||'未命名';
+      lv=item.lv||item.level||item.rank||item.rarity||'记录';
+      desc=item.desc||item.description||item.state||item.note||'';
+    }else{
+      var s=String(item),parts=s.split(/[|｜]/).map(function(x){return x.trim();});
+      if(parts.length>=3){name=parts[0];lv=parts[1];desc=parts.slice(2).join('｜');}
+      else{var m=s.match(/^【?([^】:：]+)】?[:：]\s*(.*)$/);name=m?m[1]:s;desc=m?m[2]:'';lv='记录';}
     }
-    return null;
+    return '<div class="pp-mc"><div class="pp-mc-in"><div class="pp-mc-f"><span class="pp-grade '+gradeClass(lv+' '+name+desc)+'"></span><span class="nm">'+esc(name)+'</span><span class="tip">点击查看</span></div><div class="pp-mc-b"><span class="lv">'+esc(lv)+'</span><span class="ds">'+esc(desc||'暂无详细描述。')+'</span></div></div></div>';
+  }).join('');
+}
+function otherBondHtml(v){
+  if(!has(v))return '<div class="pp-detail">暂无其他重要关系。</div>';
+  var arr=Array.isArray(v)?v:null;
+  if(!arr){try{var j=JSON.parse(String(v));if(Array.isArray(j))arr=j;}catch(e){}}
+  if(arr){
+    arr=arr.filter(function(o){return !isCoreBondName(o.name||o.title||o.relationship||o.relation);});
+    if(!arr.length)return '<div class="pp-detail">暂无其他重要关系。</div>';
+    return arr.map(function(o){
+      var name=o.name||o.title||'未命名关系',rel=o.relationship||o.relation||'关系未明',state=o.state||o.status||'暂无动向',lv=lvText(o.lv||o.level||'0'),pct=lvPercent(lv);
+      return '<div class="pp-bond"><div class="pp-bondtop"><span class="pp-bondname">'+esc(name)+'</span></div><div class="pp-bondrel">'+esc(rel)+'</div><div class="pp-bondst">'+esc(state)+'</div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span>'+esc(lv)+'</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="'+pct+'"></div></div></div></div>';
+    }).join('');
   }
-
-  function readFromObjectPath(obj, path){
-    if (!obj || !path) return undefined;
-    var parts = path.split(".");
-    var cur = obj;
-    for (var i = 0; i < parts.length; i++) {
-      if (cur === undefined || cur === null) return undefined;
-      cur = cur[parts[i]];
-    }
-    return cur;
+  var lines=splitLines(v).filter(function(x){return !isCoreBondName(x);});
+  return lines.length?lines.map(function(x){return '<div class="pp-bond"><div class="pp-bondtop"><span class="pp-bondname">'+esc(x)+'</span></div></div>';}).join(''):'<div class="pp-detail">暂无其他重要关系。</div>';
+}
+function rippleHtml(v){
+  var arr=splitLines(v);
+  if(!arr.length)return '<div class="pp-detail">暂无重大命运涟漪。</div>';
+  return arr.map(function(x){return '<div class="pp-ripple"><svg class="wing" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4v16M12 8C9 3 3 4 3 9c0 4 6 5 9 3"/></svg><span>'+esc(x)+'</span></div>';}).join('');
+}
+function parseMoney(data){
+  var s=String(data.currencyDetail||'');
+  function pick(label){var m=s.match(new RegExp(label+'\\s*[：:]\\s*([0-9]+)'));return m?m[1]:undefined;}
+  [['moneyGold','金币'],['moneySilver','银币'],['moneyCopper','铜币']].forEach(function(p){if(!has(data[p[0]])){var v=pick(p[1]);if(has(v))data[p[0]]=v;}});
+  if(!has(data.moneyOther)){
+    var extra=splitLines(s).filter(function(x){return !/(?:金|银|铜)币\s*[：:]/.test(x);});
+    data.moneyOther=extra.length?extra.join('；'):'暂无其他资金信息。';
   }
-
-  function readStatDataObject(){
-    var p = safeGetParent();
-
-    // ① 参考卡同款核心读取方式：
-    // 从“当前消息”的变量对象里读取 stat_data。
-    try {
-      if (
-        typeof getVariables === "function" &&
-        typeof getCurrentMessageId === "function" &&
-        typeof _ !== "undefined" &&
-        _.get
-      ) {
-        var vars = getVariables({
-          type: "message",
-          message_id: getCurrentMessageId()
-        });
-        var stat = _.get(vars, "stat_data", {});
-        if (stat && typeof stat === "object" && Object.keys(stat).length > 0) {
-          return stat.stat_data || stat;
-        }
-      }
-    } catch(e) {}
-
-    // ② 如果 API 挂在父窗口，则从父窗口读取。
-    try {
-      if (
-        p &&
-        typeof p.getVariables === "function" &&
-        typeof p.getCurrentMessageId === "function" &&
-        typeof p._ !== "undefined" &&
-        p._.get
-      ) {
-        var vars2 = p.getVariables({
-          type: "message",
-          message_id: p.getCurrentMessageId()
-        });
-        var stat2 = p._.get(vars2, "stat_data", {});
-        if (stat2 && typeof stat2 === "object" && Object.keys(stat2).length > 0) {
-          return stat2.stat_data || stat2;
-        }
-      }
-    } catch(e) {}
-
-    // ③ 兼容没有 lodash 的情况：直接从 getVariables 返回对象里取 stat_data。
-    try {
-      if (
-        typeof getVariables === "function" &&
-        typeof getCurrentMessageId === "function"
-      ) {
-        var vars3 = getVariables({
-          type: "message",
-          message_id: getCurrentMessageId()
-        });
-        var stat3 = vars3 && vars3.stat_data;
-        if (stat3 && typeof stat3 === "object" && Object.keys(stat3).length > 0) {
-          return stat3.stat_data || stat3;
-        }
-      }
-    } catch(e) {}
-
-    try {
-      if (
-        p &&
-        typeof p.getVariables === "function" &&
-        typeof p.getCurrentMessageId === "function"
-      ) {
-        var vars4 = p.getVariables({
-          type: "message",
-          message_id: p.getCurrentMessageId()
-        });
-        var stat4 = vars4 && vars4.stat_data;
-        if (stat4 && typeof stat4 === "object" && Object.keys(stat4).length > 0) {
-          return stat4.stat_data || stat4;
-        }
-      }
-    } catch(e) {}
-
-    // ④ 兼容 window 变量。
-    var candidates = [
-      window.mushokuStatusData,
-      window.stat_data,
-      window.statData,
-      window.chat_metadata && window.chat_metadata.variables && window.chat_metadata.variables.stat_data,
-      p && p.mushokuStatusData,
-      p && p.stat_data,
-      p && p.statData,
-      p && p.chat_metadata && p.chat_metadata.variables && p.chat_metadata.variables.stat_data
-    ];
-
-    for (var i = 0; i < candidates.length; i++) {
-      var obj = parseMaybeJson(candidates[i]);
-      if (obj) return obj.stat_data || obj;
-    }
-
-    // ⑤ 兼容 getvar("stat_data")。
-    try {
-      if (typeof getvar === "function") {
-        var whole = parseMaybeJson(getvar("stat_data"));
-        if (whole) return whole.stat_data || whole;
-      }
-    } catch(e){}
-
-    try {
-      if (p && typeof p.getvar === "function") {
-        var whole2 = parseMaybeJson(p.getvar("stat_data"));
-        if (whole2) return whole2.stat_data || whole2;
-      }
-    } catch(e){}
-
-    return {};
-  }
-
-  var data = readStatDataObject();
-
-  function readByGetvar(key){
-    var p = safeGetParent();
-    var paths = [
-      "stat_data." + key,
-      "/stat_data/" + key,
-      "stat_data/" + key
-    ];
-
-    for (var i = 0; i < paths.length; i++) {
-      try {
-        if (typeof getvar === "function") {
-          var v = getvar(paths[i]);
-          if (v !== undefined && v !== null && String(v).trim() !== "") return v;
-        }
-      } catch(e){}
-
-      try {
-        if (p && typeof p.getvar === "function") {
-          var pv = p.getvar(paths[i]);
-          if (pv !== undefined && pv !== null && String(pv).trim() !== "") return pv;
-        }
-      } catch(e){}
-    }
-
-    return undefined;
-  }
-
-  function get(key, fallback){
-    var v = data[key];
-
-    if (v === undefined || v === null || String(v).trim() === "") {
-      v = readFromObjectPath(data, key);
-    }
-
-    if (v === undefined || v === null || String(v).trim() === "") {
-      v = readByGetvar(key);
-    }
-
-    if (v === undefined || v === null) return fallback;
-    v = String(v).trim();
-    return v || fallback;
-  }
-
-  function text(id, key, fallback){
-    var el = document.getElementById(id);
-    if(el) el.textContent = get(key, fallback);
-  }
-
-  function html(id, key, fallback){
-    var el = document.getElementById(id);
-    if(el) el.innerHTML = get(key, fallback);
-  }
-
-
-
-
-  function clampNum(v, min, max){
-    v = Number(v);
-    if(!isFinite(v)) v = 0;
-    return Math.max(min, Math.min(max, v));
-  }
-
-  function renderCausalBalance(){
-    var h = clampNum(get("hitogamiAttention","0"), 0, 100);
-    var d = clampNum(get("dragonGodCausality","0"), 0, 100);
-    var hEl = document.getElementById("hitogamiAttention");
-    var dEl = document.getElementById("dragonGodCausality");
-    var track = document.getElementById("causalTrack");
-    if(hEl) hEl.textContent = String(Math.round(h)) + "/100";
-    if(dEl) dEl.textContent = String(Math.round(d)) + "/100";
-
-    // 50 为中线；人神高则滑块左移，龙神高则右移。
-    var pos = 50 + (d - h) * 0.45;
-    pos = clampNum(pos, 5, 95);
-    if(track) track.style.setProperty("--fate-pos", pos + "%");
-  }
-
-  function renderCanonDeviationLevel(){
-    var el = document.getElementById("canonDeviationLevel");
-    if(!el) return;
-    var level = get("canonDeviationLevel","低");
-    var slug = canonDeviationSlug(level);
-    el.textContent = "偏移度：" + level;
-    el.className = "causal-level-badge causal-dev-" + slug;
-  }
-
-  function renderRippleList(id, key, fallback){
-    var el = document.getElementById(id);
-    if(!el) return;
-    var items = splitCanonItems(readRaw(key));
-    if(!items.length){
-      el.innerHTML = '<div class="causal-text">' + escapeHtml(fallback) + '</div>';
-      return;
-    }
-    el.innerHTML = '<div class="ripple-list">' + items.map(function(item){
-      return '<div class="ripple-item">' + escapeHtml(item) + '</div>';
-    }).join("") + '</div>';
-  }
-
-  function canonDeviationSlug(level){
-    var s = String(level || "").replace(/\s+/g,"").trim();
-    if(/重写|崩坏|失效|规格外/.test(s)) return "rewrite";
-    if(/严重|极高|剧烈/.test(s)) return "severe";
-    if(/高|大幅|关键/.test(s)) return "high";
-    if(/中|局部|明显/.test(s)) return "mid";
-    return "low";
-  }
-
-
-
-  function splitCanonItems(raw){
-    if(raw === undefined || raw === null) return [];
-    if(Array.isArray(raw)) return raw.map(function(x){return String(x || "").trim();}).filter(Boolean);
-    var str = String(raw || "").trim();
-    if(!str) return [];
+}
+function fillResource(data,kind){
+  var up=kind.toUpperCase(),lo=kind.toLowerCase();
+  var textKey=kind+'Text',cur=first(data,[kind+'Current','hero'+up,'hero'+kind.charAt(0).toUpperCase()+kind.slice(1),kind]),max=first(data,[kind+'Max','hero'+up+'Max','hero'+kind.charAt(0).toUpperCase()+kind.slice(1)+'Max']);
+  if(!has(data[textKey])&&has(cur)&&has(max))data[textKey]=text(cur)+' / '+text(max);
+  if(has(data[textKey]))data[kind]=data[textKey];
+  if(!has(data[lo+'Percent'])){var p=percent(cur,max);if(has(p))data[lo+'Percent']=p;}
+}
+function derive(input){
+  var data=Object.assign({},input||{});
+  if(!has(data.mapLocation))data.mapLocation=data.mapNote||data.location||'';
+  if(!has(data.present))data.present=data.people||'';
+  if(!has(data.place))data.place=data.location||'';
+  fillResource(data,'hp'); fillResource(data,'mp'); parseMoney(data);
+  ['roxy','sylphy','eris'].forEach(function(n){
+    var lv=first(data,[n+'BondLv',n+'LvText',n+'Lv',n+'BondLevel']);
+    if(!has(data[n+'BondLv'])&&has(lv))data[n+'BondLv']=lvText(lv);
+    if(!has(data[n+'BondPercent']))data[n+'BondPercent']=lvPercent(first(data,[n+'BondLv',n+'Lv',n+'BondLevel']));
+    if(!has(data[n+'LastMet']))data[n+'LastMet']='尚未相遇';
+  });
+  if(!has(data.presentTagsHtml))data.presentTagsHtml=chipHtml(data.presentTags||data.pcIdentityTags||'');
+  if(!has(data.localNewsListHtml))data.localNewsListHtml=newsHtml(data.localNews);
+  if(!has(data.otherBondListHtml))data.otherBondListHtml=otherBondHtml(data.otherRelations||data.relationSummary);
+  if(!has(data.talentListHtml))data.talentListHtml=cardHtml(data.talentsDetail,'暂无已确认天赋。');
+  if(!has(data.skillListHtml))data.skillListHtml=cardHtml(data.skillsDetail,'暂无已掌握技能。');
+  if(!has(data.inventoryListHtml))data.inventoryListHtml=cardHtml(data.inventoryDetail||data.bagItems||data.itemsDetail||data.equipmentDetail,'暂无额外道具。');
+  if(!has(data.rippleListHtml))data.rippleListHtml=rippleHtml(data.canonRipples);
+  return data;
+}
+function tryJson(s){try{return JSON.parse(s);}catch(e){return null;}}
+function htmlDecode(s){var t=document.createElement('textarea');t.innerHTML=String(s||'');return t.value;}
+function looseData(s){
+  s=htmlDecode(String(s||'').trim());
+  if(!s||/\{\{getvar::|<%=?/.test(s)||s==='[object Object]')return null;
+  var j=tryJson(s);if(typeof j==='string')j=tryJson(j);if(j&&typeof j==='object')return j.stat_data||j;
+  var obj={},hit=false;
+  s.split(/\n+/).forEach(function(line){
+    var m=line.match(/^\s*([A-Za-z_][\w-]*)\s*:\s*(.*?)\s*$/);if(!m)return;
+    var v=m[2]; if(v===''||v==='|'||v==='>')return;
+    v=v.replace(/^['\"]|['\"]$/g,''); obj[m[1]]=v; hit=true;
+  });
+  return hit?obj:null;
+}
+function mergeInto(dst,src){
+  if(!src)return false;
+  if(typeof src==='string')src=looseData(src);
+  if(src&&src.stat_data)src=src.stat_data;
+  if(src&&typeof src==='object'&&!Array.isArray(src)){Object.keys(src).forEach(function(k){if(has(src[k]))dst[k]=src[k];});return true;}
+  return false;
+}
+function applyPatchData(dst,patch){
+  if(!Array.isArray(patch))return false;
+  var changed=false;
+  patch.forEach(function(p){
+    if(!p||!/^\/(?!.*\/)[^/]+$/.test(String(p.path||'')))return;
+    var op=String(p.op||'replace').toLowerCase();
+    if(op!=='replace'&&op!=='add')return;
+    dst[String(p.path).slice(1)]=p.value;changed=true;
+  });
+  return changed;
+}
+function domScopes(){
+  var scopes=[],host=root.closest('.mes,.message,.chat-message,.swipe,.last_mes');
+  if(host)scopes.push(host);
+  var p=root.parentElement,guard=0;
+  while(p&&guard++<6){if(scopes.indexOf(p)<0)scopes.push(p);p=p.parentElement;}
+  scopes.push(document);
+  return scopes;
+}
+function mergeStatusBlock(dst,s){
+  var d=looseData(s);
+  return mergeInto(dst,d);
+}
+function statusDataFromDom(){
+  var data={},seen={},found=false;
+  domScopes().forEach(function(scope){
     try{
-      var parsed = JSON.parse(str);
-      if(Array.isArray(parsed)){
-        return parsed.map(function(x){
-          if(typeof x === "object" && x){
-            return x.event || x.name || x.desc || x.description || x.text || JSON.stringify(x);
-          }
-          return String(x || "");
-        }).map(function(x){return String(x || "").trim();}).filter(Boolean);
+      Array.prototype.slice.call(scope.querySelectorAll('mushokustatusdata,statusdata,.pp-status-data,[data-pp-status-data]')).forEach(function(n){
+        var s=n.getAttribute&&n.getAttribute('data-pp-status-data')||n.textContent||'';
+        s=s.trim();if(!s||seen[s])return;seen[s]=1;if(mergeStatusBlock(data,s))found=true;
+      });
+      var html=scope===document?document.documentElement.innerHTML:(scope.innerHTML||'');
+      var txt=(scope.textContent||'')+'\n'+html;
+      var re=/<(?:MushokuStatusData|StatusData)>\s*([\s\S]*?)\s*<\/(?:MushokuStatusData|StatusData)>/ig,m;
+      while((m=re.exec(txt))){var s=m[1].trim();if(!s||seen[s])continue;seen[s]=1;if(mergeStatusBlock(data,s))found=true;}
+    }catch(e){}
+  });
+  return found?data:null;
+}
+function patchDataFromDom(){
+  var data={},seen={},found=false;
+  domScopes().forEach(function(scope){
+    try{
+      Array.prototype.slice.call(scope.querySelectorAll('jsonpatch,JSONPatch,mushokustatuspatch,statusdatapatch,.pp-status-patch,[data-pp-status-patch]')).forEach(function(n){
+        var s=n.getAttribute&&n.getAttribute('data-pp-status-patch')||n.textContent||'';
+        s=s.trim();if(!s||seen[s])return;seen[s]=1;var j=tryJson(htmlDecode(s));if(applyPatchData(data,j))found=true;
+      });
+      var html=scope===document?document.documentElement.innerHTML:(scope.innerHTML||'');
+      var txt=(scope.textContent||'')+'\n'+html;
+      var re=/<(?:JSONPatch|MushokuStatusPatch|StatusDataPatch)>\s*([\s\S]*?)\s*<\/(?:JSONPatch|MushokuStatusPatch|StatusDataPatch)>/ig,m;
+      while((m=re.exec(txt))){var s=m[1].trim();if(!s||seen[s])continue;seen[s]=1;var j=tryJson(htmlDecode(s));if(applyPatchData(data,j))found=true;}
+    }catch(e){}
+  });
+  return found?data:null;
+}
+
+function safeParent(){
+  try{
+    if(window.parent && window.parent !== window)return window.parent;
+  }catch(e){}
+  return null;
+}
+function goodVar(v){
+  if(v===undefined||v===null)return false;
+  var s=String(v).trim();
+  if(!s||s==='[object Object]')return false;
+  if(/\{\{getvar::|<%=?/.test(s))return false;
+  return true;
+}
+function pushMessageVars(out,w){
+  if(!w)return;
+  function push(v){if(v!==undefined&&v!==null)out.push(v);}
+  try{
+    if(typeof w.getVariables==="function" && typeof w.getCurrentMessageId==="function"){
+      var vars=w.getVariables({type:"message",message_id:w.getCurrentMessageId()});
+      if(vars){
+        var stat=(w._&&w._.get)?w._.get(vars,"stat_data",{}):vars.stat_data;
+        push(stat);push(vars.stat_data);push(vars.variables&&vars.variables.stat_data);
+      }
+    }
+  }catch(e){}
+  try{
+    if(typeof w.getvar==="function"){
+      ["stat_data","/stat_data","message.stat_data","variables.stat_data"].forEach(function(k){
+        var v=w.getvar(k); if(goodVar(v))push(v);
+      });
+    }
+  }catch(e){}
+}
+function readByGetvarKey(key){
+  var wins=[window],p=safeParent(); if(p)wins.push(p);
+  var keys=candidates(key),paths=[];
+  keys.forEach(function(k){
+    if(!k)return;
+    paths.push("stat_data."+k);
+    paths.push("/stat_data/"+k);
+    paths.push("stat_data/"+k);
+    paths.push(k);
+  });
+  for(var wi=0;wi<wins.length;wi++){
+    var w=wins[wi]; if(!w)continue;
+    try{
+      if(typeof w.getvar==="function"){
+        for(var i=0;i<paths.length;i++){
+          var v=w.getvar(paths[i]);
+          if(goodVar(v))return v;
+        }
       }
     }catch(e){}
-    return str.split(/\n|；|;/).map(function(x){return String(x || "").replace(/^[-•·]\s*/,"").trim();}).filter(Boolean);
   }
+  return undefined;
+}
 
-  function renderCanonList(id, key, fallback){
-    var el = document.getElementById(id);
-    if(!el) return;
-    var items = splitCanonItems(readRaw(key));
-    if(!items.length){
-      el.innerHTML = '<div class="canon-dev-text">' + escapeHtml(fallback) + '</div>';
-      return;
-    }
-    el.innerHTML = '<ul class="canon-dev-list">' + items.map(function(item){
-      return '<li>' + escapeHtml(item) + '</li>';
-    }).join("") + '</ul>';
-  }
-
-  function battleRankSlug(rank){
-    var s = String(rank || "").replace(/\s+/g,"").trim();
-    var map = {
-      "无战力":"none",
-      "普通人":"common",
-      "初级":"primary",
-      "中级":"middle",
-      "上级":"advanced",
-      "圣级":"saint",
-      "王级":"king",
-      "帝级":"emperor",
-      "神级":"god",
-      "列强":"great",
-      "规格外":"outside"
-    };
-    return map[s] || "common";
-  }
-
-  function renderBattleRank(){
-    var el = document.getElementById("battleRank");
-    if(!el) return;
-    var rank = get("battleRank","普通人");
-    el.textContent = rank;
-    el.className = "battle-rank-badge battle-rank-" + battleRankSlug(rank);
-  }
-
-  function pct(current, max){
-    current = parseFloat(String(current || "").replace(/[^\d.]/g,""));
-    max = parseFloat(String(max || "").replace(/[^\d.]/g,""));
-    if(!max || isNaN(current)) return 0;
-    return Math.max(0, Math.min(100, current / max * 100));
-  }
-
-  text("chapter","chapter","未知");
-  text("time","time","未知");
-  text("weather","weather","未知");
-  text("temperature","temperature","");
-  text("location","location","未知");
-  text("environment","environment","未知");
-  text("people","people","未知");
-
-  text("mapName","mapName","六面世界地图");
-  text("mapNote","mapNote","当前路线与当地情报记录。");
-  html("routeNote","routeNote","暂无明确路线。");
-  html("localNews","localNews","暂无新的当地传闻。");
-
-  var defaultMapUrl = "https://raw.githubusercontent.com/shiningfate/wzzsjpg/main/dc94a7ca6ec9d90d26e9f09d86ee7d5c97196803_raw.jpg";
-  var mapUrl = get("mapImageUrl", defaultMapUrl);
-  var mapFrame = document.getElementById("mapFrame");
-  if(mapFrame && mapUrl){
-    mapFrame.innerHTML = '<img src="' + mapUrl + '" alt="世界地图">';
-  }
-
-  text("pcName","pcName","未知");
-  text("pcRace","pcRace","未知种族");
-  text("pcGender","pcGender","未知性别");
-  text("pcAge","pcAge","未知年龄");
-  text("pcBodyStatus","pcBodyStatus","正常");
-  text("pcTitle","pcTitle","暂无称号");
-  text("pcIdentityTags","pcIdentityTags","暂无身份标签");
-
-  var hpCurrent = get("hpCurrent","？");
-  var hpMax = get("hpMax","？");
-  var mpCurrent = get("mpCurrent","？");
-  var mpMax = get("mpMax","？");
-
-  var hpCurrentEl = document.getElementById("hpCurrent");
-  var hpMaxEl = document.getElementById("hpMax");
-  var mpCurrentEl = document.getElementById("mpCurrent");
-  var mpMaxEl = document.getElementById("mpMax");
-  var hpBar = document.getElementById("hpBar");
-  var mpBar = document.getElementById("mpBar");
-
-  if(hpCurrentEl) hpCurrentEl.textContent = hpCurrent;
-  if(hpMaxEl) hpMaxEl.textContent = hpMax;
-  if(mpCurrentEl) mpCurrentEl.textContent = mpCurrent;
-  if(mpMaxEl) mpMaxEl.textContent = mpMax;
-  if(hpBar) hpBar.style.width = pct(hpCurrent,hpMax) + "%";
-  if(mpBar) mpBar.style.width = pct(mpCurrent,mpMax) + "%";
-
-  text("toukiRank","toukiRank","未觉醒");
-  html("toukiState","toukiState","未觉醒");
-
-  renderBattleRank();
-  html("battleStyle","battleStyle","暂无固定战斗风格。");
-  html("battleAdvantages","battleAdvantages","暂无明确实战优势。");
-  html("battleWeaknesses","battleWeaknesses","暂无明确短板。");
-  html("battleCurrentStatus","battleCurrentStatus","身体与精神状态平稳，当前未处于战斗。");
-
-  text("pcCurrentGoal","pcCurrentGoal","暂无明确目标");
-  html("pcAppearance","pcAppearance","暂无明确外貌描写。");
-
-function heroineRelationText(key, fallback){
-    var v = get(key, fallback);
-    v = String(v || "")
-      .replace(/^\s*命运固定\s*[；;：:、，,]?\s*/, "")
-      .trim();
-    return v || fallback;
-  }
-
-  function heroineHtml(id, key, fallback){
-    var el = document.getElementById(id);
-    if(el) el.innerHTML = heroineRelationText(key, fallback);
-  }
-
-  text("roxyName","roxyName","洛琪希·米格路迪亚");
-  text("roxyLv","roxyLv","0");
-  heroineHtml("roxyRelationship","roxyRelationship","尚未相遇 / 未建立羁绊");
-  html("roxyState","roxyState","暂无动向");
-
-  text("sylphyName","sylphyName","希露菲叶特");
-  text("sylphyLv","sylphyLv","0");
-  heroineHtml("sylphyRelationship","sylphyRelationship","尚未相遇 / 未建立羁绊");
-  html("sylphyState","sylphyState","暂无动向");
-
-  text("erisName","erisName","艾莉丝·伯雷亚斯·格雷拉特");
-  text("erisLv","erisLv","0");
-  heroineHtml("erisRelationship","erisRelationship","尚未相遇 / 未建立羁绊");
-  html("erisState","erisState","暂无动向");
-
-  function escapeHtml(str){
-    return String(str === undefined || str === null ? "" : str)
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#39;");
-  }
-
-  function readRaw(key){
-    var v = data[key];
-
-    if (v === undefined || v === null || String(v).trim() === "") {
-      v = readFromObjectPath(data, key);
-    }
-
-    if (v === undefined || v === null || String(v).trim() === "") {
-      v = readByGetvar(key);
-    }
-
-    return v;
-  }
-
-  function parseMaybeArray(v){
-    if (Array.isArray(v)) return v;
-    if (v === undefined || v === null || v === "") return [];
-    if (typeof v === "string") {
-      try {
-        var parsed = JSON.parse(v);
-        if (Array.isArray(parsed)) return parsed;
-      } catch(e) {}
-    }
-    return [];
-  }
-
-  function normalizeRelation(item){
-    if (!item || typeof item !== "object") return null;
-
-    var name = item.name || item.Name || item.姓名 || item.otherRelationName || item.relationName || "";
-    var lv = item.lv || item.Lv || item.level || item.bondLv || item.羁绊等级 || item.等级 || "0";
-    var relationship = item.relationship || item.relation || item.关系 || item.desc || item.description || "暂无重要关系";
-    var state = item.state || item.status || item.状态 || "暂无";
-
-    name = String(name || "").trim();
-    lv = String(lv || "0").trim();
-    relationship = String(relationship || "暂无重要关系").trim();
-    state = String(state || "暂无").trim();
-
-    if (!name || name === "暂无" || name === "无" || name === "未知") return null;
-
-    return {
-      name: name,
-      lv: lv,
-      relationship: relationship || "暂无重要关系",
-      state: state || "暂无"
-    };
-  }
-
-  function buildOtherRelations(){
-    var list = [];
-
-    // 推荐格式：otherRelations 是数组，可随剧情增加/减少，不限制数量。
-    // 示例：
-    // otherRelations: [
-    //   {"name":"保罗","lv":"6","relationship":"父亲；关系紧张但仍有关心","state":"同住中"},
-    //   {"name":"塞妮丝","lv":"6","relationship":"母亲；亲情稳定","state":"同住中"}
-    // ]
-    var arr = parseMaybeArray(readRaw("otherRelations"));
-    for (var i = 0; i < arr.length; i++) {
-      var rel = normalizeRelation(arr[i]);
-      if (rel) list.push(rel);
-    }
-
-    // 兼容格式：otherRelation1Name / otherRelation1Lv / otherRelation1Relationship / otherRelation1State。
-    // 最多扫描20个编号字段；推荐使用 otherRelations 数组来动态扩展。
-    if (list.length === 0) {
-      for (var n = 1; n <= 20; n++) {
-        var name = get("otherRelation" + n + "Name", "");
-        var lv = get("otherRelation" + n + "Lv", "0");
-        var relationship = get("otherRelation" + n + "Relationship", "暂无重要关系");
-        var state = get("otherRelation" + n + "State", "暂无");
-
-        var rel2 = normalizeRelation({
-          name: name,
-          lv: lv,
-          relationship: relationship,
-          state: state
-        });
-
-        if (rel2) list.push(rel2);
+function contextSources(){
+  var out=[];
+  function push(v){if(v!==undefined&&v!==null)out.push(v);}
+  function grab(w){
+    if(!w)return;
+    pushMessageVars(out,w);
+    try{
+      push(w.__MUSHOKU_STATUS_DATA__);push(w.mushokuStatusData);push(w.ppStatusData);push(w.stat_data);push(w.statusData);
+      push(w.chat_metadata&&w.chat_metadata.variables&&w.chat_metadata.variables.stat_data);
+      push(w.chat_metadata&&w.chat_metadata.stat_data);
+      push(w.variables&&w.variables.stat_data);
+      var ctx=(w.SillyTavern&&w.SillyTavern.getContext&&w.SillyTavern.getContext())||(w.getContext&&w.getContext());
+      if(ctx){
+        push(ctx.variables&&ctx.variables.stat_data);push(ctx.chat_metadata&&ctx.chat_metadata.variables&&ctx.chat_metadata.variables.stat_data);
+        push(ctx.chat_metadata&&ctx.chat_metadata.stat_data);push(ctx.extensionSettings&&ctx.extensionSettings.variables&&ctx.extensionSettings.variables.stat_data);
+        if(Array.isArray(ctx.chat))ctx.chat.slice(-12).forEach(function(m){push(m&&m.variables&&m.variables.stat_data);push(m&&m.extra&&m.extra.variables&&m.extra.variables.stat_data);push(m&&m.data&&m.data.stat_data);});
       }
+    }catch(e){}
+  }
+  grab(window);try{if(window.parent&&window.parent!==window)grab(window.parent);}catch(e){}
+  return out;
+}
+var ppLastGoodData=null;
+function baseData(){
+  var real={},found=false;
+  function absorb(src){
+    var before=Object.keys(real).length;
+    if(mergeInto(real,src)){
+      if(Object.keys(real).length>before)found=true;
+      else found=true;
     }
-
-    return list;
   }
+  absorb(statusDataFromDom());
+  absorb(patchDataFromDom());
+  contextSources().forEach(absorb);
+  if(root.dataset&&root.dataset.vars)absorb(root.dataset.vars);
+  Array.prototype.slice.call(root.querySelectorAll('.pp-status-data')).forEach(function(n){absorb(n.textContent||'');});
 
-  function renderOtherRelations(){
-    var box = document.getElementById("otherRelationsList");
-    if (!box) return;
-
-    var list = buildOtherRelations();
-
-    if (!list.length) {
-      var summary = get("relationSummary", "暂无其他重要关系。");
-      box.innerHTML = '<div class="other-rel-empty" id="relationSummary">' + escapeHtml(summary) + '</div>';
-      return;
-    }
-
-    var out = "";
-    for (var i = 0; i < list.length; i++) {
-      var r = list[i];
-      out += ''
-        + '<div class="rel-card other-rel">'
-        +   '<div class="rel-head"><b>' + escapeHtml(r.name) + '</b><span class="pill">Lv.' + escapeHtml(r.lv) + '/10</span></div>'
-        +   '<div class="row"><b>关系：</b><span>' + escapeHtml(r.relationship) + '</span></div>'
-        +   '<div class="row"><b>状态：</b><span>' + escapeHtml(r.state) + '</span></div>'
-        + '</div>';
-    }
-
-    box.innerHTML = out;
+  if(found && Object.keys(real).length){
+    ppLastGoodData=Object.assign({},DEFAULT_DATA||{},real);
+    return ppLastGoodData;
   }
-
-  renderOtherRelations();
-
-
-  function normalizeRankSlug(raw){
-    var s = String(raw || "").trim()
-      .replace(/\s+/g,"")
-      .replace(/（/g,"(").replace(/）/g,")");
-
-    var map = {
-      "初":"chuji","初级":"chuji",
-      "中":"zhongji","中级":"zhongji",
-      "上":"shangji","上级":"shangji",
-      "圣":"shengji","圣级":"shengji",
-      "王":"wangji","王级":"wangji",
-      "帝":"diji","帝级":"diji",
-      "神":"shenji","神级":"shenji",
-      "规格外":"guigewai",
-      "特殊":"guigewai",
-
-      "普通":"putong",
-      "稀有":"xiyou",
-      "史诗":"shishi",
-      "传说":"chuanshuo"
-    };
-
-    return map[s] || "";
-  }
-
-  function rankClass(rank, kind){
-    var slug = normalizeRankSlug(rank);
-    if (!slug) return "";
-    if (slug === "guigewai") return "rank-guigewai";
-    if (kind === "talent") return "rarity-" + slug;
-    return "rank-" + slug;
-  }
-
-  function splitRichEntries(raw){
-    raw = String(raw || "")
-      .replace(/<br\s*\/?>/gi,"\n")
-      .replace(/\r/g,"\n")
-      .trim();
-
-    if (!raw) return [];
-
-    var lines = raw.split(/\n+/).map(function(s){ return s.trim(); }).filter(Boolean);
-    if (lines.length > 1) return lines;
-
-    return raw.split(/[；;]+/).map(function(s){ return s.trim(); }).filter(Boolean);
-  }
-
-  function parseAbilityEntry(line, kind){
-    var txt = String(line || "").trim();
-    if (!txt) return null;
-
-    var m = txt.match(/^(.+?)\s*[|｜]\s*([^|｜]+)\s*[|｜]\s*(.+)$/);
-    if (m) {
-      return {
-        name: m[1].trim(),
-        rank: m[2].trim(),
-        desc: m[3].trim(),
-        kind: kind
-      };
-    }
-
-    m = txt.match(/^(.+?)\s*[（(]([^()（）]+)[）)]\s*[：:]\s*(.+)$/);
-    if (m) {
-      return {
-        name: m[1].trim(),
-        rank: m[2].trim(),
-        desc: m[3].trim(),
-        kind: kind
-      };
-    }
-
-    m = txt.match(/^(.+?)\s*[：:]\s*(.+)$/);
-    if (m) {
-      return {
-        name: m[1].trim(),
-        rank: kind === "talent" ? "普通" : "初级",
-        desc: m[2].trim(),
-        kind: kind
-      };
-    }
-
-    return {
-      name: txt,
-      rank: kind === "talent" ? "普通" : "初级",
-      desc: "暂无详细说明。",
-      kind: kind
-    };
-  }
-
-  function parseAbilityList(raw, kind){
-    var lines = splitRichEntries(raw);
-    var list = [];
-    for (var i = 0; i < lines.length; i++) {
-      var item = parseAbilityEntry(lines[i], kind);
-      if (item && item.name) list.push(item);
-    }
-    return list;
-  }
-
-  function buildRankChipHtml(rank, kind){
-    var cls = rankClass(rank, kind);
-    return '<span class="ability-chip ' + cls + '"><span class="ability-chip-name">' + escapeHtml(rank || "未标注") + '</span></span>';
-  }
-
-  function buildAbilityChipHtml(item){
-    var cls = rankClass(item.rank, item.kind);
-    return ''
-      + '<button type="button" class="ability-chip ability-item ' + cls + '"'
-      + ' data-name="' + escapeHtml(item.name) + '"'
-      + ' data-rank="' + escapeHtml(item.rank) + '"'
-      + ' data-desc="' + escapeHtml(item.desc) + '"'
-      + ' data-kind="' + escapeHtml(item.kind) + '">'
-      +   '<span class="ability-chip-name">' + escapeHtml(item.name) + '</span>'
-      + '</button>';
-  }
-
-  function renderAbilityGroup(containerId, rawKey, kind, emptyText){
-    var box = document.getElementById(containerId);
-    if (!box) return;
-
-    var raw = get(rawKey, "");
-    var list = parseAbilityList(raw, kind);
-
-    if (!list.length) {
-      box.innerHTML = '<div class="ability-empty">' + escapeHtml(emptyText) + '</div>';
-      return;
-    }
-
-    var htmlOut = "";
-    for (var i = 0; i < list.length; i++) {
-      htmlOut += buildAbilityChipHtml(list[i]);
-    }
-    box.innerHTML = htmlOut;
-  }
-
-  function normalizeCurrencyText(v){
-    if (v === undefined || v === null || v === "") return "";
-    if (typeof v === "object") {
-      var rows = [];
-      var names = [
-        ["金币", ["金币","金","gold","goldCoin","goldCoins","coinGold"]],
-        ["银币", ["银币","银","silver","silverCoin","silverCoins","coinSilver"]],
-        ["铜币", ["铜币","铜","copper","copperCoin","copperCoins","coinCopper"]]
-      ];
-      for (var i=0;i<names.length;i++){
-        var label = names[i][0], keys = names[i][1];
-        for (var j=0;j<keys.length;j++){
-          var val = v[keys[j]];
-          if (val !== undefined && val !== null && String(val).trim() !== "") {
-            rows.push(label + "：" + String(val).trim());
-            break;
-          }
-        }
-      }
-      Object.keys(v).forEach(function(k){
-        if (["金币","金","gold","goldCoin","goldCoins","coinGold","银币","银","silver","silverCoin","silverCoins","coinSilver","铜币","铜","copper","copperCoin","copperCoins","coinCopper"].indexOf(k) >= 0) return;
-        var val = v[k];
-        if (val !== undefined && val !== null && String(val).trim() !== "") rows.push(k + "：" + String(val).trim());
-      });
-      return rows.join("\n");
-    }
-    return String(v).trim();
-  }
-
-  function getFirstRaw(keys){
-    for (var i=0;i<keys.length;i++){
-      var v = readRaw(keys[i]);
-      if (v !== undefined && v !== null && String(v).trim() !== "") return v;
-    }
-    return undefined;
-  }
-
-  function buildCurrencyDetail(){
-    var raw = getFirstRaw([
-      "currencyDetail", "moneyDetail", "walletDetail", "coinDetail", "coinsDetail",
-      "currency", "money", "wallet", "coins", "funds",
-      "货币", "钱袋", "钱包", "金币银币铜币"
-    ]);
-
-    var detail = normalizeCurrencyText(raw);
-
-    if (!detail) {
-      var rows = [];
-      var groups = [
-        ["金币", ["gold", "goldCoin", "goldCoins", "coinGold", "金币", "金"]],
-        ["银币", ["silver", "silverCoin", "silverCoins", "coinSilver", "银币", "银"]],
-        ["铜币", ["copper", "copperCoin", "copperCoins", "coinCopper", "铜币", "铜"]]
-      ];
-      for (var i=0;i<groups.length;i++){
-        var label = groups[i][0], keys = groups[i][1];
-        for (var j=0;j<keys.length;j++){
-          var val = readRaw(keys[j]);
-          if (val !== undefined && val !== null && String(val).trim() !== "") {
-            rows.push(label + "：" + String(val).trim());
-            break;
-          }
-        }
-      }
-      detail = rows.join("\n");
-    }
-
-    return detail || "暂无货币记录。可在 stat_data 中写入 currencyDetail、moneyDetail、gold/silver/copper 或 金币/银币/铜币。";
-  }
-
-  function insertCurrencyChip(){
-    var box = document.getElementById("equipmentDetail");
-    if (!box) return;
-    var empty = box.querySelector(".ability-empty");
-    if (empty) empty.remove();
-    var detail = buildCurrencyDetail();
-    var chip = ''
-      + '<button type="button" class="ability-chip ability-item rank-chuji currency-chip"'
-      + ' data-name="货币"'
-      + ' data-rank="资产"'
-      + ' data-desc="' + escapeHtml(detail) + '"'
-      + ' data-kind="equipment">'
-      + '<span class="ability-chip-name">货币</span>'
-      + '</button>';
-    box.insertAdjacentHTML("afterbegin", chip);
-  }
-
-  var abilityModalMask = document.getElementById("abilityModalMask");
-  var abilityModalClose = document.getElementById("abilityModalClose");
-  var abilityModalTitle = document.getElementById("abilityModalTitle");
-  var abilityModalRank = document.getElementById("abilityModalRank");
-  var abilityModalDesc = document.getElementById("abilityModalDesc");
-
-  function openAbilityModal(name, rank, desc, kind){
-    if (!abilityModalMask) return;
-    if (abilityModalTitle) abilityModalTitle.textContent = name || "未命名";
-    if (abilityModalRank) abilityModalRank.innerHTML = buildRankChipHtml(rank || "未标注", kind || "skill");
-    if (abilityModalDesc) abilityModalDesc.textContent = (rank || "未标注") + "｜" + (desc || "暂无说明。");
-    abilityModalMask.classList.add("show");
-  }
-
-  function closeAbilityModal(){
-    if (abilityModalMask) abilityModalMask.classList.remove("show");
-  }
-
-  if (abilityModalClose) {
-    abilityModalClose.addEventListener("click", closeAbilityModal);
-  }
-  if (abilityModalMask) {
-    abilityModalMask.addEventListener("click", function(e){
-      if (e.target === abilityModalMask) closeAbilityModal();
-    });
-  }
-
-  document.addEventListener("click", function(e){
-    var btn = e.target.closest(".ability-item");
-    if (!btn || !btn.dataset) return;
-
-    openAbilityModal(
-      btn.dataset.name || "未命名",
-      btn.dataset.rank || "未标注",
-      btn.dataset.desc || "暂无说明。",
-      btn.dataset.kind || "skill"
-    );
+  if(ppLastGoodData)return ppLastGoodData;
+  return Object.assign({},DEFAULT_DATA||{});
+}
+function sanitize(html){
+  var t=document.createElement('template');t.innerHTML=String(html||'');
+  t.content.querySelectorAll('script,iframe,object,embed,link,meta,base').forEach(function(n){n.remove();});
+  t.content.querySelectorAll('*').forEach(function(el){Array.prototype.slice.call(el.attributes).forEach(function(a){
+    var n=a.name.toLowerCase(),v=String(a.value||'').trim().toLowerCase();
+    if(n.indexOf('on')===0||(n==='href'||n==='src'||n==='xlink:href')&&v.indexOf('javascript:')===0)el.removeAttribute(a.name);
+  });});
+  return t.innerHTML;
+}
+function safeImgUrl(v){
+  v=String(v||'').trim();
+  return /^(https?:\/\/|data:image\/|blob:)/i.test(v)?v:'';
+}
+function syncMap(data){
+  var box=$('#pp-mapbox')||$('.pp-map'),url=safeImgUrl(first(data,['mapImageUrl','mapUrl','mapURL','mapurl','mapImage','mapSrc']));
+  if(!box)return;
+  if(url){box.classList.add('has-img');box.style.backgroundImage='url("'+url.replace(/["\\]/g,'\\$&')+'")';}
+  else{box.classList.remove('has-img');box.style.backgroundImage='';}
+}
+function setProgress(el,pct){
+  if(!el||!has(pct))return;
+  var p=clamp(num(pct),0,100);el.setAttribute('data-pct',String(Math.round(p*100)/100));el.style.width=p+'%';el.dataset.done='1';
+}
+function syncProgress(data){
+  $all('[data-pct-var],[data-pct-current][data-pct-max]').forEach(function(el){
+    var pct=first(data,el.getAttribute('data-pct-var'));
+    if(!has(pct))pct=percent(first(data,el.getAttribute('data-pct-current')),first(data,el.getAttribute('data-pct-max')));
+    if(has(pct))setProgress(el,pct);
   });
-
-
-  renderAbilityGroup("talentsDetail","talentsDetail","talent","暂无天赋。");
-  renderAbilityGroup("skillsDetail","skillsDetail","skill","暂无习得技能。");
-  renderAbilityGroup("equipmentDetail","equipmentDetail","equipment","暂无背包物品。");
-  insertCurrencyChip();
-
-  text("targetName","targetName","未知");
-  text("targetRace","targetRace","未知");
-  text("targetGender","targetGender","未知");
-  text("targetAge","targetAge","未知");
-  html("targetAppearance","targetAppearance","暂无明确外貌描写。");
-
-  html("targetFigureState","targetFigureState","未知");
-  html("targetBreastsStatus","targetBreastsStatus","未知");
-  html("targetVaginaStatus","targetVaginaStatus","未知");
-  html("targetAnusAction","targetAnusAction","未知");
-  html("targetFeetsAction","targetFeetsAction","未知");
-  html("targetSexualFantasy","targetSexualFantasy","未知");
-
-  text("targetStance","targetStance","未知");
-  text("targetDanger","targetDanger","未知");
-  text("targetAttitude","targetAttitude","未知");
-  text("targetPowerBrief","targetPowerBrief","未评估");
-  html("targetRiskNote","targetRiskNote","暂无。");
-  html("targetTalentsSkills","targetTalentsSkills","暂无已知天赋或技能。");
-  html("targetInnerThought","targetInnerThought","无法得知。");
-
-  renderCanonDeviationLevel();
-  renderCausalBalance();
-  html("hitogamiInfluenceNote","hitogamiInfluenceNote","暂无明显诱导。");
-  html("dragonCausalityNote","dragonCausalityNote","暂无明显脱离。");
-  html("causalBalanceNote","causalBalanceNote","当前因果天平接近稳定，原著路线仍可作为主要参考。");
-  renderRippleList("canonRipples","canonRipples","暂无已确认涟漪事件。");
-
-  function setTextIfExists(id, value){
-    var el = document.getElementById(id);
-    if(el) el.textContent = value;
-  }
-  function countAbilityItems(rawKey, kind){
-    try { return parseAbilityList(get(rawKey, ""), kind).length; } catch(e) { return 0; }
-  }
-  function countOtherRelations(){
-    var raw = readRaw("otherRelations");
-    if (Array.isArray(raw)) return raw.length;
-    if (!raw) return 0;
-    try {
-      var parsed = JSON.parse(String(raw));
-      return Array.isArray(parsed) ? parsed.length : 0;
-    } catch(e) { return 0; }
-  }
-  function updateSummaryAndHeader(){
-    var ch = get("chapter","未知");
-    var loc = get("location","未知");
-    var timeVal = get("time","未知");
-    var pc = get("pcName","未知");
-    var rank = get("battleRank","普通人");
-    var hpC = get("hpCurrent","？"), hpM = get("hpMax","？");
-    var mpC = get("mpCurrent","？"), mpM = get("mpMax","？");
-    var mapNameVal = get("mapName","六面世界地图");
-    var target = get("targetName","暂无明确目标");
-    var dev = get("canonDeviationLevel","低");
-    var h = get("hitogamiAttention","0");
-    var d = get("dragonGodCausality","0");
-    var talentN = countAbilityItems("talentsDetail","talent");
-    var skillN = countAbilityItems("skillsDetail","skill");
-    var equipN = countAbilityItems("equipmentDetail","equipment");
-    var otherN = countOtherRelations();
-
-    setTextIfExists("sumOverview", timeVal);
-    setTextIfExists("sumMap", mapNameVal + " ｜ " + get("routeNote","暂无路线").slice(0,18));
-    setTextIfExists("sumPc", pc + " ｜ HP " + hpC + "/" + hpM + " ｜ MP " + mpC + "/" + mpM);
-    setTextIfExists("sumRel", "命运固定 3人 ｜ 其他 " + otherN + "人");
-    setTextIfExists("sumAbility", "天赋 " + talentN + " ｜ 技能 " + skillN + " ｜ 背包 " + equipN);
-    setTextIfExists("sumTarget", target);
-    setTextIfExists("sumCausal", "偏移 " + dev + " ｜ 人神 " + h + " ｜ 龙神 " + d);
-  }
-  updateSummaryAndHeader();
-
-
-  function setupMushokuBgmSeal(){
-    var seal = document.getElementById("mushokuBgmSeal");
-    if(!seal) return;
-
-    function sync(){
-      var url = "";
-      var label = "";
-      try{ url = localStorage.getItem("mushokuCurrentBGM") || ""; }catch(e){}
-      try{ label = localStorage.getItem("mushokuBgmLabel") || ""; }catch(e){}
-
-      seal.classList.add("is-playing");
-      seal.title = (label || url) ? ("正在播放BGM：" + (label || url)) : "BGM播放器：播放由BGM正则控制";
-    }
-
-    /* 不在状态栏里执行 /audiostop 或 /audioplay，避免部分酒馆环境报 Unknown command。
-       BGM播放/切歌/停止全部交给局部BGM正则处理；这里仅显示音乐圆章、涟漪和悬停提示。 */
-    seal.addEventListener("click", function(ev){
-      ev.preventDefault();
-      ev.stopPropagation();
-      sync();
-    });
-
-    sync();
-    setInterval(sync, 900);
-    window.addEventListener("storage", sync);
-    window.addEventListener("mushoku-bgm-state-change", sync);
-  }
-  setupMushokuBgmSeal();
-
+}
+function initBars(force){
+  $all('[data-pct]').forEach(function(b){
+    var p=clamp(num(b.getAttribute('data-pct')),0,100);
+    if(force||b.dataset.done){b.style.width=p+'%';b.dataset.done='1';}
+    else{b.style.width='0';setTimeout(function(){b.style.width=p+'%';b.dataset.done='1';},80);}
+  });
+}
+function orb(data){
+  var g=first(data||currentData,['hitogamiAttention','manGodAttention','manGodAttentionPercent']),d=first(data||currentData,['dragonGodCausality','dragonGodCausalityPercent']);
+  g=clamp(num(g),0,100);d=clamp(num(d),0,100);
+  var diff=g-d,pos=clamp(50-diff/2,12,88),o=$('#pp-orb'),beam=$('#pp-beam');
+  if(o)o.style.left=pos+'%';
+  if(beam){beam.style.transform='rotate('+(-clamp(diff*.28,-14,14))+'deg)';beam.style.transformOrigin='60px 20px';}
+}
+function applyVars(data){
+  data=(data&&data.stat_data)?data.stat_data:(data||baseData());
+  currentData=derive(data);
+  $all('[data-var-html]').forEach(function(el){var v=get(currentData,el.getAttribute('data-var-html'));if(has(v))el.innerHTML=sanitize(v);});
+  $all('[data-var]').forEach(function(el){var v=get(currentData,el.getAttribute('data-var'));if(has(v))el.textContent=text(v);});
+  syncProgress(currentData);initBars(true);syncMap(currentData);orb(currentData);return currentData;
+}
+window.ppApplyVars=applyVars;
+window.ppSetStatusData=function(data){window.ppStatusData=data||{};return applyVars(window.ppStatusData);};
+window.addEventListener('mushoku-status-data',function(e){applyVars(e.detail||{});});
+window.ppGo=function(id){$all('.pp-sec').forEach(function(s){s.classList.remove('on');});var t=$('#sec-'+id);if(t)t.classList.add('on');initBars();if(id==='butterfly')orb(currentData);};
+window.ppBack=function(){$all('.pp-sec').forEach(function(s){s.classList.remove('on');});$('#sec-home').classList.add('on');};
+window.ppFlip=function(el){el.classList.toggle('flip');};
+window.ppModal=function(t,c){$('#pp-modal-t').textContent=t;$('#pp-modal-c').textContent=c;$('#pp-mask').classList.add('on');};
+window.ppCloseModal=function(e){if(e&&e.type==='click'&&e.target.id!=='pp-mask'&&e.target.tagName!=='BUTTON')return;$('#pp-mask').classList.remove('on');};
+window.ppToast=function(txt){var el=$('#pp-toast');$('#pp-toast-t').textContent=txt;el.classList.add('on');clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.classList.remove('on');},2600);};
+root.addEventListener('click',function(e){var card=e.target.closest('.pp-dynamic-list .pp-mc');if(card&&root.contains(card))window.ppFlip(card);});
+var themeBtn=$('#pp-themebtn');
+if(themeBtn)themeBtn.addEventListener('click',function(){root.classList.toggle('dark');window.ppToast(root.classList.contains('dark')?'已切换至「魔界·夜」':'已切换至「羊皮·昼」');});
+function ppRefresh(){applyVars(baseData());}
+window.ppRefreshVars=ppRefresh;
+ppRefresh();
+[250,800,1600,3000].forEach(function(t){setTimeout(ppRefresh,t);});
 })();
 </script>
-
 </body>
 </html>
