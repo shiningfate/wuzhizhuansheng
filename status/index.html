@@ -760,14 +760,28 @@ function contextSources(){
   grab(window);try{if(window.parent&&window.parent!==window)grab(window.parent);}catch(e){}
   return out;
 }
+var ppLastGoodData=null;
 function baseData(){
-  var data=Object.assign({},DEFAULT_DATA||{});
-  mergeInto(data,statusDataFromDom());
-  mergeInto(data,patchDataFromDom());
-  contextSources().forEach(function(s){mergeInto(data,s);});
-  if(root.dataset&&root.dataset.vars)mergeInto(data,root.dataset.vars);
-  Array.prototype.slice.call(root.querySelectorAll('.pp-status-data')).forEach(function(n){mergeInto(data,n.textContent||'');});
-  return data;
+  var real={},found=false;
+  function absorb(src){
+    var before=Object.keys(real).length;
+    if(mergeInto(real,src)){
+      if(Object.keys(real).length>before)found=true;
+      else found=true;
+    }
+  }
+  absorb(statusDataFromDom());
+  absorb(patchDataFromDom());
+  contextSources().forEach(absorb);
+  if(root.dataset&&root.dataset.vars)absorb(root.dataset.vars);
+  Array.prototype.slice.call(root.querySelectorAll('.pp-status-data')).forEach(function(n){absorb(n.textContent||'');});
+
+  if(found && Object.keys(real).length){
+    ppLastGoodData=Object.assign({},DEFAULT_DATA||{},real);
+    return ppLastGoodData;
+  }
+  if(ppLastGoodData)return ppLastGoodData;
+  return Object.assign({},DEFAULT_DATA||{});
 }
 function sanitize(html){
   var t=document.createElement('template');t.innerHTML=String(html||'');
