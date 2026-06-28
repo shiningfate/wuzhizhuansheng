@@ -242,6 +242,34 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 #chat-ui-rz7m4k2p .pp-cards{grid-template-columns:1fr 1fr}
 #chat-ui-rz7m4k2p .pp-metrics{grid-template-columns:1fr}
 }
+
+
+/* ===== 本轮修正：电脑端放大、按钮可点、宫格图标居中、进度条初始宽度、天平居中 ===== */
+#chat-ui-rz7m4k2p .pp-tile svg{display:block;margin:0 auto .45em}
+#chat-ui-rz7m4k2p .pp-tile span{margin-top:0}
+#chat-ui-rz7m4k2p .pp-lvfill{width:0}
+#chat-ui-rz7m4k2p .pp-scale{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+#chat-ui-rz7m4k2p .pp-scale svg{display:block;margin:0 auto;width:8.8em;height:auto}
+#chat-ui-rz7m4k2p .pp-scaletxt{text-align:center;width:100%}
+#chat-ui-rz7m4k2p .pp-mc{touch-action:manipulation}
+@media (min-width:700px){
+  #chat-ui-rz7m4k2p{max-width:42em;font-size:17px}
+  #chat-ui-rz7m4k2p .pp-frame{padding:1.05em 1.05em 1.25em}
+  #chat-ui-rz7m4k2p .pp-title{font-size:1.55em}
+  #chat-ui-rz7m4k2p .pp-sub{font-size:.7em}
+  #chat-ui-rz7m4k2p .pp-grid{gap:.75em}
+  #chat-ui-rz7m4k2p .pp-tile{min-height:6.15em;padding:1.05em .65em .9em;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  #chat-ui-rz7m4k2p .pp-tile svg{width:2.25em;height:2.25em;margin:0 auto .55em}
+  #chat-ui-rz7m4k2p .pp-tile span{font-size:.92em;line-height:1.25}
+  #chat-ui-rz7m4k2p .pp-tile small{font-size:.64em;margin-top:.18em}
+  #chat-ui-rz7m4k2p .pp-back{font-size:.95em;padding:.34em .62em;margin-bottom:.8em;border:.08em solid rgba(184,144,47,.35);border-radius:999px;background:rgba(184,144,47,.08);box-shadow:0 .08em .25em rgba(58,40,20,.12)}
+  #chat-ui-rz7m4k2p .pp-back svg{width:1.15em;height:1.15em}
+  #chat-ui-rz7m4k2p .pp-secttl{font-size:1.18em;margin-bottom:.85em}
+  #chat-ui-rz7m4k2p .pp-block{padding:.9em;margin-bottom:.85em}
+  #chat-ui-rz7m4k2p .pp-mc{height:3.8em}
+  #chat-ui-rz7m4k2p .pp-scale svg{width:10em}
+}
+
 </style>
 </head>
 <body>
@@ -350,7 +378,7 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 <div class="pp-block">
 <div class="pp-blkttl">资金</div>
 <div class="pp-cards">
-<div class="pp-mc money-card" onclick="ppFlip(this)"><div class="pp-mc-in"><div class="pp-mc-f"><span class="pp-grade g-legend"></span><span class="nm">资金</span><span class="tip">点击查看</span></div><div class="pp-mc-b"><span class="lv">财库</span><span class="ds pp-moneyline">金币 <b data-var="money-gold">[变量·moneyGold]</b><br>银币 <b data-var="money-silver">[变量·moneySilver]</b><br>铜币 <b data-var="money-copper">[变量·moneyCopper]</b><br><span data-var="money-other">[变量·moneyOther]</span></span></div></div></div>
+<div class="pp-mc money-card"><div class="pp-mc-in"><div class="pp-mc-f"><span class="pp-grade g-legend"></span><span class="nm">资金</span><span class="tip">点击查看</span></div><div class="pp-mc-b"><span class="lv">财库</span><span class="ds pp-moneyline">金币 <b data-var="money-gold">[变量·moneyGold]</b><br>银币 <b data-var="money-silver">[变量·moneySilver]</b><br>铜币 <b data-var="money-copper">[变量·moneyCopper]</b><br><span data-var="money-other">[变量·moneyOther]</span></span></div></div></div>
 </div>
 </div>
 <div class="pp-block">
@@ -672,6 +700,8 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
     for(var j=0;j<textEls.length;j++){ var el2=textEls[j], v2=getD(el2.getAttribute('data-var'), undefined); if(has(v2))el2.textContent=text(v2); }
     var bars=root.querySelectorAll('[data-pct-var],[data-pct-current][data-pct-max]');
     for(var k=0;k<bars.length;k++){ var b=bars[k], pct=first(String(b.getAttribute('data-pct-var')||'').split('|'),undefined); if(!has(pct))pct=percent(getD(b.getAttribute('data-pct-current'),0),getD(b.getAttribute('data-pct-max'),0)); if(has(pct))setProgress(b,pct); }
+    var staticBars=root.querySelectorAll('[data-pct]');
+    for(var q=0;q<staticBars.length;q++){ var sb=staticBars[q]; if(!sb.style.width)setProgress(sb,sb.getAttribute('data-pct')); }
     var map=root.querySelector('#pp-mapbox')||root.querySelector('.pp-map'), url=safeImgUrl(first(['mapImageUrl','mapUrl','mapURL','mapurl','mapImage','mapSrc']));
     if(map && url){ map.classList.add('has-img'); map.style.backgroundImage='url("'+url.replace(/["\\]/g,'\\$&')+'")'; }
     var orb=root.querySelector('#pp-orb'), beam=root.querySelector('#pp-beam');
@@ -683,7 +713,8 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
   window.ppBack=function(){ var secs=root.querySelectorAll('.pp-sec'); for(var i=0;i<secs.length;i++)secs[i].classList.remove('on'); var home=root.querySelector('#sec-home'); if(home)home.classList.add('on'); };
   window.ppOpenModal=function(t,c){ var m=root.querySelector('#pp-mask'),mt=root.querySelector('#pp-modal-t'),mc=root.querySelector('#pp-modal-c'); if(mt)mt.textContent=t||'详情'; if(mc)mc.textContent=c||''; if(m)m.classList.add('show'); };
   window.ppCloseModal=function(e){ if(e&&e.target&&e.target!==root.querySelector('#pp-mask'))return; var m=root.querySelector('#pp-mask'); if(m)m.classList.remove('show'); };
-  root.addEventListener('click',function(e){ var c=e.target.closest&&e.target.closest('.pp-mc'); if(!c||!root.contains(c))return; var n=c.querySelector('.nm'),lv=c.querySelector('.lv'),ds=c.querySelector('.ds'); window.ppOpenModal(n?n.textContent:'详情',(lv?lv.textContent+'\n':'')+(ds?ds.textContent:'')); });
+  window.ppFlip=function(el){ if(el&&el.classList)el.classList.toggle('flip'); };
+  root.addEventListener('click',function(e){ var c=e.target.closest&&e.target.closest('.pp-mc'); if(!c||!root.contains(c))return; window.ppFlip(c); });
   render();
 })();
 </script>
