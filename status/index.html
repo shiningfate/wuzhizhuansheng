@@ -270,6 +270,55 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
   #chat-ui-rz7m4k2p .pp-scale svg{width:10em}
 }
 
+
+
+/* ===== 资产卡片弹窗修正：居中大字、去翻面、弹窗详情 ===== */
+#chat-ui-rz7m4k2p .pp-mc{
+  perspective:none!important;
+  cursor:pointer;
+  min-height:4.2em;
+  height:4.2em;
+}
+#chat-ui-rz7m4k2p .pp-mc-in{
+  position:relative!important;
+  width:100%;height:100%;
+  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease!important;
+  transform:none!important;
+  transform-style:flat!important;
+}
+#chat-ui-rz7m4k2p .pp-mc.flip .pp-mc-in{transform:none!important}
+#chat-ui-rz7m4k2p .pp-mc-f{
+  position:relative!important;
+  inset:auto!important;
+  height:100%!important;
+  min-height:4.2em!important;
+  backface-visibility:visible!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  padding:.65em .8em!important;
+}
+#chat-ui-rz7m4k2p .pp-mc-b{display:none!important}
+#chat-ui-rz7m4k2p .pp-mc:hover .pp-mc-in{transform:translateY(-.08em)!important}
+#chat-ui-rz7m4k2p .pp-mc:hover .pp-mc-f{border-color:var(--pp-gold)!important}
+#chat-ui-rz7m4k2p .pp-mc-f .nm{
+  display:block!important;
+  width:100%!important;
+  font-size:1.04em!important;
+  line-height:1.28!important;
+  font-weight:800!important;
+  letter-spacing:.04em!important;
+  text-align:center!important;
+}
+#chat-ui-rz7m4k2p .pp-mc-f .tip{display:none!important}
+#chat-ui-rz7m4k2p .pp-modal{min-width:min(31em,92%);max-width:min(36em,94%)}
+#chat-ui-rz7m4k2p .pp-modal h4{font-size:1.12em!important;justify-content:center;text-align:center}
+#chat-ui-rz7m4k2p .pp-modal p{font-size:.92em!important;line-height:1.75!important;white-space:pre-line}
+#chat-ui-rz7m4k2p .pp-modal-row{margin:.45em 0;padding:.55em .65em;border:.08em solid var(--pp-line);border-radius:.45em;background:rgba(184,144,47,.07)}
+#chat-ui-rz7m4k2p .pp-modal-row b{display:block;color:var(--pp-gold);margin-bottom:.18em;font-size:.9em}
+#chat-ui-rz7m4k2p .pp-modal-row span{display:block;color:var(--pp-ink);font-size:.98em}
+
 </style>
 </head>
 <body>
@@ -378,7 +427,7 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 <div class="pp-block">
 <div class="pp-blkttl">资金</div>
 <div class="pp-cards">
-<div class="pp-mc money-card"><div class="pp-mc-in"><div class="pp-mc-f"><span class="pp-grade g-legend"></span><span class="nm">资金</span><span class="tip">点击查看</span></div><div class="pp-mc-b"><span class="lv">财库</span><span class="ds pp-moneyline">金币 <b data-var="money-gold">[变量·moneyGold]</b><br>银币 <b data-var="money-silver">[变量·moneySilver]</b><br>铜币 <b data-var="money-copper">[变量·moneyCopper]</b><br><span data-var="money-other">[变量·moneyOther]</span></span></div></div></div>
+<div class="pp-mc money-card" tabindex="0" role="button" aria-label="查看资金详情"><div class="pp-mc-in"><div class="pp-mc-f"><span class="pp-grade g-legend"></span><span class="nm">资金</span></div></div></div>
 </div>
 </div>
 <div class="pp-block">
@@ -595,6 +644,7 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 
   function has(v){ return v !== undefined && v !== null && String(v).trim() !== ''; }
   function esc(v){ return String(v==null?'':v).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function escAttr(v){ return esc(v).replace(/'/g,'&#39;'); }
   function text(v){ return Array.isArray(v)?v.join('、'):(typeof v==='object'?JSON.stringify(v):String(v)); }
   function num(v){ var m=String(v||'').match(/-?\d+(?:\.\d+)?/); return m?Number(m[0]):0; }
   function clamp(v,min,max){ return Math.max(min,Math.min(max,v)); }
@@ -645,7 +695,7 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
       var name='',lv='',desc='';
       if(item&&typeof item==='object'){ name=item.name||item.title||item.skill||item.talent||item.item||'未命名'; lv=item.lv||item.level||item.rank||item.rarity||'记录'; desc=item.desc||item.description||item.state||item.note||''; }
       else{ var s=String(item),parts=s.split(/[|｜]/).map(function(x){return x.trim();}); if(parts.length>=3){name=parts[0];lv=parts[1];desc=parts.slice(2).join('｜');} else {name=s;lv='记录';desc='';}}
-      return '<div class="pp-mc"><div class="pp-mc-in"><div class="pp-mc-f"><span class="pp-grade"></span><span class="nm">'+esc(name)+'</span><span class="tip">点击查看</span></div><div class="pp-mc-b"><span class="lv">'+esc(lv)+'</span><span class="ds">'+esc(desc||'暂无详细描述。')+'</span></div></div></div>';
+      return '<div class="pp-mc pp-info-card" tabindex="0" role="button" aria-label="查看'+escAttr(name)+'详情" data-name="'+escAttr(name)+'" data-lv="'+escAttr(lv||'记录')+'" data-desc="'+escAttr(desc||'暂无详细描述。')+'"><div class="pp-mc-in"><div class="pp-mc-f"><span class="pp-grade"></span><span class="nm">'+esc(name)+'</span></div></div></div>';
     }).join('');
   }
   function lvText(v){ if(!has(v))return 'Lv.0/10'; var s=String(v); if(/^\s*Lv\.?/i.test(s))return s; return /^\s*\d+(?:\.\d+)?\s*(?:\/\s*10)?\s*$/.test(s)?'Lv.'+s.replace(/\s*\/\s*10\s*$/,'')+'/10':s; }
@@ -685,12 +735,20 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
     var money=String(first(['currencyDetail'],'')||'');
     function pick(label){var m=money.match(new RegExp(label+'\\s*[：:]\\s*([0-9]+)'));return m?m[1]:undefined;}
     d.moneyGold=first(['moneyGold'],pick('金币')||'0'); d.moneySilver=first(['moneySilver'],pick('银币')||'0'); d.moneyCopper=first(['moneyCopper'],pick('铜币')||'0');
-    var extra=splitLines(money).filter(function(x){return !/(?:金|银|铜)币\s*[：:]/.test(x);}); d.moneyOther=first(['moneyOther'],extra.length?extra.join('；'):'暂无其他资金信息。');
+    var extra=splitLines(money).filter(function(x){return !/(?:金|银|铜)币\s*[：:]/.test(x);}); d.moneyOther=first(['moneyOther'],extra.length?extra.join('；'):'暂无资产');
+    d['money-gold']=d.moneyGold; d['money-silver']=d.moneySilver; d['money-copper']=d.moneyCopper; d['money-other']=d.moneyOther;
     ['roxy','sylphy','eris'].forEach(function(n){ var lv=first([n+'BondLv',n+'LvText',n+'Lv',n+'BondLevel'],'0'); d[n+'BondLv']=lvText(lv); d[n+'BondPercent']=lvPercent(lv); d[n+'LastMet']=first([n+'LastMet',n+'LastMeet',n+'LastSeen'],'尚未相遇'); });
     return d;
   }
 
-  function getD(key,fallback){ var derived=currentData.__derived||{}; var v=get(key,undefined); if(!has(v)) v=derived[key]; return has(v)?v:fallback; }
+  function getD(key,fallback){
+    var derived=currentData.__derived||{}, v=get(key,undefined), list, i;
+    if(!has(v)){
+      list=candidates(key);
+      for(i=0;i<list.length;i++){ if(has(derived[list[i]])){ v=derived[list[i]]; break; } }
+    }
+    return has(v)?v:fallback;
+  }
   function render(){
     currentData = data || {};
     currentData.__derived = derive();
@@ -711,10 +769,33 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 
   window.ppGo=function(id){ var secs=root.querySelectorAll('.pp-sec'); for(var i=0;i<secs.length;i++)secs[i].classList.remove('on'); var t=root.querySelector('#sec-'+id); if(t)t.classList.add('on'); };
   window.ppBack=function(){ var secs=root.querySelectorAll('.pp-sec'); for(var i=0;i<secs.length;i++)secs[i].classList.remove('on'); var home=root.querySelector('#sec-home'); if(home)home.classList.add('on'); };
-  window.ppOpenModal=function(t,c){ var m=root.querySelector('#pp-mask'),mt=root.querySelector('#pp-modal-t'),mc=root.querySelector('#pp-modal-c'); if(mt)mt.textContent=t||'详情'; if(mc)mc.textContent=c||''; if(m)m.classList.add('show'); };
+  window.ppOpenModal=function(t,c){
+    var m=root.querySelector('#pp-mask'),mt=root.querySelector('#pp-modal-t'),mc=root.querySelector('#pp-modal-c');
+    if(mt)mt.textContent=t||'详情';
+    if(mc)mc.textContent=c||'';
+    if(m)m.classList.add('show');
+  };
+  window.ppOpenDetail=function(name,lv,desc){
+    var m=root.querySelector('#pp-mask'),mt=root.querySelector('#pp-modal-t'),mc=root.querySelector('#pp-modal-c');
+    if(mt)mt.textContent=name||'详情';
+    if(mc){
+      mc.innerHTML='<span class="pp-modal-row"><b>等级</b><span>'+esc(lv||'记录')+'</span></span>'+
+                   '<span class="pp-modal-row"><b>描述</b><span>'+esc(desc||'暂无详细描述。')+'</span></span>';
+    }
+    if(m)m.classList.add('show');
+  };
   window.ppCloseModal=function(e){ if(e&&e.target&&e.target!==root.querySelector('#pp-mask'))return; var m=root.querySelector('#pp-mask'); if(m)m.classList.remove('show'); };
-  window.ppFlip=function(el){ if(el&&el.classList)el.classList.toggle('flip'); };
-  root.addEventListener('click',function(e){ var c=e.target.closest&&e.target.closest('.pp-mc'); if(!c||!root.contains(c))return; window.ppFlip(c); });
+  function showCardDetail(card){
+    if(!card)return;
+    if(card.classList.contains('money-card')){
+      var gold=getD('moneyGold','0'), silver=getD('moneySilver','0'), copper=getD('moneyCopper','0'), other=getD('moneyOther','暂无资产');
+      window.ppOpenDetail('资金','财库','金币：'+gold+'\n银币：'+silver+'\n铜币：'+copper+'\n其他资产：'+other);
+      return;
+    }
+    window.ppOpenDetail(card.getAttribute('data-name')||'详情',card.getAttribute('data-lv')||'记录',card.getAttribute('data-desc')||'暂无详细描述。');
+  }
+  root.addEventListener('click',function(e){ var c=e.target.closest&&e.target.closest('.pp-mc'); if(!c||!root.contains(c))return; showCardDetail(c); });
+  root.addEventListener('keydown',function(e){ if(e.key!=='Enter'&&e.key!==' ')return; var c=e.target.closest&&e.target.closest('.pp-mc'); if(!c||!root.contains(c))return; e.preventDefault(); showCardDetail(c); });
   render();
 })();
 </script>
