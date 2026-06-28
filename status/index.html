@@ -385,6 +385,89 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
   }
 }
 
+
+/* ===== 弹窗排版重修：名称居中，等级/描述双框，资金四行 ===== */
+#chat-ui-rz7m4k2p .pp-modal{
+  width:min(31em,92%)!important;
+  min-width:0!important;
+  max-width:min(31em,92%)!important;
+  padding:1.05em 1.15em 1em!important;
+  border-radius:.75em!important;
+}
+#chat-ui-rz7m4k2p .pp-modal h4{
+  margin:0 0 .75em!important;
+  justify-content:center!important;
+  text-align:center!important;
+  font-size:1.24em!important;
+  line-height:1.3!important;
+  letter-spacing:.04em!important;
+}
+#chat-ui-rz7m4k2p .pp-modal h4 svg{width:1.05em!important;height:1.05em!important;flex:0 0 auto!important}
+#chat-ui-rz7m4k2p .pp-modal-body{
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  font-size:1em!important;
+  line-height:1.65!important;
+  color:var(--pp-ink)!important;
+}
+#chat-ui-rz7m4k2p .pp-detail-grade,
+#chat-ui-rz7m4k2p .pp-detail-desc{
+  display:block!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  border:.08em solid var(--pp-line)!important;
+  border-radius:.55em!important;
+  background:rgba(255,251,243,.58)!important;
+  box-shadow:inset 0 .05em 0 rgba(255,255,255,.45)!important;
+  color:var(--pp-ink)!important;
+}
+#chat-ui-rz7m4k2p .pp-detail-grade{
+  margin:0 auto .65em!important;
+  padding:.48em .85em!important;
+  text-align:center!important;
+  font-weight:800!important;
+  font-size:1.08em!important;
+  color:var(--pp-gold)!important;
+  letter-spacing:.04em!important;
+}
+#chat-ui-rz7m4k2p .pp-detail-desc{
+  min-height:4.8em!important;
+  padding:.72em .9em!important;
+  text-align:left!important;
+  white-space:pre-line!important;
+  font-size:1em!important;
+  line-height:1.75!important;
+}
+#chat-ui-rz7m4k2p .pp-money-list{
+  display:block!important;
+  border:.08em solid var(--pp-line)!important;
+  border-radius:.55em!important;
+  background:rgba(255,251,243,.58)!important;
+  padding:.72em .9em!important;
+  font-size:1.02em!important;
+  line-height:1.9!important;
+}
+#chat-ui-rz7m4k2p .pp-money-line{display:block!important;white-space:normal!important}
+#chat-ui-rz7m4k2p .pp-money-line b{color:var(--pp-gold)!important;font-weight:800!important}
+#chat-ui-rz7m4k2p .pp-modal button{
+  margin-top:.85em!important;
+  padding:.58em .7em!important;
+  font-size:1.02em!important;
+  border-radius:.45em!important;
+}
+@media only screen and (max-width:600px){
+  #chat-ui-rz7m4k2p .pp-modal{
+    width:min(25em,90vw)!important;
+    max-width:min(25em,90vw)!important;
+    padding:1em!important;
+  }
+  #chat-ui-rz7m4k2p .pp-modal h4{font-size:1.18em!important;margin-bottom:.7em!important}
+  #chat-ui-rz7m4k2p .pp-detail-grade{font-size:1.02em!important;padding:.45em .7em!important}
+  #chat-ui-rz7m4k2p .pp-detail-desc{font-size:.96em!important;min-height:4.2em!important;padding:.65em .75em!important}
+  #chat-ui-rz7m4k2p .pp-money-list{font-size:.98em!important;line-height:1.85!important;padding:.65em .75em!important}
+}
+
 </style>
 </head>
 <body>
@@ -563,7 +646,7 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 <div class="pp-mask" id="pp-mask" onclick="ppCloseModal(event)">
 <div class="pp-modal" onclick="event.stopPropagation()">
 <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.1em;height:1.1em"><path d="M12 2l2 6h6l-5 4 2 7-7-4-7 4 2-7-5-4h6z"/></svg><span id="pp-modal-t">提示</span></h4>
-<p id="pp-modal-c">内容</p>
+<div id="pp-modal-c" class="pp-modal-body">内容</div>
 <button onclick="ppCloseModal()">知晓了</button>
 </div>
 </div>
@@ -846,8 +929,8 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
     var m=root.querySelector('#pp-mask'),mt=root.querySelector('#pp-modal-t'),mc=root.querySelector('#pp-modal-c');
     if(mt)mt.textContent=name||'详情';
     if(mc){
-      mc.innerHTML='<span class="pp-modal-row"><b>等级</b><span>'+esc(lv||'记录')+'</span></span>'+
-                   '<span class="pp-modal-row"><b>描述</b><span>'+esc(desc||'暂无详细描述。')+'</span></span>';
+      mc.innerHTML='<div class="pp-detail-grade">'+esc(lv||'记录')+'</div>'+
+                   '<div class="pp-detail-desc">'+esc(desc||'暂无详细描述。')+'</div>';
     }
     if(m){m.classList.add('on');m.classList.add('show');}
   };
@@ -855,10 +938,12 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
     var m=root.querySelector('#pp-mask'),mt=root.querySelector('#pp-modal-t'),mc=root.querySelector('#pp-modal-c');
     if(mt)mt.textContent='资金';
     if(mc){
-      mc.innerHTML='<span class="pp-modal-row"><b>金币</b><span>'+esc(gold||'0')+'</span></span>'+ 
-                   '<span class="pp-modal-row"><b>银币</b><span>'+esc(silver||'0')+'</span></span>'+ 
-                   '<span class="pp-modal-row"><b>铜币</b><span>'+esc(copper||'0')+'</span></span>'+ 
-                   '<span class="pp-modal-row"><b>其他资产</b><span>'+esc(other||'暂无资产')+'</span></span>';
+      mc.innerHTML='<div class="pp-money-list">'+
+                   '<span class="pp-money-line"><b>金币：</b>'+esc(gold||'0')+'</span>'+
+                   '<span class="pp-money-line"><b>银币：</b>'+esc(silver||'0')+'</span>'+
+                   '<span class="pp-money-line"><b>铜币：</b>'+esc(copper||'0')+'</span>'+
+                   '<span class="pp-money-line"><b>其余资产：</b>'+esc(other||'暂无资产')+'</span>'+
+                   '</div>';
     }
     if(m){m.classList.add('on');m.classList.add('show');}
   };
