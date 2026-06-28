@@ -529,6 +529,89 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
   background-size:340% 340%!important;
 }
 
+
+
+/* ===== 战斗评级、羁绊与宫格图标优化 ===== */
+#chat-ui-rz7m4k2p .pp-blkttl{display:flex;align-items:center;gap:.35em}
+#chat-ui-rz7m4k2p .pp-rank{
+  float:none!important;
+  margin-left:auto!important;
+  display:inline-flex!important;
+  align-items:center;justify-content:center;
+  min-height:2.05em;
+  padding:.18em .86em!important;
+  border:.09em solid rgba(139,129,120,.45)!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.52)!important;
+  box-shadow:0 .12em .35em rgba(58,40,20,.08)!important;
+  font-size:.72em!important;
+  font-weight:800!important;
+  letter-spacing:.06em!important;
+  line-height:1!important;
+  color:transparent!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  position:relative;overflow:hidden;
+  text-shadow:0 0 .4em rgba(255,255,255,.18);
+}
+#chat-ui-rz7m4k2p .pp-rank::before{content:"";position:absolute;inset:0;border-radius:inherit;background:rgba(255,255,255,.44);z-index:-2}
+#chat-ui-rz7m4k2p .pp-rank::after{content:"";position:absolute;inset:-10%;background:linear-gradient(115deg,transparent 18%,rgba(255,255,255,.72) 50%,transparent 82%);transform:translateX(-135%);animation:ppshift 3.2s linear infinite;z-index:-1;opacity:.72}
+#chat-ui-rz7m4k2p .pp-rank.rank-flow-low{border-color:rgba(139,129,120,.55)!important;background-image:linear-gradient(110deg,#4e4843,#8B8178,#b0a39a,#6e6258,#4e4843)!important}
+#chat-ui-rz7m4k2p .pp-rank.rank-flow-mid{border-color:rgba(90,110,126,.55)!important;background-image:linear-gradient(110deg,#263a48,#5A6E7E,#8aabc0,#3f596a,#263a48)!important}
+#chat-ui-rz7m4k2p .pp-rank.rank-flow-high{border-color:rgba(199,146,75,.6)!important;background-image:linear-gradient(110deg,#794a16,#C7924B,#f0bc72,#a85135,#794a16)!important}
+#chat-ui-rz7m4k2p .pp-rank.rank-flow-saint{border-color:rgba(220,226,236,.8)!important;background-image:linear-gradient(110deg,#8e9aaa,#DCE2EC,#ffffff,#bdc7d6,#8e9aaa)!important}
+#chat-ui-rz7m4k2p .pp-rank.rank-flow-king{border-color:rgba(74,44,110,.65)!important;background-image:linear-gradient(110deg,#4A2C6E,#8f65c2,#f0ce64,#6c3d9b,#4A2C6E)!important}
+#chat-ui-rz7m4k2p .pp-rank.rank-flow-emperor{border-color:rgba(22,32,58,.68)!important;background-image:linear-gradient(110deg,#080d1c,#16203A,#4b5f93,#0f1730,#080d1c)!important}
+#chat-ui-rz7m4k2p .pp-rank.rank-flow-god{border-color:rgba(255,254,242,.95)!important;background-image:linear-gradient(110deg,#d7f8ff,#FFFEF2,#ffdff7,#e1fff3,#FFFEF2,#d7f8ff)!important}
+#chat-ui-rz7m4k2p .pp-rank.rank-flow-low,#chat-ui-rz7m4k2p .pp-rank.rank-flow-mid,#chat-ui-rz7m4k2p .pp-rank.rank-flow-high,#chat-ui-rz7m4k2p .pp-rank.rank-flow-saint,#chat-ui-rz7m4k2p .pp-rank.rank-flow-king,#chat-ui-rz7m4k2p .pp-rank.rank-flow-emperor,#chat-ui-rz7m4k2p .pp-rank.rank-flow-god,#chat-ui-rz7m4k2p .pp-rank.rank-flow-over{background-size:280% 100%!important;animation:ppshift 4.4s linear infinite!important}
+#chat-ui-rz7m4k2p .pp-rank.rank-flow-over{border-color:rgba(255,120,216,.8)!important;background-image:linear-gradient(110deg,#ff4fd8,#5ec8ff,#7dff88,#ffe36c,#c987ff,#ff6e6e,#ff4fd8)!important}
+
+#chat-ui-rz7m4k2p .pp-bondtop{align-items:flex-start!important}
+#chat-ui-rz7m4k2p .pp-fated{font-size:.72em!important;letter-spacing:.12em!important}
+#chat-ui-rz7m4k2p .pp-lvhd{font-size:.72em!important;align-items:center!important}
+#chat-ui-rz7m4k2p .pp-bondlv-num{font-size:1.06em!important;font-weight:800!important;letter-spacing:.03em!important;color:var(--pp-ink)!important}
+#chat-ui-rz7m4k2p .pp-lvtrack{margin-top:.22em!important}
+@media (min-width:700px){
+  #chat-ui-rz7m4k2p .pp-fated{font-size:.85em!important}
+  #chat-ui-rz7m4k2p .pp-lvhd{font-size:.83em!important}
+  #chat-ui-rz7m4k2p .pp-bondlv-num{font-size:1.2em!important}
+  #chat-ui-rz7m4k2p .pp-rank{font-size:.8em!important;padding:.22em .98em!important}
+}
+
+
+/* ===== 宫格与分栏图标二次修正：能力资产/异世之蝶放大并统一 ===== */
+#chat-ui-rz7m4k2p .pp-tile svg.icon-asset,
+#chat-ui-rz7m4k2p .pp-tile svg.icon-butterfly{width:2.28em!important;height:2.28em!important}
+#chat-ui-rz7m4k2p .pp-secttl svg.icon-asset,
+#chat-ui-rz7m4k2p .pp-secttl svg.icon-butterfly{width:1.28em!important;height:1.28em!important;flex:0 0 auto}
+@media (min-width:700px){
+  #chat-ui-rz7m4k2p .pp-tile svg.icon-asset,
+  #chat-ui-rz7m4k2p .pp-tile svg.icon-butterfly{width:2.48em!important;height:2.48em!important}
+  #chat-ui-rz7m4k2p .pp-secttl svg.icon-asset,
+  #chat-ui-rz7m4k2p .pp-secttl svg.icon-butterfly{width:1.38em!important;height:1.38em!important}
+}
+
+
+/* ===== 三女主核心羁绊代表色 ===== */
+#chat-ui-rz7m4k2p .pp-bond.core-roxy{
+  background:linear-gradient(135deg,rgba(241,247,255,.98) 0%,rgba(224,238,255,.98) 52%,rgba(201,225,255,.98) 100%)!important;
+  border-color:rgba(74,128,191,.58)!important;
+  box-shadow:0 .18em .55em rgba(60,110,176,.14), inset 0 0 0 .02em rgba(255,255,255,.55);
+}
+#chat-ui-rz7m4k2p .pp-bond.core-sylphy{
+  background:linear-gradient(135deg,rgba(244,251,244,.98) 0%,rgba(228,245,229,.98) 52%,rgba(203,234,206,.98) 100%)!important;
+  border-color:rgba(88,154,104,.58)!important;
+  box-shadow:0 .18em .55em rgba(76,136,88,.14), inset 0 0 0 .02em rgba(255,255,255,.55);
+}
+#chat-ui-rz7m4k2p .pp-bond.core-eris{
+  background:linear-gradient(135deg,rgba(255,244,244,.98) 0%,rgba(252,227,227,.98) 52%,rgba(246,201,201,.98) 100%)!important;
+  border-color:rgba(181,74,74,.58)!important;
+  box-shadow:0 .18em .55em rgba(166,68,68,.14), inset 0 0 0 .02em rgba(255,255,255,.55);
+}
+#chat-ui-rz7m4k2p .pp-bond.core-roxy .pp-bondname{color:#184d8f!important}
+#chat-ui-rz7m4k2p .pp-bond.core-sylphy .pp-bondname{color:#206b34!important}
+#chat-ui-rz7m4k2p .pp-bond.core-eris .pp-bondname{color:#972f2f!important}
+
 </style>
 </head>
 <body>
@@ -550,10 +633,10 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 <div class="pp-tile" onclick="ppGo('overview')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7l2.5 4.5L12 16l-2.5-4.5z"/></svg><span>总览</span><small>OVERVIEW</small></div>
 <div class="pp-tile" onclick="ppGo('map')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span>世界地图</span><small>当地情报</small></div>
 <div class="pp-tile" onclick="ppGo('hero')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-4 3-6 7-6s7 2 7 6"/></svg><span>主角档案</span><small>PROFILE</small></div>
-<div class="pp-tile" onclick="ppGo('bond')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5 6 5c2 0 3 1.2 4 2.5C11 6.2 12 5 14 5c3.5 0 5 4 3.5 7C19 16.5 12 21 12 21z"/></svg><span>羁绊</span><small>BONDS</small></div>
-<div class="pp-tile" onclick="ppGo('ability')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3l7 7-9 9-7-7 9-9z"/><path d="M9 8l2 2"/><circle cx="6" cy="18" r="2"/></svg><span>能力资产</span><small>ASSETS</small></div>
+<div class="pp-tile" onclick="ppGo('bond')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.8l-1.5-1.35C5.2 14.7 2.2 11.95 2.2 8.5 2.2 5.83 4.33 3.7 7 3.7c1.86 0 3.33.93 5 2.85 1.67-1.92 3.14-2.85 5-2.85 2.67 0 4.8 2.13 4.8 4.8 0 3.45-3 6.2-8.3 10.95L12 20.8z"/></svg><span>羁绊</span><small>BONDS</small></div>
+<div class="pp-tile" onclick="ppGo('ability')"><svg class="icon-asset" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8.7 2.7l1.45 5 5 1.45-5 1.45-1.45 5-1.45-5-5-1.45 5-1.45 1.45-5z"/><path d="M17.2 8.2l1.05 3.45 3.45 1.05-3.45 1.05-1.05 3.45-1.05-3.45-3.45-1.05 3.45-1.05 1.05-3.45z"/></svg><span>能力资产</span><small>ASSETS</small></div>
 <div class="pp-tile" onclick="ppGo('npc')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7" r="3.5"/><path d="M5 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><circle cx="12" cy="7" r="6.5" stroke-dasharray="2 2"/></svg><span>目标NPC</span><small>TARGET</small></div>
-<div class="pp-tile" onclick="ppGo('butterfly')" style="grid-column:1/4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v16M12 8C9 3 3 4 3 9c0 4 6 5 9 3M12 8c3-5 9-4 9 1 0 4-6 5-9 3"/></svg><span>异世之蝶</span><small>BUTTERFLY · 因果路线</small></div>
+<div class="pp-tile" onclick="ppGo('butterfly')" style="grid-column:1/4"><svg class="icon-butterfly" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11.6c-1.45-3.4-4.2-6.15-6.75-6.15-1.4 0-2.25 1.02-2.25 2.42 0 3 2.95 5.3 6.95 5.35"/><path d="M12 11.6c1.45-3.4 4.2-6.15 6.75-6.15 1.4 0 2.25 1.02 2.25 2.42 0 3-2.95 5.3-6.95 5.35"/><path d="M12 12.4c-1.25 3.1-3.8 5.95-6.1 5.95-1.45 0-2.4-.97-2.4-2.27 0-2.72 2.7-4.82 6.3-4.87"/><path d="M12 12.4c1.25 3.1 3.8 5.95 6.1 5.95 1.45 0 2.4-.97 2.4-2.27 0-2.72-2.7-4.82-6.3-4.87"/><path d="M12 7.9v8.2"/></svg><span>异世之蝶</span><small>BUTTERFLY · 因果路线</small></div>
 </div>
 <div class="pp-foot">· 蝶翼一振 · 命运改流 ·</div>
 </div>
@@ -610,12 +693,12 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 
 <div class="pp-sec" id="sec-bond">
 <button class="pp-back" onclick="ppBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>返回</button>
-<div class="pp-secttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5 6 5c2 0 3 1.2 4 2.5C11 6.2 12 5 14 5c3.5 0 5 4 3.5 7C19 16.5 12 21 12 21z"/></svg>羁绊</div>
+<div class="pp-secttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.8l-1.5-1.35C5.2 14.7 2.2 11.95 2.2 8.5 2.2 5.83 4.33 3.7 7 3.7c1.86 0 3.33.93 5 2.85 1.67-1.92 3.14-2.85 5-2.85 2.67 0 4.8 2.13 4.8 4.8 0 3.45-3 6.2-8.3 10.95L12 20.8z"/></svg>羁绊</div>
 <div class="pp-block">
 <div class="pp-blkttl">核心羁绊</div>
-<div class="pp-bond fated core-roxy"><div class="pp-bondtop"><span class="pp-bondname">洛琪希·米格鲁迪亚</span><span class="pp-fated">命运固定</span></div><div class="pp-bondrel" data-var="roxyRelationship">[变量·roxyRelationship]</div><div class="pp-bondst" data-var="roxyState">[变量·roxyState]</div><div class="pp-bondst">上次相遇：<span data-var="roxyLastMet">[变量·roxyLastMet]</span></div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span data-var="roxyBondLv">[变量·roxyBondLv]</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="0" data-pct-var="roxyBondPercent|roxyBondPct"></div></div></div></div>
-<div class="pp-bond fated core-sylphy"><div class="pp-bondtop"><span class="pp-bondname">希露菲叶特</span><span class="pp-fated">命运固定</span></div><div class="pp-bondrel" data-var="sylphyRelationship">[变量·sylphyRelationship]</div><div class="pp-bondst" data-var="sylphyState">[变量·sylphyState]</div><div class="pp-bondst">上次相遇：<span data-var="sylphyLastMet">[变量·sylphyLastMet]</span></div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span data-var="sylphyBondLv">[变量·sylphyBondLv]</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="0" data-pct-var="sylphyBondPercent|sylphyBondPct"></div></div></div></div>
-<div class="pp-bond fated core-eris"><div class="pp-bondtop"><span class="pp-bondname">艾莉丝·伯雷亚斯·格雷拉特</span><span class="pp-fated">命运固定</span></div><div class="pp-bondrel" data-var="erisRelationship">[变量·erisRelationship]</div><div class="pp-bondst" data-var="erisState">[变量·erisState]</div><div class="pp-bondst">上次相遇：<span data-var="erisLastMet">[变量·erisLastMet]</span></div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span data-var="erisBondLv">[变量·erisBondLv]</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="0" data-pct-var="erisBondPercent|erisBondPct"></div></div></div></div>
+<div class="pp-bond fated core-roxy"><div class="pp-bondtop"><span class="pp-bondname">洛琪希·米格鲁迪亚</span><span class="pp-fated">命运固定</span></div><div class="pp-bondrel" data-var="roxyRelationship">[变量·roxyRelationship]</div><div class="pp-bondst" data-var="roxyState">[变量·roxyState]</div><div class="pp-bondst">上次相遇：<span data-var="roxyLastMet">[变量·roxyLastMet]</span></div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span class="pp-bondlv-num" data-var="roxyBondLv">[变量·roxyBondLv]</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="0" data-pct-var="roxyBondPercent|roxyBondPct"></div></div></div></div>
+<div class="pp-bond fated core-sylphy"><div class="pp-bondtop"><span class="pp-bondname">希露菲叶特</span><span class="pp-fated">命运固定</span></div><div class="pp-bondrel" data-var="sylphyRelationship">[变量·sylphyRelationship]</div><div class="pp-bondst" data-var="sylphyState">[变量·sylphyState]</div><div class="pp-bondst">上次相遇：<span data-var="sylphyLastMet">[变量·sylphyLastMet]</span></div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span class="pp-bondlv-num" data-var="sylphyBondLv">[变量·sylphyBondLv]</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="0" data-pct-var="sylphyBondPercent|sylphyBondPct"></div></div></div></div>
+<div class="pp-bond fated core-eris"><div class="pp-bondtop"><span class="pp-bondname">艾莉丝·伯雷亚斯·格雷拉特</span><span class="pp-fated">命运固定</span></div><div class="pp-bondrel" data-var="erisRelationship">[变量·erisRelationship]</div><div class="pp-bondst" data-var="erisState">[变量·erisState]</div><div class="pp-bondst">上次相遇：<span data-var="erisLastMet">[变量·erisLastMet]</span></div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span class="pp-bondlv-num" data-var="erisBondLv">[变量·erisBondLv]</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="0" data-pct-var="erisBondPercent|erisBondPct"></div></div></div></div>
 </div>
 <div class="pp-block">
 <div class="pp-blkttl">其他重要关系</div>
@@ -625,7 +708,7 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 
 <div class="pp-sec" id="sec-ability">
 <button class="pp-back" onclick="ppBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>返回</button>
-<div class="pp-secttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3l7 7-9 9-7-7 9-9z"/><path d="M9 8l2 2"/><circle cx="6" cy="18" r="2"/></svg>能力与资产</div>
+<div class="pp-secttl"><svg class="icon-asset" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8.7 2.7l1.45 5 5 1.45-5 1.45-1.45 5-1.45-5-5-1.45 5-1.45 1.45-5z"/><path d="M17.2 8.2l1.05 3.45 3.45 1.05-3.45 1.05-1.05 3.45-1.05-3.45-3.45-1.05 3.45-1.05 1.05-3.45z"/></svg>能力与资产</div>
 <div class="pp-block">
 <div class="pp-blkttl">天赋</div>
 <div class="pp-cards pp-dynamic-list" id="talent-list" data-var-html="talentListHtml">[变量·talentListHtml]</div>
@@ -678,7 +761,7 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 
 <div class="pp-sec" id="sec-butterfly">
 <button class="pp-back" onclick="ppBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>返回</button>
-<div class="pp-secttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v16M12 8C9 3 3 4 3 9c0 4 6 5 9 3M12 8c3-5 9-4 9 1 0 4-6 5-9 3"/></svg>异世之蝶</div>
+<div class="pp-secttl"><svg class="icon-butterfly" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11.6c-1.45-3.4-4.2-6.15-6.75-6.15-1.4 0-2.25 1.02-2.25 2.42 0 3 2.95 5.3 6.95 5.35"/><path d="M12 11.6c1.45-3.4 4.2-6.15 6.75-6.15 1.4 0 2.25 1.02 2.25 2.42 0 3-2.95 5.3-6.95 5.35"/><path d="M12 12.4c-1.25 3.1-3.8 5.95-6.1 5.95-1.45 0-2.4-.97-2.4-2.27 0-2.72 2.7-4.82 6.3-4.87"/><path d="M12 12.4c1.25 3.1 3.8 5.95 6.1 5.95 1.45 0 2.4-.97 2.4-2.27 0-2.72-2.7-4.82-6.3-4.87"/><path d="M12 7.9v8.2"/></svg>异世之蝶</div>
 <div class="pp-block">
 <div class="pp-blkttl">路线 · 双轨因果</div>
 <div class="pp-track">
@@ -970,6 +1053,37 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
     d['money-gold']=d.moneyGold; d['money-silver']=d.moneySilver; d['money-copper']=d.moneyCopper; d['money-other']=d.moneyOther;
     ['roxy','sylphy','eris'].forEach(function(n){ var lv=first([n+'BondLv',n+'LvText',n+'Lv',n+'BondLevel'],'0'); d[n+'BondLv']=lvText(lv); d[n+'BondPercent']=lvPercent(lv); d[n+'LastMet']=first([n+'LastMet',n+'LastMeet',n+'LastSeen'],'尚未相遇'); });
     return d;
+  }
+
+
+  function battleRankClass(v){
+    var s=String(v||'').replace(/\s+/g,'');
+    if(/规格外|无法定义/.test(s))return 'rank-flow-over';
+    if(/神|造化|本源/.test(s))return 'rank-flow-god';
+    if(/帝|天帝|位面/.test(s))return 'rank-flow-emperor';
+    if(/王|至尊|霸主/.test(s))return 'rank-flow-king';
+    if(/圣|超凡|圣者/.test(s))return 'rank-flow-saint';
+    if(/上|大成|大师/.test(s))return 'rank-flow-high';
+    if(/中|入道|精锐/.test(s))return 'rank-flow-mid';
+    if(/普通人|初|初心|学徒/.test(s))return 'rank-flow-low';
+    return 'rank-flow-low';
+  }
+  function syncBattleRankBadge(){
+    var el=root.querySelector('.pp-rank[data-var="battleRank"]');
+    if(!el)return;
+    var rank=getD('battleRank', el.textContent||'普通人');
+    el.textContent=text(rank);
+    el.className='pp-rank '+battleRankClass(rank);
+  }
+  function syncCoreBondLevels(){
+    ['roxy','sylphy','eris'].forEach(function(n){
+      var raw=first([n+'BondLv',n+'LvText',n+'Lv',n+'BondLevel'],'0');
+      var lv=lvText(raw), pct=lvPercent(raw);
+      var lvEl=root.querySelector('[data-var="'+n+'BondLv"]');
+      if(lvEl)lvEl.textContent=lv;
+      var fill=root.querySelector('.core-'+n+' .pp-lvfill');
+      if(fill)setProgress(fill,pct);
+    });
   }
 
   function getD(key,fallback){
