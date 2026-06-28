@@ -468,6 +468,67 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
   #chat-ui-rz7m4k2p .pp-money-list{font-size:.98em!important;line-height:1.85!important;padding:.65em .75em!important}
 }
 
+
+
+/* ===== 卡片名流光配色 + 弹窗等阶框收窄 ===== */
+#chat-ui-rz7m4k2p .pp-detail-grade{
+  width:auto!important;
+  min-width:4.2em!important;
+  max-width:9em!important;
+  display:block!important;
+  padding:.34em .82em!important;
+  margin:0 auto .55em!important;
+}
+#chat-ui-rz7m4k2p #sec-ability .pp-mc-f .nm.flow-name{
+  background-size:260% 260%!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  color:transparent!important;
+  -webkit-text-fill-color:transparent!important;
+  animation:ppNameFlow 3.4s linear infinite!important;
+  text-shadow:none!important;
+}
+@keyframes ppNameFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+#chat-ui-rz7m4k2p #sec-ability .pp-mc-f .nm.flow-normal,
+#chat-ui-rz7m4k2p #sec-ability .pp-mc-f .nm.flow-rarity-normal{
+  background-image:linear-gradient(110deg,#232323,#5b5753,#8b8178,#343230,#232323)!important;
+}
+#chat-ui-rz7m4k2p #sec-ability .pp-mc-f .nm.flow-rarity-rare{
+  background-image:linear-gradient(110deg,#1e5263,#31a8bd,#66d6de,#5a6e7e,#1e5263)!important;
+}
+#chat-ui-rz7m4k2p #sec-ability .pp-mc-f .nm.flow-rarity-epic{
+  background-image:linear-gradient(110deg,#7d5313,#c7924b,#ffe08a,#d19a38,#7d5313)!important;
+}
+#chat-ui-rz7m4k2p #sec-ability .pp-mc-f .nm.flow-rarity-legend{
+  background-image:linear-gradient(110deg,#5d0707,#b41414,#ff5858,#8f1010,#5d0707)!important;
+}
+#chat-ui-rz7m4k2p #sec-ability .pp-mc-f .nm.flow-skill-low{
+  background-image:linear-gradient(110deg,#4e4843,#8b8178,#b0a39a,#6e6258,#4e4843)!important;
+}
+#chat-ui-rz7m4k2p #sec-ability .pp-mc-f .nm.flow-skill-mid{
+  background-image:linear-gradient(110deg,#263a48,#5a6e7e,#8aabc0,#3f596a,#263a48)!important;
+}
+#chat-ui-rz7m4k2p #sec-ability .pp-mc-f .nm.flow-skill-high{
+  background-image:linear-gradient(110deg,#794a16,#c7924b,#f0bc72,#a85135,#794a16)!important;
+}
+#chat-ui-rz7m4k2p #sec-ability .pp-mc-f .nm.flow-skill-saint{
+  background-image:linear-gradient(110deg,#8e9aaa,#dce2ec,#ffffff,#bdc7d6,#8e9aaa)!important;
+}
+#chat-ui-rz7m4k2p #sec-ability .pp-mc-f .nm.flow-skill-king{
+  background-image:linear-gradient(110deg,#4a2c6e,#8f65c2,#f0ce64,#6c3d9b,#4a2c6e)!important;
+}
+#chat-ui-rz7m4k2p #sec-ability .pp-mc-f .nm.flow-skill-emperor{
+  background-image:linear-gradient(110deg,#080d1c,#16203a,#4b5f93,#0f1730,#080d1c)!important;
+}
+#chat-ui-rz7m4k2p #sec-ability .pp-mc-f .nm.flow-skill-god{
+  background-image:linear-gradient(110deg,#d7f8ff,#fffef2,#ffdff7,#e1fff3,#fffef2,#d7f8ff)!important;
+  filter:drop-shadow(0 .04em .08em rgba(54,36,18,.55))!important;
+}
+#chat-ui-rz7m4k2p #sec-ability .pp-mc-f .nm.flow-outside{
+  background-image:linear-gradient(110deg,#ff4fd8,#5ec8ff,#7dff88,#ffe36c,#c987ff,#ff6e6e,#ff4fd8)!important;
+  background-size:340% 340%!important;
+}
+
 </style>
 </head>
 <body>
@@ -839,13 +900,33 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
     var arr=splitLines(v); if(!arr.length)return '<div class="pp-newsitem"><span class="dot"></span><span>暂无重要传闻。</span></div>';
     return arr.map(function(x){return '<div class="pp-newsitem"><span class="dot"></span><span>'+esc(x)+'</span></div>';}).join('');
   }
-  function cardHtml(v,emptyText){
+  function gradeClass(kind,lv){
+    var s=String(lv||'').replace(/\s+/g,'');
+    if(/规格外|无法定义/.test(s))return 'flow-outside';
+    if(kind==='skill'){
+      if(/神|造化|本源/.test(s))return 'flow-skill-god';
+      if(/帝|天帝|位面/.test(s))return 'flow-skill-emperor';
+      if(/王|至尊|霸主/.test(s))return 'flow-skill-king';
+      if(/圣|超凡|圣者/.test(s))return 'flow-skill-saint';
+      if(/上|大成|大师/.test(s))return 'flow-skill-high';
+      if(/中|入道|精锐/.test(s))return 'flow-skill-mid';
+      if(/初|初心|学徒/.test(s))return 'flow-skill-low';
+      return 'flow-normal';
+    }
+    if(/传说|传奇|血红/.test(s))return 'flow-rarity-legend';
+    if(/史诗|耀金/.test(s))return 'flow-rarity-epic';
+    if(/稀有|蓝青/.test(s))return 'flow-rarity-rare';
+    if(/普通|黑灰/.test(s))return 'flow-rarity-normal';
+    return 'flow-normal';
+  }
+  function cardHtml(v,emptyText,kind){
     var arr=splitLines(v); if(!arr.length)return '<div class="pp-detail">'+esc(emptyText||'暂无记录。')+'</div>';
     return arr.map(function(item){
       var name='',lv='',desc='';
       if(item&&typeof item==='object'){ name=item.name||item.title||item.skill||item.talent||item.item||'未命名'; lv=item.lv||item.level||item.rank||item.rarity||'记录'; desc=item.desc||item.description||item.state||item.note||''; }
       else{ var s=String(item),parts=s.split(/[|｜]/).map(function(x){return x.trim();}); if(parts.length>=3){name=parts[0];lv=parts[1];desc=parts.slice(2).join('｜');} else {name=s;lv='记录';desc='';}}
-      return '<div class="pp-mc pp-info-card" tabindex="0" role="button" aria-label="查看'+escAttr(name)+'详情" data-name="'+escAttr(name)+'" data-lv="'+escAttr(lv||'记录')+'" data-desc="'+escAttr(desc||'暂无详细描述。')+'" onclick="ppCardClick(this)" onkeydown="ppCardKey(event,this)"><div class="pp-mc-in"><div class="pp-mc-f"><span class="pp-grade"></span><span class="nm">'+esc(name)+'</span></div></div></div>';
+      var cls='nm flow-name '+gradeClass(kind||'asset',lv);
+      return '<div class="pp-mc pp-info-card" tabindex="0" role="button" aria-label="查看'+escAttr(name)+'详情" data-name="'+escAttr(name)+'" data-lv="'+escAttr(lv||'记录')+'" data-desc="'+escAttr(desc||'暂无详细描述。')+'" onclick="ppCardClick(this)" onkeydown="ppCardKey(event,this)"><div class="pp-mc-in"><div class="pp-mc-f"><span class="pp-grade"></span><span class="'+cls+'">'+esc(name)+'</span></div></div></div>';
     }).join('');
   }
   function lvText(v){ if(!has(v))return 'Lv.0/10'; var s=String(v); if(/^\s*Lv\.?/i.test(s))return s; return /^\s*\d+(?:\.\d+)?\s*(?:\/\s*10)?\s*$/.test(s)?'Lv.'+s.replace(/\s*\/\s*10\s*$/,'')+'/10':s; }
@@ -878,9 +959,9 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
     var cur = first(['pcIdentityTags','presentTags']); d.presentTagsHtml = chipHtml(cur);
     d.localNewsListHtml = newsHtml(first(['localNews']));
     d.otherBondListHtml = otherBondHtml(first(['otherRelations','relationSummary']));
-    d.talentListHtml = cardHtml(first(['talentsDetail']),'暂无已确认天赋。');
-    d.skillListHtml = cardHtml(first(['skillsDetail']),'暂无已掌握技能。');
-    d.inventoryListHtml = cardHtml(first(['inventoryDetail','bagItems','itemsDetail','equipmentDetail']),'暂无额外道具。');
+    d.talentListHtml = cardHtml(first(['talentsDetail']),'暂无已确认天赋。','asset');
+    d.skillListHtml = cardHtml(first(['skillsDetail']),'暂无已掌握技能。','skill');
+    d.inventoryListHtml = cardHtml(first(['inventoryDetail','bagItems','itemsDetail','equipmentDetail']),'暂无额外道具。','asset');
     d.rippleListHtml = rippleHtml(first(['canonRipples']));
     var money=String(first(['currencyDetail'],'')||'');
     function pick(label){var m=money.match(new RegExp(label+'\\s*[：:]\\s*([0-9]+)'));return m?m[1]:undefined;}
