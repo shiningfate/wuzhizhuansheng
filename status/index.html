@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>无职转生·六面世界旅录</title>
 <style>
-mushokustatuspatch,mushokustatusdata,statusdatapatch,statusdata,.pp-status-patch,.pp-status-data{display:none!important}
 #chat-ui-rz7m4k2p *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 #chat-ui-rz7m4k2p{
 --pp-bg:#efe2c4;--pp-bg2:#e3d2ab;--pp-ink:#3a2814;--pp-ink2:#6b5436;
@@ -247,9 +246,6 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 </head>
 <body>
 <div id="chat-ui-rz7m4k2p">
-<script type="application/json" class="pp-status-data" data-source="default">{"activeChapterIndex":"0","activeChapterCode":"CH001","activeChapterName":"CH001｜一卷·第1章 「难道是异世界？」","chapterProgress":"开端","chapterSwitchSignal":"NO","chapterSwitchReason":"暂无","year":407,"month":10,"day":12,"chapter":1,"time":"407年10月12日","weather":"晴","temperature":"微凉","location":"布耶纳村","environment":"阿斯拉王国菲托亚领附近的乡村环境。","people":"主角，家人或附近村民","mapName":"六面世界地图","mapNote":"当前位于中央大陆阿斯拉王国菲托亚领附近。","mapImageUrl":"https://raw.githubusercontent.com/shiningfate/wzzsjpg/main/dc94a7ca6ec9d90d26e9f09d86ee7d5c97196803_raw.jpg","routeNote":"暂无远行路线。","localNews":"暂无重要传闻。","pcName":"主角名","pcRace":"人族","pcGender":"男","pcAge":"幼年","pcBodyStatus":"健康","pcTitle":"无","pcIdentityTags":"格雷拉特家幼子","hpCurrent":"15","hpMax":"100","mpCurrent":"15","mpMax":"100","pcPowerBrief":"幼年期，魔力量异常优秀，身体战力仍弱。","pcMentalStatus":"清醒","pcCurrentGoal":"适应当前生活并观察周围环境。","pcAppearance":"年幼的人族男孩，外表稚嫩。","battleRank":"普通人","toukiRank":"未觉醒","toukiState":"未觉醒","battleStyle":"暂无固定战斗风格。","battleCurrentStatus":"身体状态稳定，精神清醒，当前未处于战斗。","talentsDetail":"","skillsDetail":"","equipmentDetail":"","inventoryDetail":"","currencyDetail":"金币：0\n银币：0\n铜币：0","roxyName":"洛琪希·米格路迪亚","roxyLv":"0","roxyRelationship":"命运固定；尚未相遇 / 未建立羁绊","roxyState":"暂无动向","sylphyName":"希露菲叶特","sylphyLv":"0","sylphyRelationship":"命运固定；尚未相遇 / 未建立羁绊","sylphyState":"暂无动向","erisName":"艾莉丝·伯雷亚斯·格雷拉特","erisLv":"0","erisRelationship":"命运固定；尚未相遇 / 未建立羁绊","erisState":"暂无动向","otherRelations":[{"name":"保罗","lv":"6","relationship":"亲生父子；至亲血脉","state":"布耶纳村家中，维持村中骑士与家长职责，关注鲁迪乌斯的成长与异常早熟表现。"}],"targetName":"暂无明确目标","targetRace":"未知","targetGender":"未知","targetAge":"未知","targetAppearance":"暂无明确目标。","targetFigureState":"未鉴定","targetBreastsStatus":"未鉴定","targetVaginaStatus":"未鉴定","targetAnusAction":"未鉴定","targetFeetsAction":"未鉴定","targetSexualFantasy":"暂无明确线索","targetStance":"未知","targetDanger":"低","targetAttitude":"未知","targetPowerBrief":"暂无明确目标","targetRiskNote":"暂无明显风险。","targetTalentsSkills":"未知","targetInnerThought":"未知","canonDeviationLevel":"低","hitogamiAttention":"0","dragonGodCausality":"0","hitogamiInfluenceNote":"暂无明显诱导。","dragonCausalityNote":"暂无明显脱离。","causalBalanceNote":"当前因果天平接近稳定，原著路线仍可作为主要参考。","canonRipples":"暂无已确认涟漪事件。","canonFutureRisk":"暂无明显后续风险。","roxyLastMet":"尚未相遇","sylphyLastMet":"尚未相遇","erisLastMet":"尚未相遇","gameTitle":"无职转生·六面世界旅录"}</script>
-<script type="application/json" class="pp-status-data" data-source="st-ejs"><%= JSON.stringify(getMessageVar('stat_data', { defaults: {} })) _%></script>
-<script type="application/json" class="pp-status-data" data-source="st-macro">{{getvar::stat_data}}</script>
 <div class="pp-frame">
 <div class="pp-toast" id="pp-toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2 6h6l-5 4 2 7-7-4-7 4 2-7-5-4h6z"/></svg><span id="pp-toast-t">状态已更新</span></div>
 
@@ -434,422 +430,261 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 </div>
 <script>
 (function(){
-var root=document.getElementById('chat-ui-rz7m4k2p');
-if(!root)return;
-var currentData={},toastTimer;
-var DEFAULT_DATA={"activeChapterIndex":"0","activeChapterCode":"CH001","activeChapterName":"CH001｜一卷·第1章 「难道是异世界？」","chapterProgress":"开端","chapterSwitchSignal":"NO","chapterSwitchReason":"暂无","year":407,"month":10,"day":12,"chapter":1,"time":"407年10月12日","weather":"晴","temperature":"微凉","location":"布耶纳村","environment":"阿斯拉王国菲托亚领附近的乡村环境。","people":"主角，家人或附近村民","mapName":"六面世界地图","mapNote":"当前位于中央大陆阿斯拉王国菲托亚领附近。","mapImageUrl":"https://raw.githubusercontent.com/shiningfate/wzzsjpg/main/dc94a7ca6ec9d90d26e9f09d86ee7d5c97196803_raw.jpg","routeNote":"暂无远行路线。","localNews":"暂无重要传闻。","pcName":"主角名","pcRace":"人族","pcGender":"男","pcAge":"幼年","pcBodyStatus":"健康","pcTitle":"无","pcIdentityTags":"格雷拉特家幼子","hpCurrent":"15","hpMax":"100","mpCurrent":"15","mpMax":"100","pcPowerBrief":"幼年期，魔力量异常优秀，身体战力仍弱。","pcMentalStatus":"清醒","pcCurrentGoal":"适应当前生活并观察周围环境。","pcAppearance":"年幼的人族男孩，外表稚嫩。","battleRank":"普通人","toukiRank":"未觉醒","toukiState":"未觉醒","battleStyle":"暂无固定战斗风格。","battleCurrentStatus":"身体状态稳定，精神清醒，当前未处于战斗。","talentsDetail":"","skillsDetail":"","equipmentDetail":"","inventoryDetail":"","currencyDetail":"金币：0\n银币：0\n铜币：0","roxyName":"洛琪希·米格路迪亚","roxyLv":"0","roxyRelationship":"命运固定；尚未相遇 / 未建立羁绊","roxyState":"暂无动向","sylphyName":"希露菲叶特","sylphyLv":"0","sylphyRelationship":"命运固定；尚未相遇 / 未建立羁绊","sylphyState":"暂无动向","erisName":"艾莉丝·伯雷亚斯·格雷拉特","erisLv":"0","erisRelationship":"命运固定；尚未相遇 / 未建立羁绊","erisState":"暂无动向","otherRelations":[{"name":"保罗","lv":"6","relationship":"亲生父子；至亲血脉","state":"布耶纳村家中，维持村中骑士与家长职责，关注鲁迪乌斯的成长与异常早熟表现。"}],"targetName":"暂无明确目标","targetRace":"未知","targetGender":"未知","targetAge":"未知","targetAppearance":"暂无明确目标。","targetFigureState":"未鉴定","targetBreastsStatus":"未鉴定","targetVaginaStatus":"未鉴定","targetAnusAction":"未鉴定","targetFeetsAction":"未鉴定","targetSexualFantasy":"暂无明确线索","targetStance":"未知","targetDanger":"低","targetAttitude":"未知","targetPowerBrief":"暂无明确目标","targetRiskNote":"暂无明显风险。","targetTalentsSkills":"未知","targetInnerThought":"未知","canonDeviationLevel":"低","hitogamiAttention":"0","dragonGodCausality":"0","hitogamiInfluenceNote":"暂无明显诱导。","dragonCausalityNote":"暂无明显脱离。","causalBalanceNote":"当前因果天平接近稳定，原著路线仍可作为主要参考。","canonRipples":"暂无已确认涟漪事件。","canonFutureRisk":"暂无明显后续风险。","roxyLastMet":"尚未相遇","sylphyLastMet":"尚未相遇","erisLastMet":"尚未相遇","gameTitle":"无职转生·六面世界旅录"};
+  var root = document.getElementById('chat-ui-rz7m4k2p');
+  if(!root) return;
+  var currentData = {};
 
-var ALIAS={
-  'game-title':['gameTitle'],chapter:['activeChapterName'],place:['location'],present:['people'],
-  'map-loc':['mapLocation','location','mapNote'],mapNote:['mapLocationNote','mapDesc'],mapImageUrl:['mapUrl','mapURL','mapurl','mapImage','mapSrc'],
-  pcName:['heroName'],pcRace:['heroRace'],pcGender:['heroSex','heroGender'],pcAge:['heroAge'],
-  pcBodyStatus:['heroState'],pcTitle:['heroTitle'],pcIdentityTags:['heroIdentity','heroIdentityTags'],pcAppearance:['heroAppearance'],
-  hp:['hpText','heroHpText','heroHPText'],mp:['mpText','heroMpText','heroMPText'],
-  hpPercent:['heroHpPercent','heroHPPercent'],mpPercent:['heroMpPercent','heroMPPercent'],
-  hpCurrent:['heroHP','heroHp','hp'],hpMax:['heroHPMax','heroHpMax'],
-  mpCurrent:['heroMP','heroMp','mp'],mpMax:['heroMPMax','heroMpMax'],
-  toukiRank:['heroAuraRank','auraRank'],toukiState:['heroAuraState','auraState'],
-  battleRank:['heroPowerRank'],battleStyle:['heroFightStyle'],battleCurrentStatus:['heroFightState'],pcPowerBrief:['heroTemplate','pcCurrentGoal'],
-  roxyRelationship:['roxyRelation'],roxyLastMet:['roxyLastMeet','roxyLastSeen'],roxyBondLv:['roxyLvText','roxyLv','roxyBondLevel'],roxyBondPercent:['roxyBondPct'],
-  sylphyRelationship:['sylphyRelation'],sylphyLastMet:['sylphyLastMeet','sylphyLastSeen'],sylphyBondLv:['sylphyLvText','sylphyLv','sylphyBondLevel'],sylphyBondPercent:['sylphyBondPct'],
-  erisRelationship:['erisRelation'],erisLastMet:['erisLastMeet','erisLastSeen'],erisBondLv:['erisLvText','erisLv','erisBondLevel'],erisBondPercent:['erisBondPct'],
-  'money-gold':['moneyGold'],'money-silver':['moneySilver'],'money-copper':['moneyCopper'],'money-other':['moneyOther'],
-  targetName:['targetNpcName'],targetRace:['targetNpcRace'],targetGender:['targetNpcSex','targetNpcGender'],targetAge:['targetNpcAge'],
-  targetAppearance:['targetNpcAppearance'],targetFigureState:['targetNpcBody'],targetBreastsStatus:['targetNpcChest'],
-  targetVaginaStatus:['targetNpcPelvic'],targetAnusAction:['targetNpcHip'],targetFeetsAction:['targetNpcFeet'],targetSexualFantasy:['targetNpcFantasy'],
-  targetStance:['targetNpcStance'],targetDanger:['targetNpcDanger'],targetPowerBrief:['targetNpcPower'],targetRiskNote:['targetNpcRisk'],
-  targetTalentsSkills:['targetNpcSkills'],targetInnerThought:['targetNpcMind'],
-  hitogamiAttention:['manGodAttention'],manGodAttention:['hitogamiAttention'],manGodAttentionPercent:['hitogamiAttention'],
-  dragonGodCausalityPercent:['dragonGodCausality'],canonDeviationLevel:['originalDeviation']
-};
+  function safeGetParent(){
+    try { if (window.parent && window.parent !== window) return window.parent; } catch(e){}
+    return null;
+  }
 
-function $(s){return root.querySelector(s);}
-function $all(s){return Array.prototype.slice.call(root.querySelectorAll(s));}
-function has(v){return v!==undefined&&v!==null&&String(v)!=='';}
-function esc(v){return String(v==null?'':v).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
-function text(v){return Array.isArray(v)?v.join('、'):(typeof v==='object'?JSON.stringify(v):String(v));}
-function num(v){var m=String(v||'').match(/-?\d+(?:\.\d+)?/);return m?Number(m[0]):0;}
-function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
-function camel(k){return String(k||'').replace(/[-_]+([a-zA-Z0-9])/g,function(_,c){return c.toUpperCase();});}
-function addKey(list,k){String(k||'').split('|').forEach(function(x){x=x.trim();if(x&&list.indexOf(x)<0)list.push(x);});}
-function candidates(key){
-  var list=[],c=camel(key),a=ALIAS[key]||ALIAS[c];
-  addKey(list,key); if(Array.isArray(a))a.forEach(function(x){addKey(list,x);}); addKey(list,c);
-  return list;
-}
-function pathGet(obj,path){
-  var cur=obj,parts=String(path||'').split('.');
-  for(var i=0;i<parts.length;i++){if(cur==null)return undefined;cur=cur[parts[i]];}
-  return cur;
-}
-function get(data,key){
-  var gv=readByGetvarKey(key);
-  if(has(gv))return gv;
-  var list=candidates(key);
-  for(var i=0;i<list.length;i++){var v=pathGet(data,list[i]);if(has(v))return v;}
-  return undefined;
-}
-function first(data,keys){
-  keys=Array.isArray(keys)?keys:String(keys||'').split('|');
-  for(var i=0;i<keys.length;i++){var v=get(data,String(keys[i]).trim());if(has(v))return v;}
-  return undefined;
-}
-function percent(cur,max){var m=num(max);return m>0?clamp(num(cur)/m*100,0,100):undefined;}
-function lvText(v){
-  if(!has(v))return 'Lv.0/10';
-  var s=String(v); if(/^\s*Lv\.?/i.test(s))return s;
-  return /^\s*\d+(?:\.\d+)?\s*(?:\/\s*10)?\s*$/.test(s)?'Lv.'+s.replace(/\s*\/\s*10\s*$/,'')+'/10':s;
-}
-function lvPercent(v){
-  if(!has(v))return 0;
-  var s=String(v),m=s.match(/(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)/);
-  if(m)return percent(m[1],m[2]);
-  m=s.match(/\d+(?:\.\d+)?/);return m?clamp(Number(m[0])*10,0,100):0;
-}
-function splitLines(v){
-  if(!has(v))return [];
-  if(Array.isArray(v))return v;
-  return String(v).split(/\n+|；|;|\|\|/).map(function(x){return x.trim().replace(/^[-•*]\s*/,'');}).filter(Boolean);
-}
-function gradeClass(s){
-  s=String(s||'');
-  if(/规格外|彩色|超规格/.test(s))return 'g-over';
-  if(/传说|红色/.test(s))return 'g-legend';
-  if(/史诗|金色/.test(s))return 'g-epic';
-  if(/稀有|紫色/.test(s))return 'g-rare';
-  return 'g-common';
-}
-function isCoreBondName(s){return /洛琪希|罗琪希|Roxy|希露菲|Sylph|艾莉丝|Eris/i.test(String(s||''));}
-function chipHtml(v){
-  var arr=[];
-  splitLines(v).forEach(function(x){String(x).split(/[、,，/|]/).forEach(function(y){y=y.trim();if(y)arr.push(y);});});
-  return arr.length?arr.slice(0,12).map(function(x){return '<span class="pp-chip">'+esc(x)+'</span>';}).join(''):'<span class="pp-chip">暂无标签</span>';
-}
-function newsHtml(v){
-  var arr=splitLines(v);
-  if(!arr.length)return '<div class="pp-newsitem"><span class="dot"></span><span>暂无重要传闻。</span></div>';
-  return arr.map(function(x){return '<div class="pp-newsitem"><span class="dot"></span><span>'+esc(x)+'</span></div>';}).join('');
-}
-function cardHtml(v,emptyText){
-  var arr=splitLines(v);
-  if(!arr.length)return '<div class="pp-detail">'+esc(emptyText||'暂无记录。')+'</div>';
-  return arr.map(function(item){
-    var name='',lv='',desc='';
-    if(item&&typeof item==='object'){
-      name=item.name||item.title||item.skill||item.talent||item.item||'未命名';
-      lv=item.lv||item.level||item.rank||item.rarity||'记录';
-      desc=item.desc||item.description||item.state||item.note||'';
-    }else{
-      var s=String(item),parts=s.split(/[|｜]/).map(function(x){return x.trim();});
-      if(parts.length>=3){name=parts[0];lv=parts[1];desc=parts.slice(2).join('｜');}
-      else{var m=s.match(/^【?([^】:：]+)】?[:：]\s*(.*)$/);name=m?m[1]:s;desc=m?m[2]:'';lv='记录';}
+  function parseMaybeJson(v){
+    if (v === undefined || v === null || v === '') return null;
+    if (typeof v === 'object') return v;
+    if (typeof v === 'string') {
+      try { return JSON.parse(v); } catch(e) {}
     }
-    return '<div class="pp-mc"><div class="pp-mc-in"><div class="pp-mc-f"><span class="pp-grade '+gradeClass(lv+' '+name+desc)+'"></span><span class="nm">'+esc(name)+'</span><span class="tip">点击查看</span></div><div class="pp-mc-b"><span class="lv">'+esc(lv)+'</span><span class="ds">'+esc(desc||'暂无详细描述。')+'</span></div></div></div>';
-  }).join('');
-}
-function otherBondHtml(v){
-  if(!has(v))return '<div class="pp-detail">暂无其他重要关系。</div>';
-  var arr=Array.isArray(v)?v:null;
-  if(!arr){try{var j=JSON.parse(String(v));if(Array.isArray(j))arr=j;}catch(e){}}
-  if(arr){
-    arr=arr.filter(function(o){return !isCoreBondName(o.name||o.title||o.relationship||o.relation);});
-    if(!arr.length)return '<div class="pp-detail">暂无其他重要关系。</div>';
-    return arr.map(function(o){
-      var name=o.name||o.title||'未命名关系',rel=o.relationship||o.relation||'关系未明',state=o.state||o.status||'暂无动向',lv=lvText(o.lv||o.level||'0'),pct=lvPercent(lv);
-      return '<div class="pp-bond"><div class="pp-bondtop"><span class="pp-bondname">'+esc(name)+'</span></div><div class="pp-bondrel">'+esc(rel)+'</div><div class="pp-bondst">'+esc(state)+'</div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span>'+esc(lv)+'</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="'+pct+'"></div></div></div></div>';
+    return null;
+  }
+
+  function readFromObjectPath(obj, path){
+    if (!obj || !path) return undefined;
+    var parts = String(path).split('.');
+    var cur = obj;
+    for (var i = 0; i < parts.length; i++) {
+      if (cur === undefined || cur === null) return undefined;
+      cur = cur[parts[i]];
+    }
+    return cur;
+  }
+
+  // 完全沿用旧状态栏的核心读取方式：当前消息变量 -> 父窗口当前消息变量 -> window变量 -> getvar。
+  function readStatDataObject(){
+    var p = safeGetParent();
+    try {
+      if (typeof getVariables === 'function' && typeof getCurrentMessageId === 'function' && typeof _ !== 'undefined' && _.get) {
+        var vars = getVariables({ type: 'message', message_id: getCurrentMessageId() });
+        var stat = _.get(vars, 'stat_data', {});
+        if (stat && typeof stat === 'object' && Object.keys(stat).length > 0) return stat.stat_data || stat;
+      }
+    } catch(e) {}
+    try {
+      if (p && typeof p.getVariables === 'function' && typeof p.getCurrentMessageId === 'function' && typeof p._ !== 'undefined' && p._.get) {
+        var vars2 = p.getVariables({ type: 'message', message_id: p.getCurrentMessageId() });
+        var stat2 = p._.get(vars2, 'stat_data', {});
+        if (stat2 && typeof stat2 === 'object' && Object.keys(stat2).length > 0) return stat2.stat_data || stat2;
+      }
+    } catch(e) {}
+    try {
+      if (typeof getVariables === 'function' && typeof getCurrentMessageId === 'function') {
+        var vars3 = getVariables({ type: 'message', message_id: getCurrentMessageId() });
+        var stat3 = vars3 && vars3.stat_data;
+        if (stat3 && typeof stat3 === 'object' && Object.keys(stat3).length > 0) return stat3.stat_data || stat3;
+      }
+    } catch(e) {}
+    try {
+      if (p && typeof p.getVariables === 'function' && typeof p.getCurrentMessageId === 'function') {
+        var vars4 = p.getVariables({ type: 'message', message_id: p.getCurrentMessageId() });
+        var stat4 = vars4 && vars4.stat_data;
+        if (stat4 && typeof stat4 === 'object' && Object.keys(stat4).length > 0) return stat4.stat_data || stat4;
+      }
+    } catch(e) {}
+    var candidates = [
+      window.mushokuStatusData,
+      window.stat_data,
+      window.statData,
+      window.chat_metadata && window.chat_metadata.variables && window.chat_metadata.variables.stat_data,
+      p && p.mushokuStatusData,
+      p && p.stat_data,
+      p && p.statData,
+      p && p.chat_metadata && p.chat_metadata.variables && p.chat_metadata.variables.stat_data
+    ];
+    for (var i = 0; i < candidates.length; i++) {
+      var obj = parseMaybeJson(candidates[i]);
+      if (obj) return obj.stat_data || obj;
+    }
+    try {
+      if (typeof getvar === 'function') {
+        var whole = parseMaybeJson(getvar('stat_data'));
+        if (whole) return whole.stat_data || whole;
+      }
+    } catch(e){}
+    try {
+      if (p && typeof p.getvar === 'function') {
+        var whole2 = parseMaybeJson(p.getvar('stat_data'));
+        if (whole2) return whole2.stat_data || whole2;
+      }
+    } catch(e){}
+    return {};
+  }
+
+  var data = readStatDataObject();
+
+  function readByGetvar(key){
+    var p = safeGetParent();
+    var paths = ['stat_data.' + key, '/stat_data/' + key, 'stat_data/' + key];
+    for (var i = 0; i < paths.length; i++) {
+      try {
+        if (typeof getvar === 'function') {
+          var v = getvar(paths[i]);
+          if (v !== undefined && v !== null && String(v).trim() !== '') return v;
+        }
+      } catch(e){}
+      try {
+        if (p && typeof p.getvar === 'function') {
+          var pv = p.getvar(paths[i]);
+          if (pv !== undefined && pv !== null && String(pv).trim() !== '') return pv;
+        }
+      } catch(e){}
+    }
+    return undefined;
+  }
+
+  var ALIAS={
+    'game-title':['gameTitle'],chapter:['activeChapterName'],place:['location'],present:['people'],
+    'map-loc':['mapLocation','location','mapNote'],mapNote:['mapLocationNote','mapDesc'],mapImageUrl:['mapUrl','mapURL','mapurl','mapImage','mapSrc'],
+    pcName:['heroName'],pcRace:['heroRace'],pcGender:['heroSex','heroGender'],pcAge:['heroAge'],
+    pcBodyStatus:['heroState'],pcTitle:['heroTitle'],pcIdentityTags:['heroIdentity','heroIdentityTags'],pcAppearance:['heroAppearance'],
+    hp:['hpText','heroHpText','heroHPText'],mp:['mpText','heroMpText','heroMPText'],
+    hpPercent:['heroHpPercent','heroHPPercent'],mpPercent:['heroMpPercent','heroMPPercent'],
+    hpCurrent:['heroHP','heroHp','hp'],hpMax:['heroHPMax','heroHpMax'],
+    mpCurrent:['heroMP','heroMp','mp'],mpMax:['heroMPMax','heroMpMax'],
+    toukiRank:['heroAuraRank','auraRank'],toukiState:['heroAuraState','auraState'],
+    battleRank:['heroPowerRank'],battleStyle:['heroFightStyle'],battleCurrentStatus:['heroFightState'],pcPowerBrief:['heroTemplate','pcCurrentGoal'],
+    roxyRelationship:['roxyRelation'],roxyLastMet:['roxyLastMeet','roxyLastSeen'],roxyBondLv:['roxyLvText','roxyLv','roxyBondLevel'],roxyBondPercent:['roxyBondPct'],
+    sylphyRelationship:['sylphyRelation'],sylphyLastMet:['sylphyLastMeet','sylphyLastSeen'],sylphyBondLv:['sylphyLvText','sylphyLv','sylphyBondLevel'],sylphyBondPercent:['sylphyBondPct'],
+    erisRelationship:['erisRelation'],erisLastMet:['erisLastMeet','erisLastSeen'],erisBondLv:['erisLvText','erisLv','erisBondLevel'],erisBondPercent:['erisBondPct'],
+    'money-gold':['moneyGold'],'money-silver':['moneySilver'],'money-copper':['moneyCopper'],'money-other':['moneyOther'],
+    targetName:['targetNpcName'],targetRace:['targetNpcRace'],targetGender:['targetNpcSex','targetNpcGender'],targetAge:['targetNpcAge'],
+    targetAppearance:['targetNpcAppearance'],targetFigureState:['targetNpcBody'],targetBreastsStatus:['targetNpcChest'],
+    targetVaginaStatus:['targetNpcPelvic'],targetAnusAction:['targetNpcHip'],targetFeetsAction:['targetNpcFeet'],targetSexualFantasy:['targetNpcFantasy'],
+    targetStance:['targetNpcStance'],targetDanger:['targetNpcDanger'],targetPowerBrief:['targetNpcPower'],targetRiskNote:['targetNpcRisk'],
+    targetTalentsSkills:['targetNpcSkills'],targetInnerThought:['targetNpcMind'],
+    hitogamiAttention:['manGodAttention'],manGodAttention:['hitogamiAttention'],manGodAttentionPercent:['hitogamiAttention'],
+    dragonGodCausalityPercent:['dragonGodCausality'],canonDeviationLevel:['originalDeviation']
+  };
+
+  function has(v){ return v !== undefined && v !== null && String(v).trim() !== ''; }
+  function esc(v){ return String(v==null?'':v).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function text(v){ return Array.isArray(v)?v.join('、'):(typeof v==='object'?JSON.stringify(v):String(v)); }
+  function num(v){ var m=String(v||'').match(/-?\d+(?:\.\d+)?/); return m?Number(m[0]):0; }
+  function clamp(v,min,max){ return Math.max(min,Math.min(max,v)); }
+  function addKey(list,k){ String(k||'').split('|').forEach(function(x){x=x.trim(); if(x && list.indexOf(x)<0) list.push(x);}); }
+  function camel(k){ return String(k||'').replace(/[-_]+([a-zA-Z0-9])/g,function(_,c){return c.toUpperCase();}); }
+  function candidates(key){
+    var list=[], c=camel(key), a=ALIAS[key]||ALIAS[c];
+    addKey(list,key); if(Array.isArray(a)) a.forEach(function(x){addKey(list,x);}); addKey(list,c);
+    return list;
+  }
+  function get(key, fallback){
+    var list=candidates(key), v, i;
+    for(i=0;i<list.length;i++){
+      v = data[list[i]];
+      if(!has(v)) v = readFromObjectPath(data, list[i]);
+      if(has(v)) return v;
+    }
+    for(i=0;i<list.length;i++){
+      v = readByGetvar(list[i]);
+      if(has(v)) return v;
+    }
+    return fallback;
+  }
+  function first(keys,fallback){
+    keys = Array.isArray(keys)?keys:String(keys||'').split('|');
+    for(var i=0;i<keys.length;i++){ var v=get(String(keys[i]).trim(), undefined); if(has(v)) return v; }
+    return fallback;
+  }
+  function percent(cur,max){ var m=num(max); return m>0?clamp(num(cur)/m*100,0,100):0; }
+  function splitLines(v){
+    if(Array.isArray(v)) return v;
+    if(!has(v)) return [];
+    var s=String(v).trim();
+    try{ var j=JSON.parse(s); if(Array.isArray(j)) return j; }catch(e){}
+    return s.split(/\n|；|;/).map(function(x){return String(x).replace(/^[-•·]\s*/,'').trim();}).filter(Boolean);
+  }
+  function chipHtml(v){
+    var arr=[]; splitLines(v).forEach(function(x){String(x).split(/[、,，/|]/).forEach(function(y){y=y.trim();if(y)arr.push(y);});});
+    return arr.length?arr.slice(0,12).map(function(x){return '<span class="pp-chip">'+esc(x)+'</span>';}).join(''):'<span class="pp-chip">暂无标签</span>';
+  }
+  function newsHtml(v){
+    var arr=splitLines(v); if(!arr.length)return '<div class="pp-newsitem"><span class="dot"></span><span>暂无重要传闻。</span></div>';
+    return arr.map(function(x){return '<div class="pp-newsitem"><span class="dot"></span><span>'+esc(x)+'</span></div>';}).join('');
+  }
+  function cardHtml(v,emptyText){
+    var arr=splitLines(v); if(!arr.length)return '<div class="pp-detail">'+esc(emptyText||'暂无记录。')+'</div>';
+    return arr.map(function(item){
+      var name='',lv='',desc='';
+      if(item&&typeof item==='object'){ name=item.name||item.title||item.skill||item.talent||item.item||'未命名'; lv=item.lv||item.level||item.rank||item.rarity||'记录'; desc=item.desc||item.description||item.state||item.note||''; }
+      else{ var s=String(item),parts=s.split(/[|｜]/).map(function(x){return x.trim();}); if(parts.length>=3){name=parts[0];lv=parts[1];desc=parts.slice(2).join('｜');} else {name=s;lv='记录';desc='';}}
+      return '<div class="pp-mc"><div class="pp-mc-in"><div class="pp-mc-f"><span class="pp-grade"></span><span class="nm">'+esc(name)+'</span><span class="tip">点击查看</span></div><div class="pp-mc-b"><span class="lv">'+esc(lv)+'</span><span class="ds">'+esc(desc||'暂无详细描述。')+'</span></div></div></div>';
     }).join('');
   }
-  var lines=splitLines(v).filter(function(x){return !isCoreBondName(x);});
-  return lines.length?lines.map(function(x){return '<div class="pp-bond"><div class="pp-bondtop"><span class="pp-bondname">'+esc(x)+'</span></div></div>';}).join(''):'<div class="pp-detail">暂无其他重要关系。</div>';
-}
-function rippleHtml(v){
-  var arr=splitLines(v);
-  if(!arr.length)return '<div class="pp-detail">暂无重大命运涟漪。</div>';
-  return arr.map(function(x){return '<div class="pp-ripple"><svg class="wing" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4v16M12 8C9 3 3 4 3 9c0 4 6 5 9 3"/></svg><span>'+esc(x)+'</span></div>';}).join('');
-}
-function parseMoney(data){
-  var s=String(data.currencyDetail||'');
-  function pick(label){var m=s.match(new RegExp(label+'\\s*[：:]\\s*([0-9]+)'));return m?m[1]:undefined;}
-  [['moneyGold','金币'],['moneySilver','银币'],['moneyCopper','铜币']].forEach(function(p){if(!has(data[p[0]])){var v=pick(p[1]);if(has(v))data[p[0]]=v;}});
-  if(!has(data.moneyOther)){
-    var extra=splitLines(s).filter(function(x){return !/(?:金|银|铜)币\s*[：:]/.test(x);});
-    data.moneyOther=extra.length?extra.join('；'):'暂无其他资金信息。';
+  function lvText(v){ if(!has(v))return 'Lv.0/10'; var s=String(v); if(/^\s*Lv\.?/i.test(s))return s; return /^\s*\d+(?:\.\d+)?\s*(?:\/\s*10)?\s*$/.test(s)?'Lv.'+s.replace(/\s*\/\s*10\s*$/,'')+'/10':s; }
+  function lvPercent(v){ if(!has(v))return 0; var s=String(v),m=s.match(/(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)/); if(m)return percent(m[1],m[2]); m=s.match(/\d+(?:\.\d+)?/); return m?clamp(Number(m[0])*10,0,100):0; }
+  function otherBondHtml(v){
+    if(!has(v))return '<div class="pp-detail">暂无其他重要关系。</div>';
+    var arr=Array.isArray(v)?v:null; if(!arr){try{var j=JSON.parse(String(v)); if(Array.isArray(j))arr=j;}catch(e){}}
+    if(arr){ if(!arr.length)return '<div class="pp-detail">暂无其他重要关系。</div>'; return arr.map(function(o){ var name=o.name||o.title||'未命名关系', rel=o.relationship||o.relation||'关系未明', state=o.state||o.status||'暂无动向', lv=lvText(o.lv||o.level||'0'), pct=lvPercent(lv); return '<div class="pp-bond"><div class="pp-bondtop"><span class="pp-bondname">'+esc(name)+'</span></div><div class="pp-bondrel">'+esc(rel)+'</div><div class="pp-bondst">'+esc(state)+'</div><div class="pp-lv"><div class="pp-lvhd"><span>羁绊等级</span><span>'+esc(lv)+'</span></div><div class="pp-lvtrack"><div class="pp-lvfill" data-pct="'+pct+'"></div></div></div></div>'; }).join(''); }
+    return splitLines(v).map(function(x){return '<div class="pp-bond"><div class="pp-bondtop"><span class="pp-bondname">'+esc(x)+'</span></div></div>';}).join('') || '<div class="pp-detail">暂无其他重要关系。</div>';
   }
-}
-function fillResource(data,kind){
-  var up=kind.toUpperCase(),lo=kind.toLowerCase();
-  var textKey=kind+'Text',cur=first(data,[kind+'Current','hero'+up,'hero'+kind.charAt(0).toUpperCase()+kind.slice(1),kind]),max=first(data,[kind+'Max','hero'+up+'Max','hero'+kind.charAt(0).toUpperCase()+kind.slice(1)+'Max']);
-  if(!has(data[textKey])&&has(cur)&&has(max))data[textKey]=text(cur)+' / '+text(max);
-  if(has(data[textKey]))data[kind]=data[textKey];
-  if(!has(data[lo+'Percent'])){var p=percent(cur,max);if(has(p))data[lo+'Percent']=p;}
-}
-function derive(input){
-  var data=Object.assign({},input||{});
-  if(!has(data.mapLocation))data.mapLocation=data.mapNote||data.location||'';
-  if(!has(data.present))data.present=data.people||'';
-  if(!has(data.place))data.place=data.location||'';
-  fillResource(data,'hp'); fillResource(data,'mp'); parseMoney(data);
-  ['roxy','sylphy','eris'].forEach(function(n){
-    var lv=first(data,[n+'BondLv',n+'LvText',n+'Lv',n+'BondLevel']);
-    if(!has(data[n+'BondLv'])&&has(lv))data[n+'BondLv']=lvText(lv);
-    if(!has(data[n+'BondPercent']))data[n+'BondPercent']=lvPercent(first(data,[n+'BondLv',n+'Lv',n+'BondLevel']));
-    if(!has(data[n+'LastMet']))data[n+'LastMet']='尚未相遇';
-  });
-  if(!has(data.presentTagsHtml))data.presentTagsHtml=chipHtml(data.presentTags||data.pcIdentityTags||'');
-  if(!has(data.localNewsListHtml))data.localNewsListHtml=newsHtml(data.localNews);
-  if(!has(data.otherBondListHtml))data.otherBondListHtml=otherBondHtml(data.otherRelations||data.relationSummary);
-  if(!has(data.talentListHtml))data.talentListHtml=cardHtml(data.talentsDetail,'暂无已确认天赋。');
-  if(!has(data.skillListHtml))data.skillListHtml=cardHtml(data.skillsDetail,'暂无已掌握技能。');
-  if(!has(data.inventoryListHtml))data.inventoryListHtml=cardHtml(data.inventoryDetail||data.bagItems||data.itemsDetail||data.equipmentDetail,'暂无额外道具。');
-  if(!has(data.rippleListHtml))data.rippleListHtml=rippleHtml(data.canonRipples);
-  return data;
-}
-function tryJson(s){try{return JSON.parse(s);}catch(e){return null;}}
-function htmlDecode(s){var t=document.createElement('textarea');t.innerHTML=String(s||'');return t.value;}
-function looseData(s){
-  s=htmlDecode(String(s||'').trim());
-  if(!s||/\{\{getvar::|<%=?/.test(s)||s==='[object Object]')return null;
-  var j=tryJson(s);if(typeof j==='string')j=tryJson(j);if(j&&typeof j==='object')return j.stat_data||j;
-  var obj={},hit=false;
-  s.split(/\n+/).forEach(function(line){
-    var m=line.match(/^\s*([A-Za-z_][\w-]*)\s*:\s*(.*?)\s*$/);if(!m)return;
-    var v=m[2]; if(v===''||v==='|'||v==='>')return;
-    v=v.replace(/^['\"]|['\"]$/g,''); obj[m[1]]=v; hit=true;
-  });
-  return hit?obj:null;
-}
-function mergeInto(dst,src){
-  if(!src)return false;
-  if(typeof src==='string')src=looseData(src);
-  if(src&&src.stat_data)src=src.stat_data;
-  if(src&&typeof src==='object'&&!Array.isArray(src)){Object.keys(src).forEach(function(k){if(has(src[k]))dst[k]=src[k];});return true;}
-  return false;
-}
-function applyPatchData(dst,patch){
-  if(!Array.isArray(patch))return false;
-  var changed=false;
-  patch.forEach(function(p){
-    if(!p||!/^\/(?!.*\/)[^/]+$/.test(String(p.path||'')))return;
-    var op=String(p.op||'replace').toLowerCase();
-    if(op!=='replace'&&op!=='add')return;
-    dst[String(p.path).slice(1)]=p.value;changed=true;
-  });
-  return changed;
-}
-function domScopes(){
-  var scopes=[],host=root.closest('.mes,.message,.chat-message,.swipe,.last_mes');
-  if(host)scopes.push(host);
-  var p=root.parentElement,guard=0;
-  while(p&&guard++<6){if(scopes.indexOf(p)<0)scopes.push(p);p=p.parentElement;}
-  scopes.push(document);
-  return scopes;
-}
-function mergeStatusBlock(dst,s){
-  var d=looseData(s);
-  return mergeInto(dst,d);
-}
-function statusDataFromDom(){
-  var data={},seen={},found=false;
-  domScopes().forEach(function(scope){
-    try{
-      Array.prototype.slice.call(scope.querySelectorAll('mushokustatusdata,statusdata,.pp-status-data,[data-pp-status-data]')).forEach(function(n){
-        var s=n.getAttribute&&n.getAttribute('data-pp-status-data')||n.textContent||'';
-        s=s.trim();if(!s||seen[s])return;seen[s]=1;if(mergeStatusBlock(data,s))found=true;
-      });
-      var html=scope===document?document.documentElement.innerHTML:(scope.innerHTML||'');
-      var txt=(scope.textContent||'')+'\n'+html;
-      var re=/<(?:MushokuStatusData|StatusData)>\s*([\s\S]*?)\s*<\/(?:MushokuStatusData|StatusData)>/ig,m;
-      while((m=re.exec(txt))){var s=m[1].trim();if(!s||seen[s])continue;seen[s]=1;if(mergeStatusBlock(data,s))found=true;}
-    }catch(e){}
-  });
-  return found?data:null;
-}
-function patchDataFromDom(){
-  var data={},seen={},found=false;
-  domScopes().forEach(function(scope){
-    try{
-      Array.prototype.slice.call(scope.querySelectorAll('jsonpatch,JSONPatch,mushokustatuspatch,statusdatapatch,.pp-status-patch,[data-pp-status-patch]')).forEach(function(n){
-        var s=n.getAttribute&&n.getAttribute('data-pp-status-patch')||n.textContent||'';
-        s=s.trim();if(!s||seen[s])return;seen[s]=1;var j=tryJson(htmlDecode(s));if(applyPatchData(data,j))found=true;
-      });
-      var html=scope===document?document.documentElement.innerHTML:(scope.innerHTML||'');
-      var txt=(scope.textContent||'')+'\n'+html;
-      var re=/<(?:JSONPatch|MushokuStatusPatch|StatusDataPatch)>\s*([\s\S]*?)\s*<\/(?:JSONPatch|MushokuStatusPatch|StatusDataPatch)>/ig,m;
-      while((m=re.exec(txt))){var s=m[1].trim();if(!s||seen[s])continue;seen[s]=1;var j=tryJson(htmlDecode(s));if(applyPatchData(data,j))found=true;}
-    }catch(e){}
-  });
-  return found?data:null;
-}
+  function rippleHtml(v){ var arr=splitLines(v); if(!arr.length)return '<div class="pp-detail">暂无重大命运涟漪。</div>'; return arr.map(function(x){return '<div class="pp-ripple"><span>'+esc(x)+'</span></div>';}).join(''); }
+  function sanitize(html){
+    var t=document.createElement('template'); t.innerHTML=String(html||'');
+    var bad=t.content.querySelectorAll('script,iframe,object,embed,link,meta,base'); for(var i=0;i<bad.length;i++)bad[i].remove();
+    return t.innerHTML;
+  }
+  function safeImgUrl(v){ v=String(v||'').trim(); return /^(https?:\/\/|data:image\/|blob:)/i.test(v)?v:''; }
+  function setProgress(el,pct){ if(!el)return; var p=clamp(num(pct),0,100); el.setAttribute('data-pct',String(Math.round(p*100)/100)); el.style.width=p+'%'; }
 
-function safeParent(){
-  try{
-    if(window.parent && window.parent !== window)return window.parent;
-  }catch(e){}
-  return null;
-}
-function goodVar(v){
-  if(v===undefined||v===null)return false;
-  var s=String(v).trim();
-  if(!s||s==='[object Object]')return false;
-  if(/\{\{getvar::|<%=?/.test(s))return false;
-  return true;
-}
-function pushMessageVars(out,w){
-  if(!w)return;
-  function push(v){if(v!==undefined&&v!==null)out.push(v);}
-  try{
-    if(typeof w.getVariables==="function" && typeof w.getCurrentMessageId==="function"){
-      var vars=w.getVariables({type:"message",message_id:w.getCurrentMessageId()});
-      if(vars){
-        var stat=(w._&&w._.get)?w._.get(vars,"stat_data",{}):vars.stat_data;
-        push(stat);push(vars.stat_data);push(vars.variables&&vars.variables.stat_data);
-      }
-    }
-  }catch(e){}
-  try{
-    if(typeof w.getvar==="function"){
-      ["stat_data","/stat_data","message.stat_data","variables.stat_data"].forEach(function(k){
-        var v=w.getvar(k); if(goodVar(v))push(v);
-      });
-    }
-  }catch(e){}
-}
-function readByGetvarKey(key){
-  var wins=[window],p=safeParent(); if(p)wins.push(p);
-  var keys=candidates(key),paths=[];
-  keys.forEach(function(k){
-    if(!k)return;
-    paths.push("stat_data."+k);
-    paths.push("/stat_data/"+k);
-    paths.push("stat_data/"+k);
-    paths.push(k);
-  });
-  for(var wi=0;wi<wins.length;wi++){
-    var w=wins[wi]; if(!w)continue;
-    try{
-      if(typeof w.getvar==="function"){
-        for(var i=0;i<paths.length;i++){
-          var v=w.getvar(paths[i]);
-          if(goodVar(v))return v;
-        }
-      }
-    }catch(e){}
+  function derive(){
+    var d={};
+    var keys=['presentTagsHtml','localNewsListHtml','otherBondListHtml','talentListHtml','skillListHtml','inventoryListHtml','rippleListHtml','moneyGold','moneySilver','moneyCopper','moneyOther','hp','mp','hpPercent','mpPercent','roxyBondLv','sylphyBondLv','erisBondLv','roxyBondPercent','sylphyBondPercent','erisBondPercent','roxyLastMet','sylphyLastMet','erisLastMet'];
+    // 只计算新版状态栏额外需要的派生字段，不覆盖真实 stat_data。
+    var hpC=first(['hpCurrent','heroHP','heroHp']), hpM=first(['hpMax','heroHPMax','heroHpMax']);
+    var mpC=first(['mpCurrent','heroMP','heroMp']), mpM=first(['mpMax','heroMPMax','heroMpMax']);
+    d.hp = has(first(['hp','hpText','heroHpText'])) ? first(['hp','hpText','heroHpText']) : (has(hpC)&&has(hpM)? text(hpC)+' / '+text(hpM):undefined);
+    d.mp = has(first(['mp','mpText','heroMpText'])) ? first(['mp','mpText','heroMpText']) : (has(mpC)&&has(mpM)? text(mpC)+' / '+text(mpM):undefined);
+    d.hpPercent = has(first(['hpPercent','heroHpPercent'])) ? first(['hpPercent','heroHpPercent']) : percent(hpC,hpM);
+    d.mpPercent = has(first(['mpPercent','heroMpPercent'])) ? first(['mpPercent','heroMpPercent']) : percent(mpC,mpM);
+    var cur = first(['pcIdentityTags','presentTags']); d.presentTagsHtml = chipHtml(cur);
+    d.localNewsListHtml = newsHtml(first(['localNews']));
+    d.otherBondListHtml = otherBondHtml(first(['otherRelations','relationSummary']));
+    d.talentListHtml = cardHtml(first(['talentsDetail']),'暂无已确认天赋。');
+    d.skillListHtml = cardHtml(first(['skillsDetail']),'暂无已掌握技能。');
+    d.inventoryListHtml = cardHtml(first(['inventoryDetail','bagItems','itemsDetail','equipmentDetail']),'暂无额外道具。');
+    d.rippleListHtml = rippleHtml(first(['canonRipples']));
+    var money=String(first(['currencyDetail'],'')||'');
+    function pick(label){var m=money.match(new RegExp(label+'\\s*[：:]\\s*([0-9]+)'));return m?m[1]:undefined;}
+    d.moneyGold=first(['moneyGold'],pick('金币')||'0'); d.moneySilver=first(['moneySilver'],pick('银币')||'0'); d.moneyCopper=first(['moneyCopper'],pick('铜币')||'0');
+    var extra=splitLines(money).filter(function(x){return !/(?:金|银|铜)币\s*[：:]/.test(x);}); d.moneyOther=first(['moneyOther'],extra.length?extra.join('；'):'暂无其他资金信息。');
+    ['roxy','sylphy','eris'].forEach(function(n){ var lv=first([n+'BondLv',n+'LvText',n+'Lv',n+'BondLevel'],'0'); d[n+'BondLv']=lvText(lv); d[n+'BondPercent']=lvPercent(lv); d[n+'LastMet']=first([n+'LastMet',n+'LastMeet',n+'LastSeen'],'尚未相遇'); });
+    return d;
   }
-  return undefined;
-}
 
-function contextSources(){
-  var out=[];
-  function push(v){if(v!==undefined&&v!==null)out.push(v);}
-  function grab(w){
-    if(!w)return;
-    pushMessageVars(out,w);
-    try{
-      push(w.__MUSHOKU_STATUS_DATA__);push(w.mushokuStatusData);push(w.ppStatusData);push(w.stat_data);push(w.statusData);
-      push(w.chat_metadata&&w.chat_metadata.variables&&w.chat_metadata.variables.stat_data);
-      push(w.chat_metadata&&w.chat_metadata.stat_data);
-      push(w.variables&&w.variables.stat_data);
-      var ctx=(w.SillyTavern&&w.SillyTavern.getContext&&w.SillyTavern.getContext())||(w.getContext&&w.getContext());
-      if(ctx){
-        push(ctx.variables&&ctx.variables.stat_data);push(ctx.chat_metadata&&ctx.chat_metadata.variables&&ctx.chat_metadata.variables.stat_data);
-        push(ctx.chat_metadata&&ctx.chat_metadata.stat_data);push(ctx.extensionSettings&&ctx.extensionSettings.variables&&ctx.extensionSettings.variables.stat_data);
-        if(Array.isArray(ctx.chat))ctx.chat.slice(-12).forEach(function(m){push(m&&m.variables&&m.variables.stat_data);push(m&&m.extra&&m.extra.variables&&m.extra.variables.stat_data);push(m&&m.data&&m.data.stat_data);});
-      }
-    }catch(e){}
+  function getD(key,fallback){ var derived=currentData.__derived||{}; var v=get(key,undefined); if(!has(v)) v=derived[key]; return has(v)?v:fallback; }
+  function render(){
+    currentData = data || {};
+    currentData.__derived = derive();
+    var htmlEls=root.querySelectorAll('[data-var-html]');
+    for(var i=0;i<htmlEls.length;i++){ var el=htmlEls[i], v=getD(el.getAttribute('data-var-html'), undefined); if(has(v))el.innerHTML=sanitize(v); }
+    var textEls=root.querySelectorAll('[data-var]');
+    for(var j=0;j<textEls.length;j++){ var el2=textEls[j], v2=getD(el2.getAttribute('data-var'), undefined); if(has(v2))el2.textContent=text(v2); }
+    var bars=root.querySelectorAll('[data-pct-var],[data-pct-current][data-pct-max]');
+    for(var k=0;k<bars.length;k++){ var b=bars[k], pct=first(String(b.getAttribute('data-pct-var')||'').split('|'),undefined); if(!has(pct))pct=percent(getD(b.getAttribute('data-pct-current'),0),getD(b.getAttribute('data-pct-max'),0)); if(has(pct))setProgress(b,pct); }
+    var map=root.querySelector('#pp-mapbox')||root.querySelector('.pp-map'), url=safeImgUrl(first(['mapImageUrl','mapUrl','mapURL','mapurl','mapImage','mapSrc']));
+    if(map && url){ map.classList.add('has-img'); map.style.backgroundImage='url("'+url.replace(/["\\]/g,'\\$&')+'")'; }
+    var orb=root.querySelector('#pp-orb'), beam=root.querySelector('#pp-beam');
+    var h=clamp(num(first(['hitogamiAttention','manGodAttention'],0)),0,100), dg=clamp(num(first(['dragonGodCausality','dragonGodCausalityPercent'],0)),0,100), diff=h-dg, pos=clamp(50-diff/2,12,88);
+    if(orb)orb.style.left=pos+'%'; if(beam){beam.style.transform='rotate('+(-clamp(diff*.28,-14,14))+'deg)'; beam.style.transformOrigin='60px 20px';}
   }
-  grab(window);try{if(window.parent&&window.parent!==window)grab(window.parent);}catch(e){}
-  return out;
-}
-var ppLastGoodData=null;
-function baseData(){
-  var real={},found=false;
-  function absorb(src){
-    var before=Object.keys(real).length;
-    if(mergeInto(real,src)){
-      if(Object.keys(real).length>before)found=true;
-      else found=true;
-    }
-  }
-  absorb(statusDataFromDom());
-  absorb(patchDataFromDom());
-  contextSources().forEach(absorb);
-  if(root.dataset&&root.dataset.vars)absorb(root.dataset.vars);
-  Array.prototype.slice.call(root.querySelectorAll('.pp-status-data')).forEach(function(n){absorb(n.textContent||'');});
 
-  if(found && Object.keys(real).length){
-    ppLastGoodData=Object.assign({},DEFAULT_DATA||{},real);
-    return ppLastGoodData;
-  }
-  if(ppLastGoodData)return ppLastGoodData;
-  return Object.assign({},DEFAULT_DATA||{});
-}
-function sanitize(html){
-  var t=document.createElement('template');t.innerHTML=String(html||'');
-  t.content.querySelectorAll('script,iframe,object,embed,link,meta,base').forEach(function(n){n.remove();});
-  t.content.querySelectorAll('*').forEach(function(el){Array.prototype.slice.call(el.attributes).forEach(function(a){
-    var n=a.name.toLowerCase(),v=String(a.value||'').trim().toLowerCase();
-    if(n.indexOf('on')===0||(n==='href'||n==='src'||n==='xlink:href')&&v.indexOf('javascript:')===0)el.removeAttribute(a.name);
-  });});
-  return t.innerHTML;
-}
-function safeImgUrl(v){
-  v=String(v||'').trim();
-  return /^(https?:\/\/|data:image\/|blob:)/i.test(v)?v:'';
-}
-function syncMap(data){
-  var box=$('#pp-mapbox')||$('.pp-map'),url=safeImgUrl(first(data,['mapImageUrl','mapUrl','mapURL','mapurl','mapImage','mapSrc']));
-  if(!box)return;
-  if(url){box.classList.add('has-img');box.style.backgroundImage='url("'+url.replace(/["\\]/g,'\\$&')+'")';}
-  else{box.classList.remove('has-img');box.style.backgroundImage='';}
-}
-function setProgress(el,pct){
-  if(!el||!has(pct))return;
-  var p=clamp(num(pct),0,100);el.setAttribute('data-pct',String(Math.round(p*100)/100));el.style.width=p+'%';el.dataset.done='1';
-}
-function syncProgress(data){
-  $all('[data-pct-var],[data-pct-current][data-pct-max]').forEach(function(el){
-    var pct=first(data,el.getAttribute('data-pct-var'));
-    if(!has(pct))pct=percent(first(data,el.getAttribute('data-pct-current')),first(data,el.getAttribute('data-pct-max')));
-    if(has(pct))setProgress(el,pct);
-  });
-}
-function initBars(force){
-  $all('[data-pct]').forEach(function(b){
-    var p=clamp(num(b.getAttribute('data-pct')),0,100);
-    if(force||b.dataset.done){b.style.width=p+'%';b.dataset.done='1';}
-    else{b.style.width='0';setTimeout(function(){b.style.width=p+'%';b.dataset.done='1';},80);}
-  });
-}
-function orb(data){
-  var g=first(data||currentData,['hitogamiAttention','manGodAttention','manGodAttentionPercent']),d=first(data||currentData,['dragonGodCausality','dragonGodCausalityPercent']);
-  g=clamp(num(g),0,100);d=clamp(num(d),0,100);
-  var diff=g-d,pos=clamp(50-diff/2,12,88),o=$('#pp-orb'),beam=$('#pp-beam');
-  if(o)o.style.left=pos+'%';
-  if(beam){beam.style.transform='rotate('+(-clamp(diff*.28,-14,14))+'deg)';beam.style.transformOrigin='60px 20px';}
-}
-function applyVars(data){
-  data=(data&&data.stat_data)?data.stat_data:(data||baseData());
-  currentData=derive(data);
-  $all('[data-var-html]').forEach(function(el){var v=get(currentData,el.getAttribute('data-var-html'));if(has(v))el.innerHTML=sanitize(v);});
-  $all('[data-var]').forEach(function(el){var v=get(currentData,el.getAttribute('data-var'));if(has(v))el.textContent=text(v);});
-  syncProgress(currentData);initBars(true);syncMap(currentData);orb(currentData);return currentData;
-}
-window.ppApplyVars=applyVars;
-window.ppSetStatusData=function(data){window.ppStatusData=data||{};return applyVars(window.ppStatusData);};
-window.addEventListener('mushoku-status-data',function(e){applyVars(e.detail||{});});
-window.ppGo=function(id){$all('.pp-sec').forEach(function(s){s.classList.remove('on');});var t=$('#sec-'+id);if(t)t.classList.add('on');initBars();if(id==='butterfly')orb(currentData);};
-window.ppBack=function(){$all('.pp-sec').forEach(function(s){s.classList.remove('on');});$('#sec-home').classList.add('on');};
-window.ppFlip=function(el){el.classList.toggle('flip');};
-window.ppModal=function(t,c){$('#pp-modal-t').textContent=t;$('#pp-modal-c').textContent=c;$('#pp-mask').classList.add('on');};
-window.ppCloseModal=function(e){if(e&&e.type==='click'&&e.target.id!=='pp-mask'&&e.target.tagName!=='BUTTON')return;$('#pp-mask').classList.remove('on');};
-window.ppToast=function(txt){var el=$('#pp-toast');$('#pp-toast-t').textContent=txt;el.classList.add('on');clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.classList.remove('on');},2600);};
-root.addEventListener('click',function(e){var card=e.target.closest('.pp-dynamic-list .pp-mc');if(card&&root.contains(card))window.ppFlip(card);});
-var themeBtn=$('#pp-themebtn');
-if(themeBtn)themeBtn.addEventListener('click',function(){root.classList.toggle('dark');window.ppToast(root.classList.contains('dark')?'已切换至「魔界·夜」':'已切换至「羊皮·昼」');});
-function ppRefresh(){applyVars(baseData());}
-window.ppRefreshVars=ppRefresh;
-ppRefresh();
-[250,800,1600,3000].forEach(function(t){setTimeout(ppRefresh,t);});
+  window.ppGo=function(id){ var secs=root.querySelectorAll('.pp-sec'); for(var i=0;i<secs.length;i++)secs[i].classList.remove('on'); var t=root.querySelector('#sec-'+id); if(t)t.classList.add('on'); };
+  window.ppBack=function(){ var secs=root.querySelectorAll('.pp-sec'); for(var i=0;i<secs.length;i++)secs[i].classList.remove('on'); var home=root.querySelector('#sec-home'); if(home)home.classList.add('on'); };
+  window.ppOpenModal=function(t,c){ var m=root.querySelector('#pp-mask'),mt=root.querySelector('#pp-modal-t'),mc=root.querySelector('#pp-modal-c'); if(mt)mt.textContent=t||'详情'; if(mc)mc.textContent=c||''; if(m)m.classList.add('show'); };
+  window.ppCloseModal=function(e){ if(e&&e.target&&e.target!==root.querySelector('#pp-mask'))return; var m=root.querySelector('#pp-mask'); if(m)m.classList.remove('show'); };
+  root.addEventListener('click',function(e){ var c=e.target.closest&&e.target.closest('.pp-mc'); if(!c||!root.contains(c))return; var n=c.querySelector('.nm'),lv=c.querySelector('.lv'),ds=c.querySelector('.ds'); window.ppOpenModal(n?n.textContent:'详情',(lv?lv.textContent+'\n':'')+(ds?ds.textContent:'')); });
+  render();
 })();
 </script>
 </body>
