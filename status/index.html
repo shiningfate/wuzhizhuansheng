@@ -246,6 +246,9 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 </head>
 <body>
 <div id="chat-ui-rz7m4k2p">
+<script type="application/json" class="pp-status-data" data-source="default">{"activeChapterIndex":"0","activeChapterCode":"CH001","activeChapterName":"CH001｜一卷·第1章 「难道是异世界？」","chapterProgress":"开端","chapterSwitchSignal":"NO","chapterSwitchReason":"暂无","year":407,"month":10,"day":12,"chapter":1,"time":"407年10月12日","weather":"晴","temperature":"微凉","location":"布耶纳村","environment":"阿斯拉王国菲托亚领附近的乡村环境。","people":"主角，家人或附近村民","mapName":"六面世界地图","mapNote":"当前位于中央大陆阿斯拉王国菲托亚领附近。","mapImageUrl":"https://raw.githubusercontent.com/shiningfate/wzzsjpg/main/dc94a7ca6ec9d90d26e9f09d86ee7d5c97196803_raw.jpg","routeNote":"暂无远行路线。","localNews":"暂无重要传闻。","pcName":"主角名","pcRace":"人族","pcGender":"男","pcAge":"幼年","pcBodyStatus":"健康","pcTitle":"无","pcIdentityTags":"格雷拉特家幼子","hpCurrent":"15","hpMax":"100","mpCurrent":"15","mpMax":"100","pcPowerBrief":"幼年期，魔力量异常优秀，身体战力仍弱。","pcMentalStatus":"清醒","pcCurrentGoal":"适应当前生活并观察周围环境。","pcAppearance":"年幼的人族男孩，外表稚嫩。","battleRank":"普通人","toukiRank":"未觉醒","toukiState":"未觉醒","battleStyle":"暂无固定战斗风格。","battleCurrentStatus":"身体状态稳定，精神清醒，当前未处于战斗。","talentsDetail":"","skillsDetail":"","equipmentDetail":"","inventoryDetail":"","currencyDetail":"金币：0\n银币：0\n铜币：0","roxyName":"洛琪希·米格路迪亚","roxyLv":"0","roxyRelationship":"命运固定；尚未相遇 / 未建立羁绊","roxyState":"暂无动向","sylphyName":"希露菲叶特","sylphyLv":"0","sylphyRelationship":"命运固定；尚未相遇 / 未建立羁绊","sylphyState":"暂无动向","erisName":"艾莉丝·伯雷亚斯·格雷拉特","erisLv":"0","erisRelationship":"命运固定；尚未相遇 / 未建立羁绊","erisState":"暂无动向","otherRelations":[{"name":"保罗","lv":"6","relationship":"亲生父子；至亲血脉","state":"布耶纳村家中，维持村中骑士与家长职责，关注鲁迪乌斯的成长与异常早熟表现。"}],"targetName":"暂无明确目标","targetRace":"未知","targetGender":"未知","targetAge":"未知","targetAppearance":"暂无明确目标。","targetFigureState":"未鉴定","targetBreastsStatus":"未鉴定","targetVaginaStatus":"未鉴定","targetAnusAction":"未鉴定","targetFeetsAction":"未鉴定","targetSexualFantasy":"暂无明确线索","targetStance":"未知","targetDanger":"低","targetAttitude":"未知","targetPowerBrief":"暂无明确目标","targetRiskNote":"暂无明显风险。","targetTalentsSkills":"未知","targetInnerThought":"未知","canonDeviationLevel":"低","hitogamiAttention":"0","dragonGodCausality":"0","hitogamiInfluenceNote":"暂无明显诱导。","dragonCausalityNote":"暂无明显脱离。","causalBalanceNote":"当前因果天平接近稳定，原著路线仍可作为主要参考。","canonRipples":"暂无已确认涟漪事件。","canonFutureRisk":"暂无明显后续风险。","roxyLastMet":"尚未相遇","sylphyLastMet":"尚未相遇","erisLastMet":"尚未相遇","gameTitle":"无职转生·六面世界旅录"}</script>
+<script type="application/json" class="pp-status-data" data-source="st-ejs"><%= JSON.stringify(getMessageVar('stat_data', { defaults: {} })) _%></script>
+<script type="application/json" class="pp-status-data" data-source="st-macro">{{getvar::stat_data}}</script>
 <div class="pp-frame">
 <div class="pp-toast" id="pp-toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2 6h6l-5 4 2 7-7-4-7 4 2-7-5-4h6z"/></svg><span id="pp-toast-t">状态已更新</span></div>
 
@@ -433,6 +436,7 @@ opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.4),opacity .5s;max-wi
 var root=document.getElementById('chat-ui-rz7m4k2p');
 if(!root)return;
 var currentData={},toastTimer;
+var DEFAULT_DATA={"activeChapterIndex":"0","activeChapterCode":"CH001","activeChapterName":"CH001｜一卷·第1章 「难道是异世界？」","chapterProgress":"开端","chapterSwitchSignal":"NO","chapterSwitchReason":"暂无","year":407,"month":10,"day":12,"chapter":1,"time":"407年10月12日","weather":"晴","temperature":"微凉","location":"布耶纳村","environment":"阿斯拉王国菲托亚领附近的乡村环境。","people":"主角，家人或附近村民","mapName":"六面世界地图","mapNote":"当前位于中央大陆阿斯拉王国菲托亚领附近。","mapImageUrl":"https://raw.githubusercontent.com/shiningfate/wzzsjpg/main/dc94a7ca6ec9d90d26e9f09d86ee7d5c97196803_raw.jpg","routeNote":"暂无远行路线。","localNews":"暂无重要传闻。","pcName":"主角名","pcRace":"人族","pcGender":"男","pcAge":"幼年","pcBodyStatus":"健康","pcTitle":"无","pcIdentityTags":"格雷拉特家幼子","hpCurrent":"15","hpMax":"100","mpCurrent":"15","mpMax":"100","pcPowerBrief":"幼年期，魔力量异常优秀，身体战力仍弱。","pcMentalStatus":"清醒","pcCurrentGoal":"适应当前生活并观察周围环境。","pcAppearance":"年幼的人族男孩，外表稚嫩。","battleRank":"普通人","toukiRank":"未觉醒","toukiState":"未觉醒","battleStyle":"暂无固定战斗风格。","battleCurrentStatus":"身体状态稳定，精神清醒，当前未处于战斗。","talentsDetail":"","skillsDetail":"","equipmentDetail":"","inventoryDetail":"","currencyDetail":"金币：0\n银币：0\n铜币：0","roxyName":"洛琪希·米格路迪亚","roxyLv":"0","roxyRelationship":"命运固定；尚未相遇 / 未建立羁绊","roxyState":"暂无动向","sylphyName":"希露菲叶特","sylphyLv":"0","sylphyRelationship":"命运固定；尚未相遇 / 未建立羁绊","sylphyState":"暂无动向","erisName":"艾莉丝·伯雷亚斯·格雷拉特","erisLv":"0","erisRelationship":"命运固定；尚未相遇 / 未建立羁绊","erisState":"暂无动向","otherRelations":[{"name":"保罗","lv":"6","relationship":"亲生父子；至亲血脉","state":"布耶纳村家中，维持村中骑士与家长职责，关注鲁迪乌斯的成长与异常早熟表现。"}],"targetName":"暂无明确目标","targetRace":"未知","targetGender":"未知","targetAge":"未知","targetAppearance":"暂无明确目标。","targetFigureState":"未鉴定","targetBreastsStatus":"未鉴定","targetVaginaStatus":"未鉴定","targetAnusAction":"未鉴定","targetFeetsAction":"未鉴定","targetSexualFantasy":"暂无明确线索","targetStance":"未知","targetDanger":"低","targetAttitude":"未知","targetPowerBrief":"暂无明确目标","targetRiskNote":"暂无明显风险。","targetTalentsSkills":"未知","targetInnerThought":"未知","canonDeviationLevel":"低","hitogamiAttention":"0","dragonGodCausality":"0","hitogamiInfluenceNote":"暂无明显诱导。","dragonCausalityNote":"暂无明显脱离。","causalBalanceNote":"当前因果天平接近稳定，原著路线仍可作为主要参考。","canonRipples":"暂无已确认涟漪事件。","canonFutureRisk":"暂无明显后续风险。","roxyLastMet":"尚未相遇","sylphyLastMet":"尚未相遇","erisLastMet":"尚未相遇","gameTitle":"无职转生·六面世界旅录"};
 
 var ALIAS={
   'game-title':['gameTitle'],chapter:['activeChapterName'],place:['location'],present:['people'],
@@ -598,13 +602,79 @@ function derive(input){
   return data;
 }
 function tryJson(s){try{return JSON.parse(s);}catch(e){return null;}}
+function htmlDecode(s){var t=document.createElement('textarea');t.innerHTML=String(s||'');return t.value;}
+function looseData(s){
+  s=htmlDecode(String(s||'').trim());
+  if(!s||/\{\{getvar::|<%=?/.test(s)||s==='[object Object]')return null;
+  var j=tryJson(s);if(typeof j==='string')j=tryJson(j);if(j&&typeof j==='object')return j.stat_data||j;
+  var obj={},hit=false;
+  s.split(/\n+/).forEach(function(line){
+    var m=line.match(/^\s*([A-Za-z_][\w-]*)\s*:\s*(.*?)\s*$/);if(!m)return;
+    var v=m[2]; if(v===''||v==='|'||v==='>')return;
+    v=v.replace(/^['\"]|['\"]$/g,''); obj[m[1]]=v; hit=true;
+  });
+  return hit?obj:null;
+}
+function mergeInto(dst,src){
+  if(!src)return false;
+  if(typeof src==='string')src=looseData(src);
+  if(src&&src.stat_data)src=src.stat_data;
+  if(src&&typeof src==='object'&&!Array.isArray(src)){Object.keys(src).forEach(function(k){if(has(src[k]))dst[k]=src[k];});return true;}
+  return false;
+}
+function applyPatchData(dst,patch){
+  if(!Array.isArray(patch))return false;
+  var changed=false;
+  patch.forEach(function(p){
+    if(!p||!/^\/(?!.*\/)[^/]+$/.test(String(p.path||'')))return;
+    var op=String(p.op||'replace').toLowerCase();
+    if(op!=='replace'&&op!=='add')return;
+    dst[String(p.path).slice(1)]=p.value;changed=true;
+  });
+  return changed;
+}
+function patchDataFromDom(){
+  var data={},seen={},found=false,scopes=[],host=root.closest('.mes,.message,.chat-message,.swipe,.last_mes');
+  if(host)scopes.push(host);scopes.push(document);
+  scopes.forEach(function(scope){
+    try{
+      Array.prototype.slice.call(scope.querySelectorAll('jsonpatch, JSONPatch')).forEach(function(n){
+        var s=(n.textContent||'').trim();if(!s||seen[s])return;seen[s]=1;var j=tryJson(s);if(applyPatchData(data,j))found=true;
+      });
+      var txt=scope.textContent||'';var re=/<JSONPatch>\s*([\s\S]*?)\s*<\/JSONPatch>/ig,m;
+      while((m=re.exec(txt))){var s=m[1].trim();if(!s||seen[s])continue;seen[s]=1;var j=tryJson(s);if(applyPatchData(data,j))found=true;}
+    }catch(e){}
+  });
+  return found?data:null;
+}
+function contextSources(){
+  var out=[];
+  function push(v){if(v!==undefined&&v!==null)out.push(v);}
+  function grab(w){
+    if(!w)return;
+    try{
+      push(w.__MUSHOKU_STATUS_DATA__);push(w.mushokuStatusData);push(w.ppStatusData);push(w.stat_data);push(w.statusData);
+      push(w.chat_metadata&&w.chat_metadata.variables&&w.chat_metadata.variables.stat_data);
+      push(w.chat_metadata&&w.chat_metadata.stat_data);
+      push(w.variables&&w.variables.stat_data);
+      var ctx=(w.SillyTavern&&w.SillyTavern.getContext&&w.SillyTavern.getContext())||(w.getContext&&w.getContext());
+      if(ctx){
+        push(ctx.variables&&ctx.variables.stat_data);push(ctx.chat_metadata&&ctx.chat_metadata.variables&&ctx.chat_metadata.variables.stat_data);
+        push(ctx.chat_metadata&&ctx.chat_metadata.stat_data);push(ctx.extensionSettings&&ctx.extensionSettings.variables&&ctx.extensionSettings.variables.stat_data);
+        if(Array.isArray(ctx.chat))ctx.chat.slice(-8).forEach(function(m){push(m&&m.variables&&m.variables.stat_data);push(m&&m.extra&&m.extra.variables&&m.extra.variables.stat_data);push(m&&m.data&&m.data.stat_data);});
+      }
+    }catch(e){}
+  }
+  grab(window);try{if(window.parent&&window.parent!==window)grab(window.parent);}catch(e){}
+  return out;
+}
 function baseData(){
-  var arr=[],jsonNode=document.getElementById('pp-status-data');
-  ['__MUSHOKU_STATUS_DATA__','mushokuStatusData','ppStatusData','stat_data','statusData'].forEach(function(k){if(window[k])arr.push(window[k]);});
-  if(root.dataset&&root.dataset.vars){var d=tryJson(root.dataset.vars);if(d)arr.push(d);}
-  if(jsonNode){var j=tryJson(jsonNode.textContent||'');if(j)arr.push(j);}
-  for(var i=0;i<arr.length;i++){var c=arr[i];if(c&&c.stat_data)c=c.stat_data;if(c&&typeof c==='object')return c;}
-  return {};
+  var data=Object.assign({},DEFAULT_DATA||{}),patched=patchDataFromDom();
+  mergeInto(data,patched);
+  contextSources().forEach(function(s){mergeInto(data,s);});
+  if(root.dataset&&root.dataset.vars)mergeInto(data,root.dataset.vars);
+  Array.prototype.slice.call(root.querySelectorAll('.pp-status-data')).forEach(function(n){mergeInto(data,n.textContent||'');});
+  return data;
 }
 function sanitize(html){
   var t=document.createElement('template');t.innerHTML=String(html||'');
@@ -669,7 +739,10 @@ window.ppToast=function(txt){var el=$('#pp-toast');$('#pp-toast-t').textContent=
 root.addEventListener('click',function(e){var card=e.target.closest('.pp-dynamic-list .pp-mc');if(card&&root.contains(card))window.ppFlip(card);});
 var themeBtn=$('#pp-themebtn');
 if(themeBtn)themeBtn.addEventListener('click',function(){root.classList.toggle('dark');window.ppToast(root.classList.contains('dark')?'已切换至「魔界·夜」':'已切换至「羊皮·昼」');});
-applyVars(baseData());
+function ppRefresh(){applyVars(baseData());}
+window.ppRefreshVars=ppRefresh;
+ppRefresh();
+[250,800,1600,3000].forEach(function(t){setTimeout(ppRefresh,t);});
 })();
 </script>
 </body>
