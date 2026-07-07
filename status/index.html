@@ -754,7 +754,52 @@ function mtRenderChipIcons(scope){
     updateFreeWill();
   }
 
-  window.mtStatusbar={showToast,updateFreeWill,renderStatus,renderChipIcons:mtRenderChipIcons,resolveIcon:mtResolveIcon,ICONS:MT_ICONS,KEYWORDS:MT_KEYWORDS};
+  function mtObjectSize(value){
+    return value&&typeof value==='object'&&!Array.isArray(value)?Object.keys(value).length:0;
+  }
+  function mtGetPath(obj,path,fallback){
+    if(window._&&typeof _.get==='function')return _.get(obj,path,fallback);
+    let cur=obj;
+    String(path).split('.').forEach(part=>{
+      cur=cur&&Object.prototype.hasOwnProperty.call(cur,part)?cur[part]:undefined;
+    });
+    return cur===undefined?fallback:cur;
+  }
+  async function mtReadStatData(){
+    try{
+      if(typeof getVariables==='function'&&typeof getCurrentMessageId==='function'){
+        const vars=getVariables({type:'message',message_id:getCurrentMessageId()});
+        const data=mtGetPath(vars,'stat_data',{});
+        if(mtObjectSize(data))return data;
+      }
+    }catch(err){
+      console.warn('[mtStatusbar] getVariables failed:',err);
+    }
+    try{
+      if(window.Mvu&&typeof Mvu.getMvuData==='function'&&typeof getCurrentMessageId==='function'){
+        if(typeof waitGlobalInitialized==='function'){
+          try{await waitGlobalInitialized('Mvu');}catch(_){}
+        }
+        const mvuData=await Mvu.getMvuData({type:'message',message_id:getCurrentMessageId()});
+        const data=mtGetPath(mvuData,'stat_data',{});
+        if(mtObjectSize(data))return data;
+      }
+    }catch(err){
+      console.warn('[mtStatusbar] Mvu.getMvuData failed:',err);
+    }
+    return {};
+  }
+  async function mtAutoRenderStatus(){
+    const data=await mtReadStatData();
+    if(mtObjectSize(data)){
+      renderStatus(data);
+    }else{
+      console.warn('[mtStatusbar] stat_data is empty. Check whether <UpdateVariable><JSONPatch> was applied to message variables.');
+    }
+  }
+
+  window.mtStatusbar={showToast,updateFreeWill,renderStatus,autoRenderStatus:mtAutoRenderStatus,renderChipIcons:mtRenderChipIcons,resolveIcon:mtResolveIcon,ICONS:MT_ICONS,KEYWORDS:MT_KEYWORDS};
+  mtAutoRenderStatus();
 })();
 </script>
 </body>
